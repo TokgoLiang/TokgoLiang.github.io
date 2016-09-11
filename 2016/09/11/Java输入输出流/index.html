@@ -1,0 +1,822 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,IO,转载," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="1 什么是IO　　Java中I/O操作主要是指使用Java进行输入，输出操作. Java所有的I/O机制都是基于数据流进行输入输出，这些数据流表示了字符或者字节数据的流动序列。Java的I/O流提供了读写数据的标准方法。任何Java中表示数据源的对象都会提供以数据流的方式读写它的数据的方法。  
+　　Java.io是大多数面向数据流的输入/输出类的主要软件包。此外，Java也对块传输提供支持，在核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java输入输出流">
+<meta property="og:url" content="http://yoursite.com/2016/09/11/Java输入输出流/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="1 什么是IO　　Java中I/O操作主要是指使用Java进行输入，输出操作. Java所有的I/O机制都是基于数据流进行输入输出，这些数据流表示了字符或者字节数据的流动序列。Java的I/O流提供了读写数据的标准方法。任何Java中表示数据源的对象都会提供以数据流的方式读写它的数据的方法。  
+　　Java.io是大多数面向数据流的输入/输出类的主要软件包。此外，Java也对块传输提供支持，在核">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/1355473547_6986.jpg">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%BE%93%E5%85%A5%E6%B5%81.jpg">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%BE%93%E5%87%BA%E6%B5%81.jpg">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/Java%E4%B8%ADIO%E6%B5%81%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/IO%E6%A1%86%E6%9E%B6.jpg">
+<meta property="og:updated_time" content="2016-09-11T10:18:07.407Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java输入输出流">
+<meta name="twitter:description" content="1 什么是IO　　Java中I/O操作主要是指使用Java进行输入，输出操作. Java所有的I/O机制都是基于数据流进行输入输出，这些数据流表示了字符或者字节数据的流动序列。Java的I/O流提供了读写数据的标准方法。任何Java中表示数据源的对象都会提供以数据流的方式读写它的数据的方法。  
+　　Java.io是大多数面向数据流的输入/输出类的主要软件包。此外，Java也对块传输提供支持，在核">
+<meta name="twitter:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/1355473547_6986.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/11/Java输入输出流/"/>
+
+  <title> Java输入输出流 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java输入输出流
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T14:56:05+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java_基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-什么是IO"><a href="#1-什么是IO" class="headerlink" title="1 什么是IO"></a>1 什么是IO</h2><p>　　Java中I/O操作主要是指使用Java进行输入，输出操作. Java所有的I/O机制都是基于数据流进行输入输出，这些数据流表示了字符或者字节数据的流动序列。Java的I/O流提供了读写数据的标准方法。任何Java中表示数据源的对象都会提供以数据流的方式读写它的数据的方法。  </p>
+<p>　　Java.io是大多数面向数据流的输入/输出类的主要软件包。此外，Java也对块传输提供支持，在核心库 java.nio中采用的便是块IO。</p>
+<p>　　IO的好处是简单易用，缺点是效率较低。块IO效率很高，但编程比较复杂。 </p>
+<p>　　Java IO模型：<br>　　Java的IO模型设计非常优秀，它使用Decorator模式，按功能划分Stream，您可以动态装配这些Stream，以便获得您需要的功能。例如，您需要一个具有缓冲的文件输入流，则应当组合使用FileInputStream和BufferedInputStream。 </p>
+<h2 id="2-数据流的基本概念"><a href="#2-数据流的基本概念" class="headerlink" title="2 数据流的基本概念"></a>2 数据流的基本概念</h2><p>数据流是一串连续不断的数据的集合，就象水管里的水流，在水管的一端一点一点地供水，而在水管的另一端看到的是一股连续不断的水流。数据写入程序可以是一段、一段地向数据流管道中写入数据，这些数据段会按先后顺序形成一个长的数据流。对数据读取程序来说，看不到数据流在写入时的分段情况，每次可以读取其中的任意长度的数据，但只能先读取前面的数据后，再读取后面的数据。不管写入时是将数据分多次写入，还是作为一个整体一次写入，读取时的效果都是完全一样的。 </p>
+<p><strong>“流是磁盘或其它外围设备中存储的数据的源点或终点。”</strong></p>
+<p>　　在电脑上的数据有三种存储方式，一种是外存，一种是内存，一种是缓存。比如电脑上的硬盘，磁盘，U盘等都是外存，在电脑上有内存条，缓存是在CPU里面的。外存的存储量最大，其次是内存，最后是缓存，但是外存的数据的读取最慢，其次是内存，缓存最快。这里总结从外存读取数据到内存以及将数据从内存写到外存中。对于内存和外存的理解，我们可以简单的理解为容器，即外存是一个容器，内存又是另外一个容器。那又怎样把放在外存这个容器内的数据读取到内存这个容器以及怎么把内存这个容器里的数据存到外存中呢？</p>
+<p>　　<strong>Java类库中，IO部分的内容是很庞大的，因为它涉及的领域很广泛:</strong></p>
+<p>　　<strong>标准输入输出，文件的操作，网络上的数据流，字符串流，对象流，zip文件流等等，java中将输入输出抽象称为流</strong>，就好像水管，将两个容器连接起来。将数据冲外存中读取到内存中的称为输入流，将数据从内存写入外存中的称为输出流。</p>
+<p>　　流是一个很形象的概念，当程序需要读取数据的时候，就会开启一个通向数据源的流，这个数据源可以是文件，内存，或是网络连接。类似的，当程序需要写入数据的时候，就会开启一个通向目的地的流。</p>
+<p>　　<strong>总结的基本概念如下：</strong></p>
+<h4 id="2-1-数据流"><a href="#2-1-数据流" class="headerlink" title="2.1 数据流"></a>2.1 数据流</h4><p>　　一组有序，有起点和终点的字节的数据序列。包括输入流和输出流。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/1355473547_6986.jpg" alt="数据流"></p>
+<h4 id="2-2-输入流"><a href="#2-2-输入流" class="headerlink" title="2.2 输入流"></a>2.2 输入流</h4><p>　　程序从输入流读取数据源。数据源包括外界(键盘、文件、网络…)，即是将数据源读入到程序的通信通道</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%BE%93%E5%85%A5%E6%B5%81.jpg" alt="输入流"></p>
+<h4 id="2-3-输出流"><a href="#2-3-输出流" class="headerlink" title="2.3 输出流"></a>2.3 输出流</h4><p>　　程序向输出流写入数据。将程序中的数据输出到外界（显示器、打印机、文件、网络…）的通信通道。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%BE%93%E5%87%BA%E6%B5%81.jpg" alt="输出流"></p>
+<p>　　采用数据流的目的就是使得输出输入独立于设备。</p>
+<ul>
+<li>Input Stream不关心数据源来自何种设备（键盘，文件，网络）</li>
+<li>Output Stream不关心数据的目的是何种设备（键盘，文件，网络）</li>
+</ul>
+<h4 id="2-4-数据流分类"><a href="#2-4-数据流分类" class="headerlink" title="2.4 数据流分类"></a>2.4 数据流分类</h4><p>　　流序列中的数据既可以是未经加工的原始二进制数据，也可以是经一定编码处理后符合某种格式规定的特定数据。因此Java中的流分为两种：</p>
+<ul>
+<li>字节流：数据流中最小的数据单元是字节</li>
+<li>字符流：数据流中最小的数据单元是字符， Java中的字符是Unicode编码，一个字符占用两个字节。</li>
+</ul>
+<h2 id="3-标准I-O"><a href="#3-标准I-O" class="headerlink" title="3 标准I/O"></a>3 标准I/O</h2><p>　　Java程序可通过命令行参数与外界进行简短的信息交换，同时，也规定了与标准输入、输出设备，如键盘、显示器进行信息交换的方式。而通过文件可以与外界进行任意数据形式的信息交换。</p>
+<h4 id="3-1-命令行参数"><a href="#3-1-命令行参数" class="headerlink" title="3.1 命令行参数"></a>3.1 命令行参数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestArgs</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; args.length; i++) &#123;  </div><div class="line">            System.out.println(<span class="string">"args["</span> + i + <span class="string">"] is &lt;"</span> + args[i] + <span class="string">"&gt;"</span>);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>运行命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java Java C VB</div></pre></td></tr></table></figure>
+<p><strong>运行结果：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">args[0] is &lt;Java&gt;</div><div class="line">args[1] is &lt;C&gt;</div><div class="line">args[2] is &lt;VB&gt;</div></pre></td></tr></table></figure>
+<h4 id="3-2-标准输入，输出数据流"><a href="#3-2-标准输入，输出数据流" class="headerlink" title="3.2 标准输入，输出数据流"></a>3.2 标准输入，输出数据流</h4><p>java系统自带的标准数据流：java.lang.System:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">java.lang.System   </div><div class="line">public final class System  extends Object&#123;   </div><div class="line">   static  PrintStream  err;//标准错误流（输出）  </div><div class="line">   static  InputStream  in;//标准输入(键盘输入流)  </div><div class="line">   static  PrintStream  out;//标准输出流(显示器输出流)  </div><div class="line">&#125; </div><div class="line">``` </div><div class="line"></div><div class="line">注意：</div><div class="line">1. System类不能创建对象，只能直接使用它的三个静态成员。</div><div class="line">1. 每当main方法被执行时,就自动生成上述三个对象。</div><div class="line"></div><div class="line">###### 3.2.1 标准输出流 System.out</div><div class="line"></div><div class="line">System.out向标准输出设备输出数据，其数据类型为PrintStream。方法：</div><div class="line"></div><div class="line">- Void print(参数)</div><div class="line">- Void println(参数)</div><div class="line"></div><div class="line">###### 3.2.2 标准输入流 System.in</div><div class="line"></div><div class="line">System.in读取标准输入设备数据（从标准输入获取数据，一般是键盘），其数 据类型为InputStream。方法：</div><div class="line"></div><div class="line">- int read()  //返回ASCII码。若,返回值=-1，说明没有读取到任何字节读取工作结束。</div><div class="line">- int read(byte[] b)//读入多个字节到缓冲区b中返回值是读入的字节数</div><div class="line"></div><div class="line">例如：</div><div class="line"></div><div class="line">``` java</div><div class="line">import java.io.*;  </div><div class="line">public class StandardInputOutput &#123;  </div><div class="line">    public static void main(String args[]) &#123;  </div><div class="line">        int b;  </div><div class="line">        try &#123;  </div><div class="line">            System.out.println("please Input:");  </div><div class="line">            while ((b = System.in.read()) != -1) &#123;  </div><div class="line">                System.out.print((char) b);  </div><div class="line">            &#125;  </div><div class="line">        &#125; catch (IOException e) &#123;  </div><div class="line">            System.out.println(e.toString());  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>等待键盘输入，键盘输入什么，就打印出什么：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">please Input:</div><div class="line">tokgoliang</div><div class="line">tokgoliang</div></pre></td></tr></table></figure>
+<h6 id="3-2-3-标准错误流"><a href="#3-2-3-标准错误流" class="headerlink" title="3.2.3 标准错误流"></a>3.2.3 标准错误流</h6><p>System.err输出标准错误，其数据类型为PrintStream。可查阅API获得详细说明。</p>
+<p>　　标准输出通过System.out调用println方法输出参数并换行，而print方法输出参数但不换行。println或print方法都通 过重载实现了输出基本数据类型的多个方法，包括输出参数类型为boolean、char、int、long、float和double。同时，也重载实现 了输出参数类型为char[]、String和Object的方法。其中，print（Object）和println（Object）方法在运行时将调 用参数Object的toString方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.BufferedReader;  </div><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.io.InputStreamReader;  </div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StandardInputOutput</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">        String s;  </div><div class="line">        <span class="comment">// 创建缓冲区阅读器从键盘逐行读入数据  </span></div><div class="line">        InputStreamReader ir = <span class="keyword">new</span> InputStreamReader(System.in);  </div><div class="line">        BufferedReader in = <span class="keyword">new</span> BufferedReader(ir);  </div><div class="line">        System.out.println(<span class="string">"Unix系统: ctrl-d 或 ctrl-c 退出"</span>  </div><div class="line">                + <span class="string">"\nWindows系统: ctrl-z 退出"</span>);  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            <span class="comment">// 读一行数据，并标准输出至显示器  </span></div><div class="line">            s = in.readLine();  </div><div class="line">            <span class="comment">// readLine()方法运行时若发生I/O错误，将抛出IOException异常  </span></div><div class="line">            <span class="keyword">while</span> (s != <span class="keyword">null</span>) &#123;  </div><div class="line">                System.out.println(<span class="string">"Read: "</span> + s);  </div><div class="line">                s = in.readLine();  </div><div class="line">            &#125;  </div><div class="line">            <span class="comment">// 关闭缓冲阅读器  </span></div><div class="line">            in.close();  </div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123; <span class="comment">// Catch any IO exceptions.  </span></div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-java-IO层次体系结构"><a href="#4-java-IO层次体系结构" class="headerlink" title="4 java.IO层次体系结构"></a>4 java.IO层次体系结构</h2><p>在整个Java.io包中最重要的就是5个类和一个接口。5个类指的是File、OutputStream、InputStream、Writer、Reader；一个接口指的是Serializable.掌握了这些IO的核心操作那么对于Java中的IO体系也就有了一个初步的认识了</p>
+<p>Java I/O主要包括如下几个层次，包含三个部分：</p>
+<ol>
+<li>流式部分――IO的主体部分；</li>
+<li>非流式部分――主要包含一些辅助流式部分的类，如：File类、RandomAccessFile类和FileDescriptor等类；</li>
+<li>其他类–文件读取部分的与安全相关的类，如：SerializablePermission类，以及与本地操作系统相关的文件系统的类，如：FileSystem类和Win32FileSystem类和WinNTFileSystem类。</li>
+</ol>
+<p><strong>主要的类如下：</strong></p>
+<ol>
+<li>File（文件特征与管理）：用于文件或者目录的描述信息，例如生成新目录，修改文件名，删除文件，判断文件所在路径等。</li>
+<li>InputStream（二进制格式操作）：抽象类，基于字节的输入操作，是所有输入流的父类。定义了所有输入流都具有的共同特征。</li>
+<li>OutputStream（二进制格式操作）：抽象类。基于字节的输出操作。是所有输出流的父类。定义了所有输出流都具有的共同特征。<br><strong>Java中字符是采用Unicode标准，一个字符是16位，即一个字符使用两个字节来表示。为此，JAVA中引入了处理字符的流。</strong></li>
+<li>Reader（文件格式操作）：抽象类，基于字符的输入操作。</li>
+<li>Writer（文件格式操作）：抽象类，基于字符的输出操作。</li>
+<li>RandomAccessFile（随机文件操作）：它的功能丰富，可以从文件的任意位置进行存取（输入输出）操作。</li>
+</ol>
+<p>Java中IO流的体系结构如图：<br><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Java%E4%B8%ADIO%E6%B5%81%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.jpg" alt="Java中IO流的体系结构"></p>
+<h2 id="5-非流式文件类–File类"><a href="#5-非流式文件类–File类" class="headerlink" title="5 非流式文件类–File类"></a>5 非流式文件类–File类</h2><p>　　在Java语言的java.io包中，由File类提供了描述文件和目录的操作与管理方法。但File类不是InputStream、OutputStream或Reader、Writer的子类，因为它不负责数据的输入输出，而专门用来管理磁盘文件与目录。</p>
+<p>作用：File类主要用于命名文件、查询文件属性和处理文件目录。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">File</span> <span class="keyword">extends</span> <span class="title">Object</span> <span class="keyword">implements</span> <span class="title">Serializable</span>,<span class="title">Comparable</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p>File类共提供了三个不同的构造函数，以不同的参数形式灵活地接收文件和目录名信息。构造函数：</p>
+<p><strong>1）File (String   pathname)  </strong><br>　　例:File  f1=new File(“FileTest1.txt”); //创建文件对象f1，f1所指的文件是在当前目录下创建的FileTest1.txt<br><strong>2）File (String  parent  ,  String child)</strong><br>　　例:File f2=new  File(“D:\dir1”,”FileTest2.txt”) ;//  注意：D:\dir1目录事先必须存在，否则异常<br><strong>3）File (File    parent  , String child)</strong><br>　　例:File  f4=new File(“\dir3”);<br>　　File  f5=new File(f4,”FileTest5.txt”);  //在如果 \dir3目录不存在使用f4.mkdir()先创建一个对应于某磁盘文件或目录的File对象一经创建， 就可以通过调用它的方法来获得文件或目录的属性。    </p>
+<ul>
+<li>public boolean exists( ) 判断文件或目录是否存在</li>
+<li>public boolean isFile( ) 判断是文件还是目录 </li>
+<li>public boolean isDirectory( ) 判断是文件还是目录</li>
+<li>public String getName( ) 返回文件名或目录名</li>
+<li>public String getPath( ) 返回文件或目录的路径。</li>
+<li>public long length( ) 获取文件的长度 </li>
+<li>public String[ ] list ( ) 将目录中所有文件名保存在字符串数组中返回。<br>File类中还定义了一些对文件或目录进行管理、操作的方法，常用的方法有：</li>
+<li>public boolean renameTo( File newFile );    重命名文件</li>
+<li>public void delete( );   删除文件</li>
+<li>public boolean mkdir( ); 创建目录</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.File;  </div><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestFile</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;  </div><div class="line">        File dir = <span class="keyword">new</span> File(<span class="string">"\\root"</span>);  </div><div class="line">        File f1 = <span class="keyword">new</span> File(dir, <span class="string">"fileOne.txt"</span>);  </div><div class="line">        File f2 = <span class="keyword">new</span> File(dir, <span class="string">"fileTwo.java"</span>);  </div><div class="line">        <span class="comment">// 文件对象创建后，指定的文件或目录不一定物理上存在  </span></div><div class="line">        <span class="keyword">if</span> (!dir.exists())  </div><div class="line">            dir.mkdir();  </div><div class="line">        <span class="keyword">if</span> (!f1.exists())  </div><div class="line">            f1.createNewFile();  </div><div class="line">        <span class="keyword">if</span> (!f2.exists())  </div><div class="line">            f2.createNewFile();  </div><div class="line">        System.out.println(<span class="string">"f1's AbsolutePath=  "</span> + f1.getAbsolutePath());  </div><div class="line">        System.out.println(<span class="string">"f1 Canread="</span> + f1.canRead());  </div><div class="line">        System.out.println(<span class="string">"f1's len= "</span> + f1.length());  </div><div class="line">        String[] FL;  </div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;  </div><div class="line">        FL = dir.list();  </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; FL.length; i++) &#123;  </div><div class="line">            count++;  </div><div class="line">            System.out.println(FL[i] + <span class="string">"is in \\root"</span>);  </div><div class="line">        &#125;  </div><div class="line">        System.out.println(<span class="string">"there are"</span> + count + <span class="string">"file in //root"</span>);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>说明：File类的方法:</p>
+<ul>
+<li>exists()测试磁盘中指定的文件或目录是否存在</li>
+<li>mkdir()创建文件对象指定的目录（单层目录）</li>
+<li>createNewFile()创建文件对象指定的文件</li>
+<li>list()返回目录中所有文件名字符串</li>
+</ul>
+<h2 id="6-Java-IO流类库"><a href="#6-Java-IO流类库" class="headerlink" title="6 Java.IO流类库"></a>6 Java.IO流类库</h2><h4 id="6-1-io流的四个基本类"><a href="#6-1-io流的四个基本类" class="headerlink" title="6.1 io流的四个基本类"></a>6.1 io流的四个基本类</h4><p>　　java.io包中包含了流式I/O所需要的所有类。在java.io包中有四个基本类：InputStream、OutputStream及Reader、Writer类，它们分别处理字节流和字符流：</p>
+<table>
+<thead>
+<tr>
+<th>输入/输出</th>
+<th>字节流</th>
+<th>字符流</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入流</td>
+<td>Inputstream</td>
+<td>Reader</td>
+</tr>
+<tr>
+<td>输出流</td>
+<td>OutputStream</td>
+<td>Writer</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/IO%E6%A1%86%E6%9E%B6.jpg" alt="IO框架"></p>
+<p>　　JDK1.4版本开始引入了新I/O类库，它位于java.nio包中，新I/O类库利用通道和缓冲区等来提高I/O操作的效率。</p>
+<p>　　在java.io包中， java.io.InputStream 表示字节输入流， java.io.OutputStream表示字节输出流，处于java.io包最顶层。这两个类均为抽象类，也就是说它们不能被实例化，必须生成子类之后才能实现一定的功能。</p>
+<h4 id="6-2-io流的具体分类"><a href="#6-2-io流的具体分类" class="headerlink" title="6.2 io流的具体分类"></a>6.2 io流的具体分类</h4><p><strong>按I/O类型来总体分类：</strong></p>
+<ul>
+<li><p>Memory<br>　　1）从/向内存数组读写数据: CharArrayReader、 CharArrayWriter、ByteArrayInputStream、ByteArrayOutputStream<br>　　2）从/向内存字符串读写数据 StringReader、StringWriter、StringBufferInputStream</p>
+</li>
+<li><p>Pipe管道  实现管道的输入和输出（进程间通信）: PipedReader、PipedWriter、PipedInputStream、PipedOutputStream</p>
+</li>
+<li><p>File 文件流。对文件进行读、写操作 ：FileReader、FileWriter、FileInputStream、FileOutputStream</p>
+</li>
+<li><p>ObjectSerialization 对象输入、输出 ：ObjectInputStream、ObjectOutputStream</p>
+</li>
+<li><p>DataConversion数据流 按基本数据类型读、写（处理的数据是Java的基本类型（如布尔型，字节，整数和浮点数））：DataInputStream、DataOutputStream</p>
+</li>
+<li><p>Printing 包含方便的打印方法 ：PrintWriter、PrintStream</p>
+</li>
+<li><p>Buffering缓冲  在读入或写出时，对数据进行缓存，以减少I/O的次数：BufferedReader、BufferedWriter、BufferedInputStream、BufferedOutputStream</p>
+</li>
+<li><p>Filtering 滤流，在数据进行读或写时进行过滤：FilterReader、FilterWriter、FilterInputStream、FilterOutputStream过</p>
+</li>
+<li><p>Concatenation合并输入 把多个输入流连接成一个输入流 ：SequenceInputStream </p>
+</li>
+<li><p>Counting计数  在读入数据时对行记数 ：LineNumberReader、LineNumberInputStream</p>
+</li>
+<li><p>Peeking Ahead 通过缓存机制，进行预读 ：PushbackReader、PushbackInputStream</p>
+</li>
+<li><p>Converting between Bytes and Characters 按照一定的编码/解码标准将字节流转换为字符流，或进行反向转换（Stream到Reader,Writer的转换类）：InputStreamReader、OutputStreamWriter</p>
+</li>
+</ul>
+<p><strong>按数据来源（去向）分类：</strong></p>
+<ul>
+<li>File（文件）： FileInputStream, FileOutputStream, FileReader, FileWriter </li>
+<li>byte[]：ByteArrayInputStream, ByteArrayOutputStream </li>
+<li>Char[]: CharArrayReader, CharArrayWriter </li>
+<li>String: StringBufferInputStream, StringReader, StringWriter </li>
+<li>网络数据流：InputStream, OutputStream, Reader, Writer </li>
+</ul>
+<h2 id="7-字节流InputStream-OutputStream"><a href="#7-字节流InputStream-OutputStream" class="headerlink" title="7 字节流InputStream/OutputStream"></a>7 字节流InputStream/OutputStream</h2><h4 id="7-1-InputStream抽象类"><a href="#7-1-InputStream抽象类" class="headerlink" title="7.1 InputStream抽象类"></a>7.1 InputStream抽象类</h4><p>　　InputStream 为字节输入流，它本身为一个抽象类，必须依靠其子类实现各种功能，此抽象类是表示字节输入流的所有类的超类。 继承自InputStream  的流都是向程序中输入数据的，且数据单位为字节（8bit）；</p>
+<p>　　InputStream是输入字节数据用的类，所以InputStream类提供了3种重载的read方法.Inputstream类中的常用方法： </p>
+<ul>
+<li>public abstract int read( )：读取一个byte的数据，返回值是高位补0的int类型值。若返回值=-1说明没有读取到任何字节读取工作结束。</li>
+<li>public int read(byte b[ ])：读取b.length个字节的数据放到b数组中。返回值是读取的字节数。该方法实际上是调用下一个方法实现的 </li>
+<li>public int read(byte b[ ], int off, int len)：从输入流中最多读取len个字节的数据，存放到偏移量为off的b数组中。 </li>
+<li>public int available( )：返回输入流中可以读取的字节数。注意：若输入阻塞，当前线程将被挂起，如果InputStream对象调用这个方法的话，它只会返回0，这个方法必须由继承InputStream类的子类对象调用才有用， </li>
+<li>public long skip(long n)：忽略输入流中的n个字节，返回值是实际忽略的字节数, 跳过一些字节来读取 </li>
+<li>public int close( ) ：我们在使用完后，必须对我们打开的流进行关闭. </li>
+</ul>
+<p><strong>主要的子类：</strong></p>
+<ul>
+<li>FileInputStream把一个文件作为InputStream，实现对文件的读取操作     </li>
+<li>ByteArrayInputStream：把内存中的一个缓冲区作为InputStream使用 </li>
+<li>StringBufferInputStream：把一个String对象作为InputStream </li>
+<li>PipedInputStream：实现了pipe的概念，主要在线程中使用 </li>
+<li>SequenceInputStream：把多个InputStream合并为一个InputStream </li>
+</ul>
+<h4 id="7-2-OutputStream抽象类"><a href="#7-2-OutputStream抽象类" class="headerlink" title="7.2 OutputStream抽象类"></a>7.2 OutputStream抽象类</h4><p>　　OutputStream提供了3个write方法来做数据的输出，这个是和InputStream是相对应的。 </p>
+<ul>
+<li>public void write(byte b[ ])：将参数b中的字节写到输出流。 </li>
+<li>public void write(byte b[ ], int off, int len) ：将参数b的从偏移量off开始的len个字节写到输出流。 </li>
+<li>public abstract void write(int b) ：先将int转换为byte类型，把低字节写入到输出流中。 </li>
+<li>public void flush( ) : 将数据缓冲区中数据全部输出，并清空缓冲区。 </li>
+<li>public void close( ) : 关闭输出流并释放与流相关的系统资源。 </li>
+</ul>
+<p>主要的子类：</p>
+<p>ByteArrayOutputStream：把信息存入内存中的一个缓冲区中<br>FileOutputStream：把信息存入文件中<br>PipedOutputStream：实现了pipe的概念，主要在线程中使用<br>SequenceOutputStream：把多个OutStream合并为一个OutStream </p>
+<p>流结束的判断：方法read()的返回值为-1时；readLine()的返回值为null时。</p>
+<h4 id="7-3-文件输入流：-FileInputStream类"><a href="#7-3-文件输入流：-FileInputStream类" class="headerlink" title="7.3 文件输入流： FileInputStream类"></a>7.3 文件输入流： FileInputStream类</h4><p>　　FileInputStream可以使用read()方法一次读入一个字节，并以int类型返回，或者是使用read()方法时读入至一个byte数组，byte数组的元素有多少个，就读入多少个字节。在将整个文件读取完成或写入完毕的过程中，这么一个byte数组通常被当作缓冲区，因为这么一个byte数组通常扮演承接数据的中间角色。</p>
+<p>作用：以文件作为数据输入源的数据流。或者说是打开文件，从文件读数据到内存的类。<br>使用方法(1)<br>File  fin=new File(“d:/abc.txt”);<br>FileInputStream in=new FileInputStream( fin);<br>使用方法(2)<br>FileInputStream  in=new  FileInputStream(“d: /abc.txt”);</p>
+<p>程序举例：将InputFromFile.java的程序的内容显示在显示器上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.io.FileInputStream;  </div><div class="line">;  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestFile</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;  </div><div class="line">        <span class="keyword">try</span>&#123;      </div><div class="line">               FileInputStream rf=<span class="keyword">new</span>   FileInputStream(<span class="string">"InputFromFile.java"</span>);  </div><div class="line">               <span class="keyword">int</span> n=<span class="number">512</span>;   <span class="keyword">byte</span>  buffer[]=<span class="keyword">new</span>  <span class="keyword">byte</span>[n];     </div><div class="line">               <span class="keyword">while</span>((rf.read(buffer,<span class="number">0</span>,n)!=-<span class="number">1</span>)&amp;&amp;(n&gt;<span class="number">0</span>))&#123;  </div><div class="line">                   System.out.println(<span class="keyword">new</span> String(buffer) );  </div><div class="line">                &#125;  </div><div class="line">                System.out.println();  </div><div class="line">                rf.close();  </div><div class="line">        &#125; <span class="keyword">catch</span>(IOException  IOe)&#123;        </div><div class="line">              System.out.println(IOe.toString());  </div><div class="line">        &#125;  </div><div class="line">  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="7-4-文件输出流-FileOutputStream类"><a href="#7-4-文件输出流-FileOutputStream类" class="headerlink" title="7.4 文件输出流:FileOutputStream类"></a>7.4 文件输出流:FileOutputStream类</h4><p>作用：用来处理以文件作为数据输出目的数据流；或者说是从内存区读数据入文件</p>
+<p>FileOutputStream类用来处理以文件作为数据输出目的数据流；一个表示文件名的字符串，也可以是File或FileDescriptor对象。 </p>
+<p>创建一个文件流对象有两种方法：<br>方式1：<br>File   f=new  File (“d:/myjava/write.txt “);<br>FileOutputStream  out= new FileOutputStream (f);<br>　　<br>方式2：<br>FileOutputStream out=new FileOutputStream(“d:/myjava/write.txt “);<br>　　<br>方式3：构造函数将 FileDescriptor()对象作为其参数。<br>FileDescriptor() fd=new FileDescriptor();<br>FileOutputStream f2=new FileOutputStream(fd);<br>　　<br>方式4：构造函数将文件名作为其第一参数，将布尔值作为第二参数。<br>FileOutputStream f=new FileOutputStream(“d:/abc.txt”,true); </p>
+<p><strong>注意： （1）文件中写数据时，若文件已经存在，则覆盖存在的文件；（2）的读/写操作结束时，应调用close方法关闭流。</strong> </p>
+<p>程序举例：使用键盘输入一段文章，将文章保存在文件write.txt中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.io.FileOutputStream;  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestFile</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            System.out.println(<span class="string">"please Input from      Keyboard"</span>);  </div><div class="line">            <span class="keyword">int</span> count, n = <span class="number">512</span>;  </div><div class="line">            <span class="keyword">byte</span> buffer[] = <span class="keyword">new</span> <span class="keyword">byte</span>[n];  </div><div class="line">            count = System.in.read(buffer);  </div><div class="line">            FileOutputStream wf = <span class="keyword">new</span> FileOutputStream(<span class="string">"d:/myjava/write.txt"</span>);  </div><div class="line">            wf.write(buffer, <span class="number">0</span>, count);  </div><div class="line">            wf.close(); <span class="comment">// 当流写操作结束时，调用close方法关闭流。  </span></div><div class="line">            System.out.println(<span class="string">"Save to the write.txt"</span>);  </div><div class="line">        &#125; <span class="keyword">catch</span> (IOException IOe) &#123;  </div><div class="line">            System.out.println(<span class="string">"File Write Error!"</span>);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="7-5-FileInputStream流和FileOutputStream的应用"><a href="#7-5-FileInputStream流和FileOutputStream的应用" class="headerlink" title="7.5 FileInputStream流和FileOutputStream的应用"></a>7.5 FileInputStream流和FileOutputStream的应用</h4><p>利用程序将文件file1.txt 拷贝到file2.txt中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.File;  </div><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.io.FileOutputStream;  </div><div class="line"><span class="keyword">import</span> java.io.FileInputStream;  </div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestFile</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            File inFile = <span class="keyword">new</span> File(<span class="string">"copy.java"</span>);  </div><div class="line">            File outFile = <span class="keyword">new</span> File(<span class="string">"copy2.java"</span>);  </div><div class="line">            FileInputStream finS = <span class="keyword">new</span> FileInputStream(inFile);  </div><div class="line">            FileOutputStream foutS = <span class="keyword">new</span> FileOutputStream(outFile);  </div><div class="line">            <span class="keyword">int</span> c;  </div><div class="line">            <span class="keyword">while</span> ((c = finS.read()) != -<span class="number">1</span>) &#123;  </div><div class="line">                foutS.write(c);  </div><div class="line">            &#125;  </div><div class="line">            finS.close();  </div><div class="line">            foutS.close();  </div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;  </div><div class="line">            System.err.println(<span class="string">"FileStreamsTest: "</span> + e);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="7-6-缓冲输入输出流-BufferedInputStream-BufferedOutputStream"><a href="#7-6-缓冲输入输出流-BufferedInputStream-BufferedOutputStream" class="headerlink" title="7.6 缓冲输入输出流 BufferedInputStream/ BufferedOutputStream"></a>7.6 缓冲输入输出流 BufferedInputStream/ BufferedOutputStream</h4><p>　　计算机访问外部设备非常耗时。访问外存的频率越高，造成CPU闲置的概率就越大。为了减少访问外存的次数，应该在一次对外设的访问中，读写更多的数据。为此，除了程序和流节点间交换数据必需的读写机制外，还应该增加缓冲机制。缓冲流就是每一个数据流分配一个缓冲区，一个缓冲区就是一个临时存储数据的内存。这样可以减少访问硬盘的次数,提高传输效率。</p>
+<p>　　BufferedInputStream:当向缓冲流写入数据时候，数据先写到缓冲区，待缓冲区写满后，系统一次性将数据发送给输出设备。</p>
+<p>　　BufferedOutputStream :当从向缓冲流读取数据时候，系统先从缓冲区读出数据，待缓冲区为空时，系统再从输入设备读取数据到缓冲区。</p>
+<p>1）将文件读入内存：<br>将BufferedInputStream与FileInputStream相接<br>FileInputStream in=new  FileInputStream( “file1.txt ” );<br>BufferedInputStream bin=new  BufferedInputStream( in); </p>
+<p>2）将内存写入文件：<br>将BufferedOutputStream与 FileOutputStream相接<br>FileOutputStreamout=new FileOutputStream(“file1.txt”);<br>BufferedOutputStream  bin=new BufferedInputStream(out);</p>
+<p>3）键盘输入流读到内存<br>将BufferedReader与标准的数据流相接<br>InputStreamReader sin=new InputStreamReader (System.in) ；<br>BufferedReader bin=new             BufferedReader(sin);</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.*;  </div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadWriteToFile</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> IOException </span>&#123;  </div><div class="line">        InputStreamReader sin = <span class="keyword">new</span> InputStreamReader(System.in);  </div><div class="line">        BufferedReader bin = <span class="keyword">new</span> BufferedReader(sin);  </div><div class="line">        FileWriter out = <span class="keyword">new</span> FileWriter(<span class="string">"myfile.txt"</span>);  </div><div class="line">        BufferedWriter bout = <span class="keyword">new</span> BufferedWriter(out);  </div><div class="line">        String s;  </div><div class="line">        <span class="keyword">while</span> ((s = bin.readLine()).length() &gt; <span class="number">0</span>) &#123;  </div><div class="line">            bout.write(s, <span class="number">0</span>, s.length());  </div><div class="line">        &#125;  </div><div class="line">  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序说明：<br>从键盘读入字符，并写入到文件中BufferedReader类的方法：String readLine()<br>作用：读一行字符串，以回车符为结束。<br>BufferedWriter类的方法：bout.write(String s,offset,len)<br>作用：从缓冲区将字符串s从offset开始，len长度的字符串写到某处。</p>
+<ol>
+<li>字符流Writer/Reader<pre><code>Java中字符是采用Unicode标准，一个字符是16位，即一个字符使用两个字节来表示。为此，JAVA中引入了处理字符的流。
+</code></pre></li>
+</ol>
+<ol>
+<li>Reader抽象类<br> 用于读取字符流的抽象类。子类必须实现的方法只有 read(char[], int, int) 和 close()。但是，多数子类将重写此处定义的一些方法，以提供更高的效率和/或其他功能。</li>
+</ol>
+<pre><code>1) FileReader :与FileInputStream对应  
+   主要用来读取字符文件，使用缺省的字符编码，有三种构造函数： 
+</code></pre><p>　　    (1）将文件名作为字符串 ：FileReader f=new FileReader(“c:/temp.txt”);<br>　　    (2）构造函数将File对象作为其参数。<br>　　            File f=new file(“c:/temp.txt”);<br>　　            FileReader f1=new FileReader(f);<br>　　   (3)  构造函数将FileDescriptor对象作为参数<br>　　          FileDescriptor() fd=new FileDescriptor()<br>　　          FileReader f2=new FileReader(fd);<br>               (1) 用指定字符数组作为参数：CharArrayReader(char[])<br>               (2) 将字符数组作为输入流:CharArrayReader(char[], int, int)<br>　         读取字符串，构造函数如下： public StringReader(String s);<br>        2) CharArrayReader：与ByteArrayInputStream对应<br>　　3) StringReader : 与StringBufferInputStream对应<br>　　4) InputStreamReader<br>　　      从输入流读取字节，在将它们转换成字符:Public inputstreamReader(inputstream is);<br>　　5) FilterReader: 允许过滤字符流<br>　　      protected filterReader(Reader r);<br>　　6) BufferReader :接受Reader对象作为参数，并对其添加字符缓冲器，使用readline()方法可以读取一行。<br>　　   Public BufferReader(Reader r); </p>
+<pre><code>主要方法：
+
+(1)  public int read() throws IOException; //读取一个字符，返回值为读取的字符 
+</code></pre><p>　　(2)  public int read(char cbuf[]) throws IOException; /<em>读取一系列字符到数组cbuf[]中，返回值为实际读取的字符的数量</em>/<br>　　(3)  public abstract int read(char cbuf[],int off,int len) throws IOException;<br>　　/<em>读取len个字符，从数组cbuf[]的下标off处开始存放，返回值为实际读取的字符数量，该方法必须由子类实现</em>/ </p>
+<ol>
+<li>Writer抽象类<br>  写入字符流的抽象类。子类必须实现的方法仅有 write(char[], int, int)、flush() 和 close()。但是，多数子类将重写此处定义的一些方法，以提供更高的效率和/或其他功能。 其子类如下：</li>
+</ol>
+<pre><code>1） FileWrite: 与FileOutputStream对应  
+</code></pre><p>　　将字符类型数据写入文件，使用缺省字符编码和缓冲器大小。<br>　　Public FileWrite(file f);<br>　　2)  chararrayWrite:与ByteArrayOutputStream对应 ,将字符缓冲器用作输出。<br>　　    Public CharArrayWrite();<br>　　3) PrintWrite:生成格式化输出<br>　　    public PrintWriter(outputstream os);<br>　　4) filterWriter:用于写入过滤字符流<br>　　    protected FilterWriter(Writer w);<br>　　5) PipedWriter：与PipedOutputStream对应   </p>
+<pre><code>6) StringWriter：无与之对应的以字节为导向的stream  
+
+主要方法：
+</code></pre><p>　　(1)  public void write(int c) throws IOException； //将整型值c的低16位写入输出流<br>　　(2)  public void write(char cbuf[]) throws IOException； //将字符数组cbuf[]写入输出流<br>　　(3)  public abstract void write(char cbuf[],int off,int len) throws IOException； //将字符数组cbuf[]中的从索引为off的位置处开始的len个字符写入输出流<br>　　(4)  public void write(String str) throws IOException； //将字符串str中的字符写入输出流<br>　　(5)  public void write(String str,int off,int len) throws IOException； //将字符串str 中从索引off开始处的len个字符写入输出流<br>　　(6)  flush( ) //刷空输出流，并输出所有被缓存的字节。<br>　　(7)close()    关闭流 public abstract void close() throws IOException</p>
+<p>3 .InputStream与Reader差别 OutputStream与Writer差别<br>InputStream和OutputStream类处理的是字节流，数据流中的最小单位是字节(8个bit)<br>Reader与Writer处理的是字符流，在处理字符流时涉及了字符编码的转换问题</p>
+<p>[java] view plain copy print?<br>import java.io.*;<br>public class EncodeTest {<br>    private static void readBuff(byte [] buff) throws IOException {<br>       ByteArrayInputStream in =new ByteArrayInputStream(buff);<br>        int data;<br>        while((data=in.read())!=-1)   System.out.print(data+”  “);<br>        System.out.println();     in.close();     }  </p>
+<p>   public static void main(String args[]) throws IOException {<br>       System.out.println(“内存中采用unicode字符编码：” );<br>       char   c=’好’;<br>       int lowBit=c&0xFF;     int highBit=(c&amp;0xFF00)&gt;&gt;8;<br>       System.out.println(“”+lowBit+”   “+highBit);<br>       String s=”好”;<br>       System.out.println(“本地操作系统默认字符编码：”);<br>       readBuff(s.getBytes());<br>       System.out.println(“采用GBK字符编码：”);<br>       readBuff(s.getBytes(“GBK”));<br>       System.out.println(“采用UTF-8字符编码：”);<br>       readBuff(s.getBytes(“UTF-8”));      }<br>}  </p>
+<p>Reader类能够将输入流中采用其他编码类型的字符转换为Unicode字符，然后在内存中为其分配内存<br>Writer类能够将内存中的Unicode字符转换为其他编码类型的字符，再写到输出流中。</p>
+<ol>
+<li>IOException异常类的子类<br>1.public class  EOFException ：<br>非正常到达文件尾或输入流尾时，抛出这种类型的异常。<br>2.public class FileNotFoundException：<br>当文件找不到时，抛出的异常。<br>3.public class InterruptedIOException：<br>当I/O操作被中断时，抛出这种类型的异常。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/IO/" rel="tag">#IO</a>
+          
+            <a href="/tags/转载/" rel="tag">#转载</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/11/Java基础 之软引用、弱引用、虚引用/" rel="next" title="Java基础 之软引用、弱引用、虚引用">
+                <i class="fa fa-chevron-left"></i> Java基础 之软引用、弱引用、虚引用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是IO"><span class="nav-number">1.</span> <span class="nav-text">1 什么是IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-数据流的基本概念"><span class="nav-number">2.</span> <span class="nav-text">2 数据流的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-数据流"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 数据流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-输入流"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 输入流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-输出流"><span class="nav-number">2.0.3.</span> <span class="nav-text">2.3 输出流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-数据流分类"><span class="nav-number">2.0.4.</span> <span class="nav-text">2.4 数据流分类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-标准I-O"><span class="nav-number">3.</span> <span class="nav-text">3 标准I/O</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-命令行参数"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 命令行参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-标准输入，输出数据流"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2 标准输入，输出数据流</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-3-标准错误流"><span class="nav-number">3.0.2.0.1.</span> <span class="nav-text">3.2.3 标准错误流</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-java-IO层次体系结构"><span class="nav-number">4.</span> <span class="nav-text">4 java.IO层次体系结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-非流式文件类–File类"><span class="nav-number">5.</span> <span class="nav-text">5 非流式文件类–File类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Java-IO流类库"><span class="nav-number">6.</span> <span class="nav-text">6 Java.IO流类库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-io流的四个基本类"><span class="nav-number">6.0.1.</span> <span class="nav-text">6.1 io流的四个基本类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-io流的具体分类"><span class="nav-number">6.0.2.</span> <span class="nav-text">6.2 io流的具体分类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-字节流InputStream-OutputStream"><span class="nav-number">7.</span> <span class="nav-text">7 字节流InputStream/OutputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-InputStream抽象类"><span class="nav-number">7.0.1.</span> <span class="nav-text">7.1 InputStream抽象类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-OutputStream抽象类"><span class="nav-number">7.0.2.</span> <span class="nav-text">7.2 OutputStream抽象类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-文件输入流：-FileInputStream类"><span class="nav-number">7.0.3.</span> <span class="nav-text">7.3 文件输入流： FileInputStream类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-4-文件输出流-FileOutputStream类"><span class="nav-number">7.0.4.</span> <span class="nav-text">7.4 文件输出流:FileOutputStream类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-5-FileInputStream流和FileOutputStream的应用"><span class="nav-number">7.0.5.</span> <span class="nav-text">7.5 FileInputStream流和FileOutputStream的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-6-缓冲输入输出流-BufferedInputStream-BufferedOutputStream"><span class="nav-number">7.0.6.</span> <span class="nav-text">7.6 缓冲输入输出流 BufferedInputStream/ BufferedOutputStream</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

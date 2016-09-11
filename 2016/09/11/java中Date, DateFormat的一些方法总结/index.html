@@ -1,0 +1,619 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,转载,Date," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="TokgoLiang——转载别人的原文链接一定要写在开头
+DateDemo1.java
+1234567/*  * 取得系统的时间  */  public class DateDemo1 &amp;#123;  	public static void main(String args[]) &amp;#123;  		System.out.println(System.currentTimeMillis());">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java中Date, DateFormat的一些方法总结">
+<meta property="og:url" content="http://yoursite.com/2016/09/11/java中Date, DateFormat的一些方法总结/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="TokgoLiang——转载别人的原文链接一定要写在开头
+DateDemo1.java
+1234567/*  * 取得系统的时间  */  public class DateDemo1 &amp;#123;  	public static void main(String args[]) &amp;#123;  		System.out.println(System.currentTimeMillis());">
+<meta property="og:updated_time" content="2016-09-11T06:52:44.993Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java中Date, DateFormat的一些方法总结">
+<meta name="twitter:description" content="TokgoLiang——转载别人的原文链接一定要写在开头
+DateDemo1.java
+1234567/*  * 取得系统的时间  */  public class DateDemo1 &amp;#123;  	public static void main(String args[]) &amp;#123;  		System.out.println(System.currentTimeMillis());">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/11/java中Date, DateFormat的一些方法总结/"/>
+
+  <title> java中Date, DateFormat的一些方法总结 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java中Date, DateFormat的一些方法总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T10:34:07+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java_基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://blog.csdn.net/woshisap/article/details/6617118/" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
+<p><strong>DateDemo1.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"> * 取得系统的时间 </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo1</span> </span>&#123;  </div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">		System.out.println(System.currentTimeMillis());  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">1311060393171</span></div></pre></td></tr></table></figure></p>
+<p>　　执行结果会显示从1970年1月1日开始到取得系统时间为止所经过的毫秒数，例如1115346430703这个数字，但这样的数字没有人确切了解它的意 义是什么，您可以使用Date类别来让这个数字变的更有意义一些</p>
+<p><strong>DateDemo2.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo2</span> </span>&#123;  </div><div class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"deprecation"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">          </div><div class="line">        System.out.println(<span class="string">"date.toString: "</span> + date.toString());  </div><div class="line">        System.out.println(<span class="string">"date: "</span> + date.getDate());  </div><div class="line">        System.out.println(<span class="string">"day: "</span> + date.getDay());  </div><div class="line">        System.out.println(<span class="string">"hour: "</span> + date.getHours());  </div><div class="line">        System.out.println(<span class="string">"minutes: "</span> + date.getMinutes());  </div><div class="line">        System.out.println(<span class="string">"month: "</span> + (date.getMonth() + <span class="number">1</span>));  </div><div class="line">        System.out.println(<span class="string">"seconds: "</span> + date.getSeconds());  </div><div class="line">        System.out.println(<span class="string">"time: "</span> + date.getTime());  </div><div class="line">        System.out.println(<span class="string">"timezone: "</span> + date.getTimezoneOffset());  </div><div class="line">        System.out.println(<span class="string">"year: "</span> + (date.getYear() + <span class="number">1900</span>));  </div><div class="line">          </div><div class="line">        Calendar calendar = Calendar.getInstance();  </div><div class="line">        <span class="keyword">int</span> year = calendar.get(Calendar.YEAR);  </div><div class="line">        <span class="keyword">int</span> month = calendar.get(Calendar.MONTH) + <span class="number">1</span>;  </div><div class="line">        <span class="keyword">int</span> day = calendar.get(Calendar.DATE);  </div><div class="line">        <span class="keyword">int</span> hour = calendar.get(Calendar.HOUR);  </div><div class="line">        <span class="keyword">int</span> minute = calendar.get(Calendar.MINUTE);  </div><div class="line">        <span class="keyword">int</span> second = calendar.get(Calendar.SECOND);  </div><div class="line">          </div><div class="line">        System.out.println(<span class="string">"----------Calendar-------"</span>);  </div><div class="line">        System.out.println(<span class="string">"year: "</span> + year);  </div><div class="line">        System.out.println(<span class="string">"month: "</span> + month);  </div><div class="line">        System.out.println(<span class="string">"day: "</span> + day);  </div><div class="line">        System.out.println(<span class="string">"hour: "</span> + hour);  </div><div class="line">        System.out.println(<span class="string">"minute: "</span> + minute);  </div><div class="line">        System.out.println(<span class="string">"second: "</span> + second);  </div><div class="line">          </div><div class="line">    	&#125;  </div><div class="line">	&#125;    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>　　用date获得时间的值，如时、分、秒、月、日、年得方法已经过时，需要改用Calendar的方法来获取时间的值,输出结果为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">date.toString: Tue Jul <span class="number">19</span> <span class="number">15</span>:<span class="number">32</span>:<span class="number">42</span> CST <span class="number">2011</span>  </div><div class="line">date: <span class="number">19</span>  </div><div class="line">day: <span class="number">2</span>  </div><div class="line">hour: <span class="number">15</span>  </div><div class="line">minutes: <span class="number">32</span>  </div><div class="line">month: <span class="number">7</span>  </div><div class="line">seconds: <span class="number">42</span>  </div><div class="line">time: <span class="number">1311060762362</span>  </div><div class="line">timezone: -<span class="number">480</span>  </div><div class="line">year: <span class="number">2011</span>  </div><div class="line">----------Calendar-------  </div><div class="line">year: <span class="number">2011</span>  </div><div class="line">month: <span class="number">7</span>  </div><div class="line">day: <span class="number">19</span>  </div><div class="line">hour: <span class="number">3</span>  </div><div class="line">minute: <span class="number">32</span>  </div><div class="line">second: <span class="number">42</span></div></pre></td></tr></table></figure>
+<p><strong>DateDemo3.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo3</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">          </div><div class="line">        <span class="comment">/* </span></div><div class="line">         * DateFormat会依电脑上的区域设定显示时间格式，EE表示星期，MM表示月份、dd表示日期，而yyyy是西元，每个字元的设定都各有其意义 </div><div class="line">         * 从Date--&gt;String </div><div class="line">         */  </div><div class="line">        DateFormat dateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"EE-MM-dd-yyyy"</span>);  </div><div class="line">        System.out.println(dateFormat.format(date));  </div><div class="line">          </div><div class="line">        DateFormat format1 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);  </div><div class="line">        System.out.println(format1.format(date));  </div><div class="line">          </div><div class="line">        DateFormat format2 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);  </div><div class="line">        System.out.println(format2.format(date));  </div><div class="line">      </div><div class="line">        <span class="comment">/* </span></div><div class="line">         * 从String--&gt;Date </div><div class="line">         */  </div><div class="line">        String dateStr = <span class="string">"2011-7-19"</span>;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            Date dateTrans = format1.parse(dateStr);  </div><div class="line">            <span class="comment">//System.out.println(dateTrans.toString());   </span></div><div class="line">            System.out.println(dateTrans.toLocaleString());  <span class="comment">//转换为本地的形式  </span></div><div class="line">        &#125; <span class="keyword">catch</span> (ParseException e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">          </div><div class="line">    &#125;  </div><div class="line">&#125;</div><div class="line">```  </div><div class="line"></div><div class="line"> 　　使用DateFormat来格式化日期数据，上面部分为从Date--&gt;String，下面的部分为从String--&gt;Date，输出结果为：</div><div class="line"></div><div class="line">``` java</div><div class="line">星期二-<span class="number">07</span>-<span class="number">19</span>-<span class="number">2011</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">19</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">19</span> <span class="number">15</span>:<span class="number">33</span>:<span class="number">27</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">7</span>-<span class="number">19</span> <span class="number">0</span>:<span class="number">00</span>:<span class="number">00</span></div></pre></td></tr></table></figure></p>
+<p><strong>DateDemo4.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo4</span> </span>&#123;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">          </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">        DateFormat shortFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);  </div><div class="line">        DateFormat mediumFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);  </div><div class="line">        DateFormat longFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);  </div><div class="line">        DateFormat fullFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);  </div><div class="line">          </div><div class="line">        System.out.println(shortFormat.format(date));  </div><div class="line">        System.out.println(mediumFormat.format(date));  </div><div class="line">        System.out.println(longFormat.format(date));  </div><div class="line">        System.out.println(fullFormat.format(date));  </div><div class="line">          </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出结果为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">11</span>-<span class="number">7</span>-<span class="number">19</span> 下午<span class="number">3</span>:<span class="number">33</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">7</span>-<span class="number">19</span> <span class="number">15</span>:<span class="number">33</span>:<span class="number">54</span>  </div><div class="line"><span class="number">2011</span>年<span class="number">7</span>月<span class="number">19</span>日 下午<span class="number">03</span>时<span class="number">33</span>分<span class="number">54</span>秒  </div><div class="line"><span class="number">2011</span>年<span class="number">7</span>月<span class="number">19</span>日 星期二 下午<span class="number">03</span>时<span class="number">33</span>分<span class="number">54</span>秒 CST</div></pre></td></tr></table></figure></p>
+<p><strong>DateDemo5.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo5</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">          </div><div class="line">        Locale locale = <span class="keyword">new</span> Locale(<span class="string">"en"</span>, <span class="string">"US"</span>);  </div><div class="line">          </div><div class="line">        DateFormat shortDateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);  </div><div class="line">        DateFormat mediumDateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);  </div><div class="line">        DateFormat longDateFormat = DateFormat.getDateInstance(DateFormat.LONG, locale);  </div><div class="line">        DateFormat fullDateFormat = DateFormat.getDateInstance(DateFormat.FULL, locale);  </div><div class="line">          </div><div class="line">        System.out.println(shortDateFormat.format(date));  </div><div class="line">        System.out.println(mediumDateFormat.format(date));  </div><div class="line">        System.out.println(longDateFormat.format(date));  </div><div class="line">        System.out.println(fullDateFormat.format(date));  </div><div class="line">          </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出结果为：</p>
+<pre><code class="java"><span class="number">7</span>/<span class="number">19</span>/<span class="number">11</span>  
+Jul <span class="number">19</span>, <span class="number">2011</span>  
+July <span class="number">19</span>, <span class="number">2011</span>  
+Tuesday, July <span class="number">19</span>, <span class="number">2011</span>
+</code></pre>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/转载/" rel="tag">#转载</a>
+          
+            <a href="/tags/Date/" rel="tag">#Date</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/10/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/11/Java基础 之软引用、弱引用、虚引用/" rel="prev" title="Java基础 之软引用、弱引用、虚引用">
+                Java基础 之软引用、弱引用、虚引用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
