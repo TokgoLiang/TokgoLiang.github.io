@@ -1,0 +1,678 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="原创,android,App研发录,重构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="重新规划Android项目的目录结构第一步：建立AndroidLib类库，将与业务无关的逻辑转移到AndroidLib
+AndroidLib中业务无关逻辑至少包括五大部分，
+
+activity包，存放与业务无关的Activity积累，Activity基类要分两层，AndroidLib下的基类BaseActivity封装的是业务无关的公用逻辑，主项目中的AppBaseActivity基类封装的事业务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章：重构，夜未眠">
+<meta property="og:url" content="http://yoursite.com/2016/09/12/第一章：重构，夜未眠/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="重新规划Android项目的目录结构第一步：建立AndroidLib类库，将与业务无关的逻辑转移到AndroidLib
+AndroidLib中业务无关逻辑至少包括五大部分，
+
+activity包，存放与业务无关的Activity积累，Activity基类要分两层，AndroidLib下的基类BaseActivity封装的是业务无关的公用逻辑，主项目中的AppBaseActivity基类封装的事业务">
+<meta property="og:updated_time" content="2016-09-12T14:34:43.487Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第一章：重构，夜未眠">
+<meta name="twitter:description" content="重新规划Android项目的目录结构第一步：建立AndroidLib类库，将与业务无关的逻辑转移到AndroidLib
+AndroidLib中业务无关逻辑至少包括五大部分，
+
+activity包，存放与业务无关的Activity积累，Activity基类要分两层，AndroidLib下的基类BaseActivity封装的是业务无关的公用逻辑，主项目中的AppBaseActivity基类封装的事业务">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/12/第一章：重构，夜未眠/"/>
+
+  <title> 第一章：重构，夜未眠 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第一章：重构，夜未眠
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-12T22:34:39+08:00" content="2016-09-12">
+              2016-09-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="重新规划Android项目的目录结构"><a href="#重新规划Android项目的目录结构" class="headerlink" title="重新规划Android项目的目录结构"></a>重新规划Android项目的目录结构</h1><p>第一步：建立AndroidLib类库，将与业务无关的逻辑转移到AndroidLib</p>
+<p>AndroidLib中业务无关逻辑至少包括五大部分，</p>
+<ul>
+<li>activity包，存放与业务无关的Activity积累，Activity基类要分两层，AndroidLib下的基类BaseActivity封装的是业务无关的公用逻辑，主项目中的AppBaseActivity基类封装的事业务相关的公用逻辑。</li>
+<li>net包，存放网络底层封装，如AsyncTase</li>
+<li>cache包，存放的是缓存数据和图片相关的处理</li>
+<li>ui包，存放自定义控件</li>
+<li>utils包，存放各种与业务逻辑无关的公用方法，比如对SharedPreferences的封装</li>
+</ul>
+<p>第二步：将主项目中的类分门别类的进行规划，放置在各种包中，</p>
+<ul>
+<li>activity包，按照模块继续拆分，将不同模块Activity划分到不同的包下</li>
+<li>adapter包，所有适配器都放在一起</li>
+<li>entity包，将所有实体都放在一起</li>
+<li>db包，SQLLite相关逻辑的封装</li>
+<li>engine包，将业务相关的类都放在一起</li>
+<li>ui包，将自定义控件都放在一起</li>
+<li>uitils包，将所有公用方法</li>
+<li>interfaces包，真正意义上的接口，命名以“I”作为开头</li>
+<li>listener包，基于Listener的接口，命名以“On”开头</li>
+</ul>
+<h1 id="为Activity定义新的生命周期"><a href="#为Activity定义新的生命周期" class="headerlink" title="为Activity定义新的生命周期"></a>为Activity定义新的生命周期</h1><p>例如，把onCreate方法中拆成三个子方法</p>
+<ul>
+<li>initVariables：初始化变量，包括Intent带的数据和Activity内的变量</li>
+<li>initViews：加载Layout布局文件，初始化控件，为控件挂上事件的方法</li>
+<li>loadData：获取数据</li>
+</ul>
+<h1 id="统一事件编程模型"><a href="#统一事件编程模型" class="headerlink" title="统一事件编程模型"></a>统一事件编程模型</h1><p><strong>方式一：实现Listener，在onClick方法中使用switch…case…，作者不建议使用</strong></p>
+<blockquote>
+<p>我不希望R这个类在程序中反复出现，这回扰乱面向对象编程的风格，按照我的设想，我们在initViews方法中一次性把所有的控件都初始化了，今后就再也不会私用R.id了。</p>
+</blockquote>
+<p><strong>方式二：匿名内部类</strong></p>
+<p>作者比较推崇的方法，有以下两个有点：</p>
+<ol>
+<li>直接在btn按钮对象上曾经点击事件，是面向对象的写法。</li>
+<li>将onClick方面的实现，封装成一个对应的方法，这样onClick事件方法就不那么臃肿了。</li>
+</ol>
+<h1 id="实体化编程"><a href="#实体化编程" class="headerlink" title="实体化编程"></a>实体化编程</h1><h2 id="使用fastJSON（阿里巴巴）和GSON（Google）"><a href="#使用fastJSON（阿里巴巴）和GSON（Google）" class="headerlink" title="使用fastJSON（阿里巴巴）和GSON（Google）"></a>使用fastJSON（阿里巴巴）和GSON（Google）</h2><p>作者使用fastJSON之后遇到的一个问题，表现为</p>
+<ol>
+<li>加了符号Annotation的实体属性，一使用就奔溃</li>
+<li>当有泛型是，一使用就崩溃</li>
+</ol>
+<p>在调试的时候没事，每次打签名混淆包，就会出现上述问题，原因：</p>
+<ul>
+<li>–keepattributes Signature                //避免混淆泛型</li>
+<li>–keepattributes <em>Annotation</em>            //不混淆注解</li>
+</ul>
+<h2 id="在页面跳转中使用实体"><a href="#在页面跳转中使用实体" class="headerlink" title="在页面跳转中使用实体"></a>在页面跳转中使用实体</h2><p>一个页面中，数据的来源有两种：</p>
+<ul>
+<li>调用MobileAPI获取JSON数据,使用fastJSON或者GSON</li>
+<li>从上一个页面传递过来,Activity之间的数据传递</li>
+</ul>
+<p><strong>方法一：使用全局变量</strong></p>
+<p>不建议使用，App一旦被切换到后台，当内存不足的时候，就会回收这些全局变量，从而当App再次切回到前台是，再继续使用全局变量，就会因为他们为空二崩溃</p>
+<p>如果必须使用全局变量，就一定要把它们序列化到本地，这样即使全局变量味浓，也能从本地文件中恢复</p>
+<p><strong>方法二：使用Intent在页面间传递数据实体</strong></p>
+<p>注，如果使用Fragment可以使用Fragment来传递数据。。。（我自己加的）</p>
+<h1 id="Adapter模板"><a href="#Adapter模板" class="headerlink" title="Adapter模板"></a>Adapter模板</h1><p>作者建议所有的Adapter都继承自BaseAdapter，从构造函数注入List&lt;自定义实体&gt;这样的数据集合，从而完成ListView的填充工作，代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CinemaAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> ArrayList&lt;CinemaBean&gt; cinemaList;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> AppBaseActivity context;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">CinemaAdapter</span><span class="params">(ArrayList&lt;CinemaBean&gt; cinemaList,</span></span></div><div class="line">			AppBaseActivity context) &#123;</div><div class="line">		<span class="keyword">this</span>.cinemaList = cinemaList;</div><div class="line">		<span class="keyword">this</span>.context = context;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> cinemaList.size();</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> CinemaBean <span class="title">getItem</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> cinemaList.get(position);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getItemId</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> position;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> position, View convertView,</span></span></div><div class="line">			<span class="keyword">final</span> ViewGroup parent) &#123;</div><div class="line">		<span class="keyword">final</span> Holder holder;</div><div class="line">		<span class="keyword">if</span> (convertView == <span class="keyword">null</span>) &#123;</div><div class="line">			holder = <span class="keyword">new</span> Holder();</div><div class="line">			convertView = context.getLayoutInflater().inflate(</div><div class="line">					R.layout.item_cinemalist, <span class="keyword">null</span>);</div><div class="line">			holder.tvCinemaName = (TextView) convertView</div><div class="line">					.findViewById(R.id.tvCinemaName);</div><div class="line">			holder.tvCinemaId = (TextView) convertView</div><div class="line">					.findViewById(R.id.tvCinemaId);</div><div class="line">			convertView.setTag(holder);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			holder = (Holder) convertView.getTag();</div><div class="line">		&#125;</div><div class="line">		CinemaBean cinema = cinemaList.get(position);</div><div class="line">		holder.tvCinemaName.setText(cinema.getCinemaName());</div><div class="line">		holder.tvCinemaId.setText(cinema.getCinemaId());</div><div class="line">		<span class="keyword">return</span> convertView;</div><div class="line">	&#125;</div><div class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Holder</span> </span>&#123;</div><div class="line">		TextView tvCinemaName;</div><div class="line">		TextView tvCinemaId;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于每个自定义的Adapter都要实现以下四个方法</p>
+<ul>
+<li>getCount()</li>
+<li>getItem()</li>
+<li>getItemId()</li>
+<li>getView()<br>此外还要内置一个ViewHolder</li>
+</ul>
+<h1 id="类型安全转换函数"><a href="#类型安全转换函数" class="headerlink" title="类型安全转换函数"></a>类型安全转换函数</h1><p><strong>对于一个Object类型的对象，我们对其直接使用字符串操作函数toString，当其为null是就会奔溃</strong></p>
+<p>比较好的做法就是，编写一个类型安全转换函数，实现如下，核心思想是，如果转换失败就返回默认值： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">convertToInt</span><span class="params">(Object value, <span class="keyword">int</span> defaultValue)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (value == <span class="keyword">null</span> || <span class="string">""</span>.equals(value.toString().trim())) &#123;</div><div class="line">		<span class="keyword">return</span> defaultValue;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="keyword">return</span> Integer.valueOf(value.toString());</div><div class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">return</span> Double.valueOf(value.toString()).intValue();</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e1) &#123;</div><div class="line">			<span class="keyword">return</span> defaultValue;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>如果长度不够，那么执行subString函数就会崩溃</strong></p>
+<p>所以每次使用subString函数的时候，都要判断start和end两个参数是否越界了。</p>
+<p>以上两类问题的根源，都来自MobileAPI返回的数据，由此引出另一个很严肃的问题，对于从MobileAPI返回的数据，可信度到底有多高呢？</p>
+<p>首先，不能让App崩溃，应该在解析JSON数据的外面包一层try…catch…语句，将截获到的异常在catch中进行处理，例如发送错误日志给服务器。</p>
+<p>其次，对数据要分级对待，例如：</p>
+<p>1.对于那些不需要加工就能直接展示的数据，我们不担心，因为即使为空，页面上也就是不显示而已，不会引起逻辑的问题</p>
+<p>2.对于那些很重要的数据，比如设计支付的金额不能为空的逻辑，这个时候就应该弹出提示框提示用户当前服务不可用，并停止接下里的操作</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/原创/" rel="tag">#原创</a>
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/App研发录/" rel="tag">#App研发录</a>
+          
+            <a href="/tags/重构/" rel="tag">#重构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/11/Java基础 之软引用、弱引用、虚引用/" rel="next" title="Java基础 之软引用、弱引用、虚引用">
+                <i class="fa fa-chevron-left"></i> Java基础 之软引用、弱引用、虚引用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重新规划Android项目的目录结构"><span class="nav-number">1.</span> <span class="nav-text">重新规划Android项目的目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为Activity定义新的生命周期"><span class="nav-number">2.</span> <span class="nav-text">为Activity定义新的生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#统一事件编程模型"><span class="nav-number">3.</span> <span class="nav-text">统一事件编程模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实体化编程"><span class="nav-number">4.</span> <span class="nav-text">实体化编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用fastJSON（阿里巴巴）和GSON（Google）"><span class="nav-number">4.1.</span> <span class="nav-text">使用fastJSON（阿里巴巴）和GSON（Google）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在页面跳转中使用实体"><span class="nav-number">4.2.</span> <span class="nav-text">在页面跳转中使用实体</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Adapter模板"><span class="nav-number">5.</span> <span class="nav-text">Adapter模板</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型安全转换函数"><span class="nav-number">6.</span> <span class="nav-text">类型安全转换函数</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
