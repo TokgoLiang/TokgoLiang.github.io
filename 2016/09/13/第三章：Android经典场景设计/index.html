@@ -1,0 +1,685 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="原创,android,App研发录,设计," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="App图片缓存设计App缓存分为两部分，数据缓存和图片缓存，第二章介绍了数据缓存
+ImageLoader设计原理在显示图片的时候，现在内存中查找，如果没有就去本地查找，如果还没有就开一个新线程去下载，下载成功之后吧图片同时缓存到内存和本地。
+基于这个原理，我们可以在每次退出一个页面的时候，吧ImageLoader内存中的缓存全部清除，这样就节省了大量内存，下次再用的时候在本地取出来就可以了。
+此外">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章：Android经典场景设计">
+<meta property="og:url" content="http://yoursite.com/2016/09/13/第三章：Android经典场景设计/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="App图片缓存设计App缓存分为两部分，数据缓存和图片缓存，第二章介绍了数据缓存
+ImageLoader设计原理在显示图片的时候，现在内存中查找，如果没有就去本地查找，如果还没有就开一个新线程去下载，下载成功之后吧图片同时缓存到内存和本地。
+基于这个原理，我们可以在每次退出一个页面的时候，吧ImageLoader内存中的缓存全部清除，这样就节省了大量内存，下次再用的时候在本地取出来就可以了。
+此外">
+<meta property="og:updated_time" content="2016-09-13T14:31:09.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第三章：Android经典场景设计">
+<meta name="twitter:description" content="App图片缓存设计App缓存分为两部分，数据缓存和图片缓存，第二章介绍了数据缓存
+ImageLoader设计原理在显示图片的时候，现在内存中查找，如果没有就去本地查找，如果还没有就开一个新线程去下载，下载成功之后吧图片同时缓存到内存和本地。
+基于这个原理，我们可以在每次退出一个页面的时候，吧ImageLoader内存中的缓存全部清除，这样就节省了大量内存，下次再用的时候在本地取出来就可以了。
+此外">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/13/第三章：Android经典场景设计/"/>
+
+  <title> 第三章：Android经典场景设计 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第三章：Android经典场景设计
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-13T22:31:06+08:00" content="2016-09-13">
+              2016-09-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="App图片缓存设计"><a href="#App图片缓存设计" class="headerlink" title="App图片缓存设计"></a>App图片缓存设计</h1><p>App缓存分为两部分，数据缓存和图片缓存，第二章介绍了数据缓存</p>
+<h2 id="ImageLoader设计原理"><a href="#ImageLoader设计原理" class="headerlink" title="ImageLoader设计原理"></a>ImageLoader设计原理</h2><p>在显示图片的时候，现在内存中查找，如果没有就去本地查找，如果还没有就开一个新线程去下载，下载成功之后吧图片同时缓存到内存和本地。</p>
+<p>基于这个原理，我们可以在每次退出一个页面的时候，吧ImageLoader内存中的缓存全部清除，这样就节省了大量内存，下次再用的时候在本地取出来就可以了。</p>
+<p>此外，由于ImageLoader对图片是软应用的形式，所以内存中的图片会在内存不足的时候被系统回收（内存足够的时候不会对其进行垃圾回收）。</p>
+<p><a href="https://github.com/nostra13/Android-Universal-Image-Loader" title="ImageLoader在GitHub的下载地址" target="_blank" rel="external">ImageLoader在GitHub的下载地址：https://github.com/nostra13/Android-Universal-Image-Loader</a></p>
+<h2 id="ImageLoader的使用"><a href="#ImageLoader的使用" class="headerlink" title="ImageLoader的使用"></a>ImageLoader的使用</h2><h3 id="ImageLoader由三大组件组成"><a href="#ImageLoader由三大组件组成" class="headerlink" title="ImageLoader由三大组件组成"></a>ImageLoader由三大组件组成</h3><ul>
+<li>ImageLoaderConfiguration：对图片缓存进行总体配置，包括内存缓存大小，本地缓存的大小和位置，日志，下载策略（FIFO，LIFO）等等。       </li>
+<li>ImageLoader：我们一般使用displayImage来把URL对应的图片显示在ImageView上。       </li>
+<li>DisplayImageOptions：在每个页面需要显示图片的地方，控制如何显示的细节，比如指定下载时的默认图片（包括下载中，下载失败，URL为空等），是否将缓存放到内存或者本地磁盘。</li>
+</ul>
+<p>博客园陈哈哈博文中对三个关系的比喻：           </p>
+<blockquote>
+<p>他们有点像厨房规定，厨师，客户个人口味之间的关系。ImageLoaderConfiguration就像是厨房里的规定，每一个厨师要怎么着装，要怎么保持厨房的干净，这是针对每一个厨师都适用的规定，而且不允许个性化改变。ImageLoader就像是具体做菜的厨师，负责具体菜谱的制作。DisplayImageOptions就像是客户的偏好，根据客户是重口味还是清淡，每一个ImageLoader根据DisplayImageOptions的要求具体执行。</p>
+</blockquote>
+<h3 id="如何使用ImageLoader"><a href="#如何使用ImageLoader" class="headerlink" title="如何使用ImageLoader"></a>如何使用ImageLoader</h3><p>1.在Application中配置ImageLoader</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">YoungHeartApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.onCreate();</div><div class="line">		CacheManager.getInstance().initCacheDir();</div><div class="line">		ImageLoaderConfiguration config = </div><div class="line">				<span class="keyword">new</span> ImageLoaderConfiguration.Builder(</div><div class="line">				getApplicationContext())</div><div class="line">				.threadPriority(Thread.NORM_PRIORITY - <span class="number">2</span>)</div><div class="line">				.memoryCacheExtraOptions(<span class="number">480</span>, <span class="number">480</span>)</div><div class="line">				.memoryCacheSize(<span class="number">2</span> * <span class="number">1024</span> * <span class="number">1024</span>)</div><div class="line">				.denyCacheImageMultipleSizesInMemory()</div><div class="line">				.discCacheFileNameGenerator(<span class="keyword">new</span> Md5FileNameGenerator())</div><div class="line">				.tasksProcessingOrder(QueueProcessingType.LIFO)</div><div class="line">				.memoryCache(<span class="keyword">new</span> WeakMemoryCache()).build();</div><div class="line">		ImageLoader.getInstance().init(config);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.在使用ImageView加载图片的地方，配置当前页面的ImageLoader选项，有可能是Activity也有可能是Adapter </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">CinemaAdapter</span><span class="params">(ArrayList&lt;CinemaBean&gt; cinemaList,</span></span></div><div class="line">			AppBaseActivity context) &#123;</div><div class="line">		<span class="keyword">this</span>.cinemaList = cinemaList;</div><div class="line">		<span class="keyword">this</span>.context = context;</div><div class="line">		options = <span class="keyword">new</span> DisplayImageOptions.Builder()</div><div class="line">				.showStubImage(R.drawable.ic_launcher)</div><div class="line">				.showImageForEmptyUri(R.drawable.ic_launcher)</div><div class="line">				.cacheInMemory()</div><div class="line">				.cacheOnDisc()</div><div class="line">				.build();</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>3.在使用ImageView加载图片的地方，使用ImageLoader。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">CinemaBean cinema = cinemaList.get(position);</div><div class="line">		holder.tvCinemaName.setText(cinema.getCinemaName());</div><div class="line">		holder.tvCinemaId.setText(cinema.getCinemaId());</div><div class="line">		context.imageLoader.displayImage(cinemaList.get(position)</div><div class="line">				.getCinemaPhotoUrl(), holder.imgPhoto);</div></pre></td></tr></table></figure>
+<p><strong>ImageLoader优化</strong></p>
+<p>ImageLoader把图片缓存到内存，会导致内存占用过高，虽然对图片的引用是软引用，会在内存不足的时候被GC，但是我们希望减少GC的次数，所以要手动清理ImageLoader中的缓存。</p>
+<p>在APPBaseActivity中的onDestroy方法中，执行ImageLoader的clearMemoryCache方法，下次复用的时候即使内存中没有了，还可以在本地磁盘找到：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div></pre></td><td class="code"><pre><div class="line">protected void onDestroy &#123;</div><div class="line">    imageLoader.clearMemoryCache();</div><div class="line">    super.onDestroy ();</div><div class="line">&#125;</div><div class="line">``` </div><div class="line"></div><div class="line">## 推荐文章： ##</div><div class="line"></div><div class="line">1.简介ImageLoader（一），（二）</div><div class="line">- http://blog.csdn.net/yueqinglkong/article/details/27660107</div><div class="line">- http://blog.csdn.net/yueqinglkong/article/details/28094963</div><div class="line">        </div><div class="line">2.Android-Universal-Image-Loader图片异步加载类库的使用（超详细配置）</div><div class="line">- http://blog.csdn.net/vipzjyno1/article/details/23206387</div><div class="line"></div><div class="line">3.Android开源框架Android-Universal-Image-Loade完全解析</div><div class="line">- http://blog.csdn.net/xiaanming/article/details/26810303</div><div class="line">- http://blog.csdn.net/xiaanming/article/details/27525741</div><div class="line">- http://blog.csdn.net/xiaanming/article/details/39057201</div><div class="line"></div><div class="line">## 图片加载利器Fresco ##</div><div class="line"></div><div class="line">Facebook的Android图片加载组件,使用Fresco：</div><div class="line"></div><div class="line">1.在Application级别，对Fresco进行初始化，</div><div class="line">Fresco.initialize(getApplicationContext());</div><div class="line"></div><div class="line">2.与ImageLoader等传统第三方图片处理SDK不同，Fresco是基于控件级别的，所以需要把程序中显示网络图片的ImageView都替换为SimpleDraweeView即可，并在布局文件添加fresco命名空间，如下：</div><div class="line">xmlns：fresco="http://schemas.android.com/apk/res-auto"</div><div class="line">&lt;com.facebook.drawee.view.SimpleDraweeView... /&gt;</div><div class="line"></div><div class="line">3.在Activity中为这个图片控件指定要显示的网络图片：</div><div class="line">Uri uri = Uri.parse("http://www.bb.com/a.png")</div><div class="line">draweeView.setImageURI(uri);</div><div class="line"></div><div class="line">Fresco原理是，设计了一个ImagePipeline的概念，它负责先后检查内存，磁盘文件，如果都没有再从网络下载图片，可以使用ImagePipelineConfig来配置ImagePipeline，像配置ImageLoader一样。</div><div class="line"></div><div class="line">Fresco有三个线程池，其中3个线程用于网络下载图片，2个线程用于磁盘文件的读写，还有2个线程用于CPU相关操作，这是Fresco的核心，它比其他图片SDK吃内存小，就在于这个全新的缓存设计。</div><div class="line"></div><div class="line">**第一层：Bitmap缓存**</div><div class="line">在Android5.0系统中，考虑到内存管理有了很大改进，所以Bitmap缓存位于Java的堆（heap）中，而在Android4.x和更低的系统，Bitmap位于ashmem中，这意味着图片的创建和回收不会引发过多的GC，从而让App运行得更快。当App切到后台时，Bitmap缓存会被清空。</div><div class="line"></div><div class="line">**第二层：内存缓存**</div><div class="line">内存缓存中存储了图片的原始压缩格式，从内存缓存中取出的图片，在显示之前必须先解码，当App切换到后台时，内存缓存也会被清空。</div><div class="line"></div><div class="line">**第三层：磁盘缓存**</div><div class="line">磁盘缓存又名本地缓存，磁盘缓存中存储的也是图片的原始压缩格式，在使用前也要解码。当App切到后台，甚至关机，磁盘缓存也不会丢失。</div><div class="line"></div><div class="line">Fresco在GitHub上的源码：https://github.com/mkottman/AndroLua</div><div class="line">Fresco官方文档：http://www.fresco-cn.org/docs/index.html#_</div><div class="line"></div><div class="line"># 对网络流量进行优化 #</div><div class="line"></div><div class="line">## 通信层面的优化 ##</div><div class="line"></div><div class="line">1.MobileAPI接口返回的数据，要使用gzip进行压缩，注意：大于1KB才进行压缩，否则得不偿失。</div><div class="line"></div><div class="line">2.App与MobileAPI直接传递数据，通常是遵守JSON协议的。JSON因为是xml格式的，并且是以字符存在的，在数据量上还有可以压缩的空间。作者推荐一种新的数据传输协议，那就是ProtoBuffer。这种协议是二进制格式的，所以在表示大数据时，空间不JSON小的多。</div><div class="line"></div><div class="line">3.解决频繁调用MobileAPI的问题。发起一次网络请求，服务器处理速度是很快的，主要花费的时间在数据传输上。走路时间的长度，网络运维人员负责解决，移动开发人员需要注意的是，减少网络访问次数。</div><div class="line"></div><div class="line">4.传统的MobileAPI使用的是HTTP无状态短连接，使用HTTP协议的速度远不如使用TCP协议，因为后者是长连接，所以可以使用TCP长连接。TCP的缺点是一台服务器能支持的长连接个数不多。</div><div class="line"></div><div class="line">5.要建立取消网络请求的机制。一个页面如果没有请求完数据，在跳转到另一个界面之前，吧之前的网络请求全部取消，不在等待，也不再接受数据。</div><div class="line"></div><div class="line">6.增加重试机制。如果MobileAPI是严格的RESTful风格，那么我们一般将获取数据的请求接口都定义为get，而把操作数据的请求接口都定义为post。这样的话可以为所有的get请求配置重试机制，比如请求失败后重试3次，如果post请求具有防重复机制，那么到是可以增加重试机制。</div><div class="line">    </div><div class="line">## 图片策略优化 ##</div><div class="line">        </div><div class="line">**1.要确保下载的每张图片，都符合Imageview控件的大小**</div><div class="line">            </div><div class="line">事先准备多套不同分辨率的图片，每次根据RUL请求图片时，都要额外在URL上加两个参数，width和height。</div><div class="line">            </div><div class="line">如果认为每次准备多套图片浪费人力，事先准备一台服务器，成为ImageSever，具体流程如下：</div><div class="line">                </div><div class="line">(1).首先，App每次加载图片，都会把URL地址以及width和height参数所组成的字符串进行encode，然后发送给ImageSever，新的URL如：http://www.ImageServer.com/getImage?param=(encode value )</div><div class="line">                </div><div class="line">(2).然后，ImageSever收到这个请求，会把param的值decode，得到原始图片的URL，以及App想要现实这张图片的width和height，ImageServer会根据URL获取到这张图片的原始图片，然后根据width和height，重新进行绘制，保存到ImageServer上，并返回给App。</div><div class="line">              </div><div class="line">(3).最后，App请求道一张符合其大小的图片。            </div><div class="line">再加一个参数imagetype，用于在比例不一致进行等比缩放后裁剪或者填充以及不缩放，这种方案的全电视频繁写硬盘。所以要事先规定几套width和height，App尽量遵守，同时在出口加以控制，也就是在像ImageServer发起请求的时候，去轮询事先规定好的各个尺寸，看哪个更接近。</div><div class="line"></div><div class="line">**2.低流量模式**</div><div class="line"></div><div class="line">在2G和3G网络环境下，适当降低图片的质量，可以在URL中再增加一个参数，quality根据网络环境设置对应的值，把这个参数传递给ImageServer，从而ImageServer在绘制图片时，就会将图片质量降低为quality对应比例。</div><div class="line"></div><div class="line">**3.极速模式**</div><div class="line"></div><div class="line">设计一些额外界面，区别于正常模式下图文并茂的页面，这些只有文字的页面称为极速模式。</div><div class="line"></div><div class="line"># 城市列表的设计 #</div><div class="line">    </div><div class="line">## 城市列表数据 ##</div><div class="line"></div><div class="line">一份城市列表数据包括以下几个字典：</div><div class="line"> </div><div class="line">- cityId，</div><div class="line">- cityName，</div><div class="line">- pinyin，</div><div class="line">- jianpin</div><div class="line"></div><div class="line">把城市列表数据写在本地，时间久了会产生两个问题</div><div class="line"></div><div class="line">1.Android和iOS维护的数据，差距越来越大</div><div class="line"></div><div class="line">写一个文本分析工具，找出Android和iOS各自维护文件的不同数据。</div><div class="line"></div><div class="line">2.城市太多，每次从本地加载都要很长时间</div><div class="line"></div><div class="line">每次都要解析xml城市数据文件，既然每次读取数据都很慢，那么干脆把序列化过的城市列表信息直接保存到本地文件，随App一起发布。每次读取这个文件是，直接进行发序列化即可。</div><div class="line"></div><div class="line">对于解决数据更新时的同步问题，把城市列表数据做成一个MobileAPI接口，有MobileAPI去后台采集数据，增加一个版本号version字段，对比本地版本号和线上最新版本号，MobileAPI返回响应结果，如果一致，则从本地问价加载数据，否则解析MobileAPI返回的数据，同时更新本地版本号。如果MobileAPI接口调用没有成功，也直接从本地读取，从MobileAPI获取大量数据时候开启gzip压缩。</div><div class="line"></div><div class="line">## 城市列表数据增量更新机制 ##</div><div class="line"></div><div class="line">cityId作为唯一标识，增量更新的数据，由增、删、改三部分组成。</div><div class="line"></div><div class="line">重新定义城市列表的JSON格式，在每笔增量数据中增加一个字段type，取来区别增删改，客户端收到JSON数据后，会根据type处理本地的数据。</div><div class="line"></div><div class="line"># App与HTML5的交互 #</div><div class="line"></div><div class="line">有的团队直接使用PhoneGap来实现交互功能，作者认为PhoneGay太重了，完全可以吧这些交互操作在底层封装好，然后给开发人员使用。</div><div class="line"></div><div class="line">**App操作HTML5页面的方法**</div><div class="line"></div><div class="line">首先要定好通讯协议，也就是App要调用的HTML5中的JavaScript的方法名称。例如App要调用HTML5页面的changeColor(color)方法，</div><div class="line"></div><div class="line">HTML5代码如下：</div><div class="line"></div><div class="line">``` html</div><div class="line">&lt;script type="text/javascript" &gt;</div><div class="line">    function chanageColor(color) &#123;</div><div class="line">        document.body.backgroundColor = color;</div><div class="line">    &#125;</div><div class="line">&lt;/script &gt;</div><div class="line">``` </div><div class="line"></div><div class="line">Android代码如下：</div><div class="line"></div><div class="line">``` java</div><div class="line">wvAds.getSettings().setJavaScriptEnabled(true);</div><div class="line">wvAds.loadUrl("file://.../xxx.html");</div><div class="line">btnShowAlert.setOnCliceListener(new View.OnClickListener() &#123;</div><div class="line">    @Override</div><div class="line">    public void onClick(View v) &#123;</div><div class="line">    String color = "#00ee00";</div><div class="line">    wvAds.loadUrl("javascript:changeColor('"+color+"');");</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>HTML5页面操作App页面的方法</p>
+<p>首先仍然是定义通讯协议，这次是定义JavaScript要调用Android种方法的名称。例如调用callAndroidMethod方法，</p>
+<p>HTML5代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">onClick</span>=<span class="string">"baobao.callAndroidMethod(100,100,'ccc',true)"</span>&gt;</span></div><div class="line">CallAndroidMethod<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Android代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">JSInterfacel</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callAndroidMethod</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">float</span> b, String c, <span class="keyword">boolean</span> d)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(d) &#123;</div><div class="line">            String strMessage = <span class="string">"fafafsadf"</span>;</div><div class="line">            <span class="keyword">new</span> AlertDialog.Builder(MainActivity.<span class="keyword">this</span>)</div><div class="line">                .setTitle(title)</div><div class="line">                .setMessage(strMessage).show(); </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同时需要注册baobao和JSInterfacel的对应关系  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wvAds.addJavascriptInterface(<span class="keyword">new</span> JSInterfacel(), <span class="string">"baobao"</span>);</div></pre></td></tr></table></figure>
+<p>App和Android之间定义跳转协议,如上面的例子，事先约定格式。。</p>
+<p><strong>在App中内置HTML5页面</strong></p>
+<p>当有些UI不太容易在App中使用原始语言实现时，而HTML5擅长，只要调整好屏幕适配，就可以在App中应用HTML5。</p>
+<p>1.首先定义两个HTML5文件，放在assets目录下<br>其中，102.html是静态页：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span>        </div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">datalDefinedByBaobao</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">table</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line">``` </div><div class="line">datal_template.html是一个数据模板，他负责提供表格中一行的样式</div><div class="line"></div><div class="line">``` html</div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">price</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">``` </div><div class="line">像name，price，datalDefinedByBaobao都是占位符</div><div class="line"></div><div class="line">2.在MovieDetailActivity中，通过遍历movieList这个集合，把数据填充到SBContent中，最终，把拼接好的字符串替换<span class="tag">&lt;<span class="name">datalDefinedByBaobao</span>&gt;</span>标签。</div><div class="line"></div><div class="line">``` java</div><div class="line">wvAds = (WebView) findViewById(R.id.wvAds);</div><div class="line">		String template = getFromAssets("data1_template.html");</div><div class="line">		StringBuilder sbContent = new StringBuilder(); </div><div class="line">		ArrayList<span class="tag">&lt;<span class="name">MovieInfo</span>&gt;</span> movieList = organizeMovieList();</div><div class="line">		for (MovieInfo movie : movieList) &#123;</div><div class="line">			String rowData;</div><div class="line">			rowData = template.replace("<span class="tag">&lt;<span class="name">name</span>&gt;</span>", movie.getName());</div><div class="line">			rowData = rowData.replace("<span class="tag">&lt;<span class="name">price</span>&gt;</span>", movie.getPrice());</div><div class="line">			sbContent.append(rowData);</div><div class="line">		&#125;</div><div class="line">		String realData = getFromAssets("102.html");</div><div class="line">		realData = realData.replace("<span class="tag">&lt;<span class="name">data1DefinedByBaobao</span>&gt;</span>", </div><div class="line">				sbContent.toString());</div><div class="line">		wvAds.loadData(realData, "text/html", "utf-8");</div></pre></td></tr></table></figure>
+<p>灵活切换Native和HTML5页面的策略</p>
+<p>对于经常改动的页面，我们会把它做成HTML5页面，在App中以WebView的形式加载。虽然HTML开发周期相对App而言短，但是HTML5会比较慢。</p>
+<p>HTML5页面生成的步骤；</p>
+<ol>
+<li>从服务器动态获取数据并拼接成一个HTML，</li>
+<li>返回给客户端WebView，</li>
+<li>在WebView中解析并生成HTML。</li>
+</ol>
+<p>结合两者的优点，同时做两套页面，Native一套，HTML一套，然后在App中设置一个变量，来判断页面将显示Native还是HTML5的，这个变量可以从MobileAPI获取。App中所有的页面都可以这样做，为此，我们需要改变之前做App的思路。</p>
+<ol>
+<li>需要做一个后台，根据版本进行配置每个页面是使用Native页面还是HTML5页面，</li>
+<li>当App启动的时候，从MobileAPI获取到每个页面是Native还是HTML5，</li>
+<li>在App代码层面，页面之间要实现松耦合。</li>
+</ol>
+<p>页面分发器</p>
+<p>对于那些来自HTML5页面，传递简单数据的页面跳转请求，我们将为其抽象一个分发器，放在BaseActivity中。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">onclick</span>=<span class="string">"baobao.gotoAnyWhere(</span></span></div><div class="line">    'com.example.youngheart.MovieDetailActivity,</div><div class="line">    iOS.MovieDetailViewController:movieId=(int)123')"&gt;</div><div class="line">    gotoAnyWhere</div><div class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">``` </div><div class="line"></div><div class="line">协议的内容分成三段，第一段是Android要条转到的Activity的名称，第二段是iOS要跳转到的ViewController的名称，第三段是需要传递的参数，以key-value的形式组装。</div><div class="line"></div><div class="line">我们接下来要做的就是从协议URL中取出第1段，将其反射成一个Activity对象，取出第3段，将其解析为key-value的形式，然后从当前页面跳转到目标页面并配以正确的参数。其中，写一个辅助函数getAndroidPageName，用来获取Activity名称，</div><div class="line"></div><div class="line">``` java</div><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line">	public void gotoAnyWhere(String url) &#123;</div><div class="line">		if (url != null) &#123;</div><div class="line">			if (url.startsWith("gotoMovieDetail:")) &#123;</div><div class="line">				String strMovieId = url.substring(24);</div><div class="line">				int movieId = Integer.valueOf(strMovieId);</div><div class="line">				Intent intent = new Intent(this, MovieDetailActivity.class);</div><div class="line">				intent.putExtra("movieId", movieId);</div><div class="line">				startActivity(intent);</div><div class="line">			&#125; else if (url.startsWith("gotoNewsList:")) &#123;</div><div class="line">				// as above</div><div class="line">			&#125; else if (url.startsWith("gotoPersonCenter")) &#123;</div><div class="line">				Intent intent = new Intent(this, PersonCenterActivity.class);</div><div class="line">				startActivity(intent);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	private String getAndroidPageName(String key) &#123;</div><div class="line">		String pageName = null;</div><div class="line">		int pos = key.indexOf(",");</div><div class="line">		if (pos == -1) &#123;</div><div class="line">			pageName = key;</div><div class="line">		&#125; else &#123;</div><div class="line">			pageName = key.substring(0, pos);</div><div class="line">		&#125;</div><div class="line">		return pageName;</div><div class="line">	&#125;</div><div class="line">	public void gotoAnyWhere2(String url) &#123;</div><div class="line">		if (url == null)</div><div class="line">			return;</div><div class="line">		</div><div class="line">		String pageName = getAndroidPageName(url);</div><div class="line">		if (pageName == null || pageName.trim() == "")</div><div class="line">			return;</div><div class="line">		Intent intent = new Intent();</div><div class="line">		int pos = url.indexOf(":");</div><div class="line">		if (pos &gt; 0) &#123;</div><div class="line">			String strParams = url.substring(pos);</div><div class="line">			String[] pairs = strParams.split("&amp;");</div><div class="line">			for (String strKeyAndValue : pairs) &#123;</div><div class="line">				String[] arr = strKeyAndValue.split("=");</div><div class="line">				String key = arr[0];</div><div class="line">				String value = arr[1];</div><div class="line">				if (value.startsWith("(int)")) &#123;</div><div class="line">					intent.putExtra(key, Integer.valueOf(value.substring(5)));</div><div class="line">				&#125; else if (value.startsWith("(Double)")) &#123;</div><div class="line">					intent.putExtra(key, Double.valueOf(value.substring(8)));</div><div class="line">				&#125; else &#123;</div><div class="line">					intent.putExtra(key, value);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		try &#123;</div><div class="line">			intent.setClass(this, Class.forName(pageName));</div><div class="line">		&#125; catch (ClassNotFoundException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		startActivity(intent);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="消灭全局变量"><a href="#消灭全局变量" class="headerlink" title="消灭全局变量"></a>消灭全局变量</h1><p><strong>问题的发现</strong></p>
+<p>在内存不足的时候，系统会回收一部分闲置的资源，由于App被切换到后台，所以存放的全局变量很容易被回收，这时候在切回到前台继续使用，就会因为全局变量的值为空而崩溃。</p>
+<p><strong>把数据作为Intent的参数传递</strong></p>
+<p>即使目标Activity被系统销毁了，Intent上的数据仍然存在，所以Intent是保存数据的一个很好的地方。但是Intent能传递的数据也必须支持序列化，想JSONObject这样的数据类型，是传递不过去的。</p>
+<p><strong>把全局变量序列化到本地</strong></p>
+<p>另一个比较稳妥的解决方案是，我们仍然使用全局变量，在每次修改全局变量的值得时候，都要把值序列化到本地文件中，这样的话，即使内存中的全局变量被回收，本地还保存有最新的值，当我们再次使用全局变量时，就从本地文件中再反序列化到内存。但不是长远之计，以后还是要讲全局变量转换为Intent上可序列化的数据。</p>
+<p><strong>序列化的缺点</strong></p>
+<p>再次强调，把全局变量序列化到本地的方案只是一种过渡性的解决方案，他有以下几个硬伤：</p>
+<ul>
+<li>每次设置全局变量的值都要强制执行一次序列化的操作，容易造成ANR，</li>
+<li>序列化生成的文件，会因为内存不够而丢失。</li>
+<li>Android提供的数据类型并不全部都支持序列化。JSONObject，JSONArray，包含JSONObject或者JSONArray的List和Map，，都不支持序列化。解决方案，将JSONObject或者JSONArray转换成字符串然后再序列化，，，</li>
+</ul>
+<p><strong>如果Activity也被销毁了</strong></p>
+<p>常见原因旋转屏幕，但是即使Activity被销毁了，Intent并不会丢失。如果需要保存页面状态则要是下面两个方法：</p>
+<ul>
+<li>onSaveInstanceState();</li>
+<li>onRestoreInstanceState();</li>
+</ul>
+<p><strong>如何看待SharedPreferences</strong></p>
+<p>作者认为，</p>
+<blockquote>
+<p>SharedPreferences是全局变量序列化到本地的另一种形式，存取数据也要支持序列化。注意不要把跳转时要传递的数据放在SharedPreferences，而是使用Intent。</p>
+</blockquote>
+<p><strong>User是唯一例外的全局变量</strong></p>
+<p>作者看来，</p>
+<blockquote>
+<p>App中只有一个全局变量的存在是合理的，那就是User类。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/原创/" rel="tag">#原创</a>
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/App研发录/" rel="tag">#App研发录</a>
+          
+            <a href="/tags/设计/" rel="tag">#设计</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/12/第二章：Android网络底层框架设计/" rel="next" title="第二章：Android网络底层框架设计">
+                <i class="fa fa-chevron-left"></i> 第二章：Android网络底层框架设计
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#App图片缓存设计"><span class="nav-number">1.</span> <span class="nav-text">App图片缓存设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ImageLoader设计原理"><span class="nav-number">1.1.</span> <span class="nav-text">ImageLoader设计原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ImageLoader的使用"><span class="nav-number">1.2.</span> <span class="nav-text">ImageLoader的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ImageLoader由三大组件组成"><span class="nav-number">1.2.1.</span> <span class="nav-text">ImageLoader由三大组件组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用ImageLoader"><span class="nav-number">1.2.2.</span> <span class="nav-text">如何使用ImageLoader</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#消灭全局变量"><span class="nav-number">2.</span> <span class="nav-text">消灭全局变量</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
