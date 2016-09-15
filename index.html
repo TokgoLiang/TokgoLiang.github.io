@@ -238,6 +238,138 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/13/我所理解的OOP——UML六种关系/" itemprop="url">
+                  我所理解的OOP——UML六种关系
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-13T23:21:50+08:00" content="2016-09-13">
+              2016-09-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.cnblogs.com/dolphinX/p/3296681.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
+<p>UML定义的关系主要有：泛化、实现、依赖、关联、聚合、组合，这六种关系紧密程度依次加强，分别看一下</p>
+<h1 id="泛化"><a href="#泛化" class="headerlink" title="泛化"></a>泛化</h1><p>概念：泛化是一种一般与特殊、一般与具体之间关系的描述，具体描述建立在一般描述的基础之上，并对其进行了扩展。在程序中是通过继承类实现的。比如狗是对动物的具体描述，在面向对象设计的时候一般把狗设计为动物的子类。</p>
+<p>表示方法：空心三角形箭头的实线，子类指向父类</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E6%B3%9B%E5%8C%96.png" alt="泛化"></p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>概念：实现是一种类与接口的关系，表示类是接口所有特征和行为的实现，在程序中一般通过类实现接口来描述</p>
+<p>表示方法：空心三角形箭头的虚线，实现类指向接口</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%AE%9E%E7%8E%B0.png" alt="实现"></p>
+<h1 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h1><p>概念：是一种使用的关系，即一个类的实现需要另一个类的协助，所以要尽量不使用双向的互相依赖，在程序中一般表现为类A中的方法需要类B的实例作为其参数或者变量，而类A本身并不需要引用类B的实例作为其成员变量。</p>
+<p>表示方法：虚线箭头，类A指向类B。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E4%BE%9D%E8%B5%96.png" alt="依赖"></p>
+<h1 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h1><p>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的，在程序中被关联类B以类属性的形式出现在关联类A中，也可能是关联类A引用了一个类型为被关联类B的全局变量</p>
+<p>表示方法：实线箭头，类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%85%B3%E8%81%94.png" alt="关联"></p>
+<h1 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h1><p>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</p>
+<p>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%81%9A%E5%90%88.png" alt="聚合"></p>
+<h1 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h1><p>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</p>
+<p>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E7%BB%84%E5%90%88.png" alt="组合"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/13/理解Android编译命令/" itemprop="url">
                   理解Android编译命令
                 </a>
@@ -619,8 +751,8 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
             
               
                 
-                <a class="post-title-link" href="/2016/09/13/我所理解的OOP——UML六种关系/" itemprop="url">
-                  我所理解的OOP——UML六种关系
+                <a class="post-title-link" href="/2016/09/13/第四章：Android命名规范和编码规范/" itemprop="url">
+                  第四章：Android命名规范和编码规范
                 </a>
               
             
@@ -633,7 +765,7 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-13T23:21:50+08:00" content="2016-09-13">
+            <time itemprop="dateCreated" datetime="2016-09-13T22:31:06+08:00" content="2016-09-13">
               2016-09-13
             </time>
           </span>
@@ -647,8 +779,8 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
                   </a>
                 </span>
 
@@ -682,26 +814,75 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
       
         
           
-            <p><a href="http://www.cnblogs.com/dolphinX/p/3296681.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
-<p>UML定义的关系主要有：泛化、实现、依赖、关联、聚合、组合，这六种关系紧密程度依次加强，分别看一下</p>
-<h1 id="泛化"><a href="#泛化" class="headerlink" title="泛化"></a>泛化</h1><p>概念：泛化是一种一般与特殊、一般与具体之间关系的描述，具体描述建立在一般描述的基础之上，并对其进行了扩展。在程序中是通过继承类实现的。比如狗是对动物的具体描述，在面向对象设计的时候一般把狗设计为动物的子类。</p>
-<p>表示方法：空心三角形箭头的实线，子类指向父类</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E6%B3%9B%E5%8C%96.png" alt="泛化"></p>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>概念：实现是一种类与接口的关系，表示类是接口所有特征和行为的实现，在程序中一般通过类实现接口来描述</p>
-<p>表示方法：空心三角形箭头的虚线，实现类指向接口</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%AE%9E%E7%8E%B0.png" alt="实现"></p>
-<h1 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h1><p>概念：是一种使用的关系，即一个类的实现需要另一个类的协助，所以要尽量不使用双向的互相依赖，在程序中一般表现为类A中的方法需要类B的实例作为其参数或者变量，而类A本身并不需要引用类B的实例作为其成员变量。</p>
-<p>表示方法：虚线箭头，类A指向类B。</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E4%BE%9D%E8%B5%96.png" alt="依赖"></p>
-<h1 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h1><p>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的，在程序中被关联类B以类属性的形式出现在关联类A中，也可能是关联类A引用了一个类型为被关联类B的全局变量</p>
-<p>表示方法：实线箭头，类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%85%B3%E8%81%94.png" alt="关联"></p>
-<h1 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h1><p>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</p>
-<p>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%81%9A%E5%90%88.png" alt="聚合"></p>
-<h1 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h1><p>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</p>
-<p>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E7%BB%84%E5%90%88.png" alt="组合"></p>
+            <blockquote>
+<p>制定规范不需要太多的理论知识，只要记住两点就够了：尽量简单，多写注释！</p>
+</blockquote>
+<p><strong>但是也很多人认为注释是越少也好，我更赞同，当然这是建立在你的代码非常容易理解的基础之上！！</strong></p>
+<h1 id="Android命名规范"><a href="#Android命名规范" class="headerlink" title="Android命名规范"></a>Android命名规范</h1><h2 id="Java类文件命名规范"><a href="#Java类文件命名规范" class="headerlink" title="Java类文件命名规范"></a>Java类文件命名规范</h2><ul>
+<li>Activity：以Activity作为后缀，比如PersonActivity。</li>
+<li>Adapter：以Adapter作为后缀，比如PersonAdapter。</li>
+<li>Entity：大多以Entity作为后缀，比如PersonEntity，值得注意的是User是全局变量，不算是实体，不受此约束。</li>
+</ul>
+<h2 id="资源文件命名规范"><a href="#资源文件命名规范" class="headerlink" title="资源文件命名规范"></a>资源文件命名规范</h2><p><strong>layout目录下的文件</strong></p>
+<ul>
+<li>页面布局文件，以act_为前缀，Activity所在Package为中缀，Activity名称（去掉Activity）作为后缀，都是小写。例如Person模块下AddCustomerActivity对应的layout文件该是：act_person_addcustomer，不过我自己习惯activity_add_customer；</li>
+<li>ListView中的item布局文件，以item_为前缀，列表项的名称为后缀，如item_users;</li>
+<li>Dialog布局文件，以dlg_为前缀，Dialog的功能名称为后缀，如dlg_hint，我还是习惯dialog_hint。</li>
+</ul>
+<p><strong>drawable（或者mipmap）目录下文件命名规范：</strong></p>
+<ul>
+<li>drawable目录下的资源，大部分是图片，此外，还有一部分xml文件。无论是图片还是xml文件，都应该遵循以下的命名规范：</li>
+<li>对于只在一个页面使用的资源，就以该页面的名称做前缀。</li>
+<li>对于只在一个模块下多个页面是用的资源，就以该模块的名称作为前缀，</li>
+<li>对于在各个模块，各个页面都有可能使用的资源，比如上导航，下导航，，以common最为前缀。</li>
+</ul>
+<h2 id="Java类中控件对象命名规范"><a href="#Java类中控件对象命名规范" class="headerlink" title="Java类中控件对象命名规范"></a>Java类中控件对象命名规范</h2><p>控件类型缩写+控件逻辑名称，如btnLogin</p>
+<h2 id="Layout中控件对象命名规范"><a href="#Layout中控件对象命名规范" class="headerlink" title="Layout中控件对象命名规范"></a>Layout中控件对象命名规范</h2><ul>
+<li>形式一：和Activity中对应的控件名保持一致</li>
+<li>形式二：功能名_控件类型，如login_button</li>
+</ul>
+<p>我还是习惯btn_login</p>
+<h2 id="strings-xml中常量命名规范"><a href="#strings-xml中常量命名规范" class="headerlink" title="strings.xml中常量命名规范"></a>strings.xml中常量命名规范</h2><p>出现在Activity或者Layout中的，Activity名作为前缀，后面接控件名称，在后面随意例如loginActivity_btnLogin_text(我不习惯这样的。。)，如果涉及和公共模块相关，则以common做前缀</p>
+<h2 id="常量命名"><a href="#常量命名" class="headerlink" title="常量命名"></a>常量命名</h2><p>遵循Java的命名规范，只包含字母和下划线，字母全部大写，单词之间用下划线隔开</p>
+<h1 id="Android编码规范"><a href="#Android编码规范" class="headerlink" title="Android编码规范"></a>Android编码规范</h1><ol>
+<li>要分门别类的存放各种类，</li>
+<li><p>findViewById，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">TextView tvName;</div><div class="line">initView() &#123;</div><div class="line">    tvName = (TextView) findViewById(R.id.tv_name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Layout中的常量，要在strings.xml中定义，</p>
+</li>
+<li>Layout中所有控件的字体大小，都定义在dinens.xml中</li>
+<li>在Activity中定义新的生命周期</li>
+</ol>
+<ul>
+<li>initVariables：初始化变量，包括Intent带的数据和Activity内的变量</li>
+<li>initViews：加载Layout布局文件，初始化控件，为控件挂上事件的方法</li>
+<li>loadData：获取数据</li>
+</ul>
+<ol>
+<li>坚持使用fastJSON自定义实体来作为MobileAPI的数据载体（不知道为什么不提GSON。。）<br>像JSONObject，JSONArray，Map<string, object="">，ArrayList&lt; Object&gt;,这些不能序列化的实体，都禁止使用，除非仅仅是在方法内部。</string,></li>
+<li>页面之间传值，坚持使用Intent携带序列化实体数据的方式，禁止为了方便使用全局变量</li>
+<li>为控件添加事件，使用匿名内部类</li>
+<li>Activity中不要嵌套内部类，</li>
+<li>Adapter的编码规范</li>
+</ol>
+<ul>
+<li>所有Adapter，都放在adapter这个包中</li>
+<li>Adapter绑定的数据，一律为ArrayList&lt;自定义可序列化实体&gt;</li>
+<li>在Adapter中创建适合于列表自身的ViewHolder实体类，统一命名为ViewHolder</li>
+</ul>
+<ol>
+<li>实体类不要再不同模块之间共享，但是可以在同一模块的不同页面之间共享</li>
+<li>为了节省内存，可以使用ArrayList而不是HashMap</li>
+<li>大量的图片，使用ImageLoader或者Fresco来进行异步加载</li>
+<li>什么时候使用SharedPreferences？简单配置信息，设置页面的各种开关。但是对于复杂的对象，还是要存储到本地文件中。</li>
+<li>尽量使用ApplicationContext代替Context，否则会引起内存泄露，当然也不是任何地方都适用。</li>
+<li>数据类型转换一定要进行验证。</li>
+<li>使用常量代替枚举，</li>
+</ol>
+<h1 id="统一代码格式"><a href="#统一代码格式" class="headerlink" title="统一代码格式"></a>统一代码格式</h1><p>在Eclipse中导入Android源码中用于统一代码格式的android-formatting.xml，然后执行快键键Ctrl+shift+f，</p>
+<p>导入方法如下：window–preference–Java–code style–Formatter 导入android-formatting.xml</p>
+<p>推荐一个自动检查工具，checkstyle，</p>
 
           
         
@@ -1426,6 +1607,276 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
             
               
                 
+                <a class="post-title-link" href="/2016/09/11/聊聊并发-Java中的Copy-On-Write容器/" itemprop="url">
+                  聊聊并发-Java中的Copy-On-Write容器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T14:56:05+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java_基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://ifeve.com/java-copy-on-write/" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
+<p>　　Copy-On-Write简称COW，是一种用于程序设计中的优化策略。其基本思路是，从一开始大家都在共享同一个内容，当某个人想要修改这个内容的时候，才会真正把内容Copy出去形成一个新的内容然后再改，这是一种延时懒惰策略。从JDK1.5开始Java并发包里提供了两个使用CopyOnWrite机制实现的并发容器,它们是CopyOnWriteArrayList和CopyOnWriteArraySet。CopyOnWrite容器非常有用，可以在非常多的并发场景中使用到。</p>
+<h2 id="什么是CopyOnWrite容器"><a href="#什么是CopyOnWrite容器" class="headerlink" title="什么是CopyOnWrite容器"></a>什么是CopyOnWrite容器</h2><p>　　CopyOnWrite容器即写时复制的容器。通俗的理解是当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器。这样做的好处是我们可以对CopyOnWrite容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以CopyOnWrite容器也是一种读写分离的思想，读和写不同的容器。</p>
+<h2 id="CopyOnWriteArrayList的实现原理"><a href="#CopyOnWriteArrayList的实现原理" class="headerlink" title="CopyOnWriteArrayList的实现原理"></a>CopyOnWriteArrayList的实现原理</h2><p>　　在使用CopyOnWriteArrayList之前，我们先阅读其源码了解下它是如何实现的。以下代码是向ArrayList里添加元素，可以发现在添加的时候是需要加锁的，否则多线程写的时候会Copy出N个副本出来。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(T e)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</div><div class="line">    lock.lock();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">        Object[] elements = getArray();</div><div class="line">        <span class="keyword">int</span> len = elements.length;</div><div class="line">        <span class="comment">// 复制出新数组</span></div><div class="line">        Object[] newElements = Arrays.copyOf(elements, len + <span class="number">1</span>);</div><div class="line">        <span class="comment">// 把新元素添加到新数组里</span></div><div class="line">        newElements[len] = e;</div><div class="line">        <span class="comment">// 把原数组引用指向新数组</span></div><div class="line">        setArray(newElements);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        lock.unlock();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setArray</span><span class="params">(Object[] a)</span> </span>&#123;</div><div class="line">    array = a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>　　读的时候不需要加锁，如果读的时候有多个线程正在向ArrayList添加数据，读还是会读到旧的数据，因为写的时候不会锁住旧的ArrayList。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> get(getArray(), index);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>　　JDK中并没有提供CopyOnWriteMap，我们可以参考CopyOnWriteArrayList来实现一个，基本代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Collection;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CopyOnWriteMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;, <span class="title">Cloneable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> Map&lt;K, V&gt; internalMap;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CopyOnWriteMap</span><span class="params">()</span> </span>&#123;</div><div class="line">        internalMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            Map&lt;K, V&gt; newMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;(internalMap);</div><div class="line">            V val = newMap.put(key, value);</div><div class="line">            internalMap = newMap;</div><div class="line">            <span class="keyword">return</span> val;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> internalMap.get(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; newData)</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            Map&lt;K, V&gt; newMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;(internalMap);</div><div class="line">            newMap.putAll(newData);</div><div class="line">            internalMap = newMap;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>　　实现很简单，只要了解了CopyOnWrite机制，我们可以实现各种CopyOnWrite容器，并且在不同的应用场景中使用。</p>
+<h2 id="CopyOnWrite的应用场景"><a href="#CopyOnWrite的应用场景" class="headerlink" title="CopyOnWrite的应用场景"></a>CopyOnWrite的应用场景</h2><p>　　CopyOnWrite并发容器用于读多写少的并发场景。比如白名单，黑名单，商品类目的访问和更新场景，假如我们有一个搜索网站，用户在这个网站的搜索框中，输入关键字搜索内容，但是某些关键字不允许被搜索。这些不能被搜索的关键字会被放在一个黑名单当中，黑名单每天晚上更新一次。当用户搜索时，会检查当前关键字在不在黑名单当中，如果在，则提示不能搜索。实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.ifeve.book;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> com.ifeve.book.forkjoin.CopyOnWriteMap;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 黑名单服务</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span> fangtengfei</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlackListServiceImpl</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CopyOnWriteMap&lt;String, Boolean&gt; blackListMap = <span class="keyword">new</span> CopyOnWriteMap&lt;String, Boolean&gt;(</div><div class="line">            <span class="number">1000</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isBlackList</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> blackListMap.get(id) == <span class="keyword">null</span> ? <span class="keyword">false</span> : <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addBlackList</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        blackListMap.put(id, Boolean.TRUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 批量添加黑名单</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> ids</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addBlackList</span><span class="params">(Map&lt;String,Boolean&gt; ids)</span> </span>&#123;</div><div class="line">        blackListMap.putAll(ids);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>代码很简单，但是使用CopyOnWriteMap需要注意两件事情：</strong></p>
+<ol>
+<li>减少扩容开销。根据实际需要，初始化CopyOnWriteMap的大小，避免写时CopyOnWriteMap扩容的开销。</li>
+<li>使用批量添加。因为每次添加，容器每次都会进行复制，所以减少添加次数，可以减少容器的复制次数。如使用上面代码里的addBlackList方法。</li>
+</ol>
+<h2 id="CopyOnWrite的缺点"><a href="#CopyOnWrite的缺点" class="headerlink" title="CopyOnWrite的缺点"></a>CopyOnWrite的缺点</h2><p>　　CopyOnWrite容器有很多优点，但是同时也存在两个问题，即内存占用问题和数据一致性问题。所以在开发的时候需要注意一下。</p>
+<p>　　内存占用问题。因为CopyOnWrite的写时复制机制，所以在进行写操作的时候，内存里会同时驻扎两个对象的内存，旧的对象和新写入的对象（注意:在复制的时候只是复制容器里的引用，只是在写的时候会创建新对象添加到新容器里，而旧容器的对象还在使用，所以有两份对象内存）。如果这些对象占用的内存比较大，比如说200M左右，那么再写入100M数据进去，内存就会占用300M，那么这个时候很有可能造成频繁的Yong GC和Full GC。之前我们系统中使用了一个服务由于每晚使用CopyOnWrite机制更新大对象，造成了每晚15秒的Full GC，应用响应时间也随之变长。</p>
+<p>　　针对内存占用问题，可以通过压缩容器中的元素的方法来减少大对象的内存消耗，比如，如果元素全是10进制的数字，可以考虑把它压缩成36进制或64进制。或者不使用CopyOnWrite容器，而使用其他的并发容器，如ConcurrentHashMap。</p>
+<p>　　数据一致性问题。CopyOnWrite容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的的数据，马上能读到，请不要使用CopyOnWrite容器。</p>
+<p>　　关于C++的STL中，曾经也有过Copy-On-Write的玩法，参见陈皓的《C++ STL String类中的Copy-On-Write》，后来，因为有很多线程安全上的事，就被去掉了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/11/Java基础 之软引用、弱引用、虚引用/" itemprop="url">
+                  Java基础 之软引用、弱引用、虚引用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T14:56:05+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java_基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.cnblogs.com/blogoflee/archive/2012/03/22/2411124.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>　　在JDK1.2以前的版本中，当一个对象不被任何变量引用，那么程序就无法再使用这个对象。也就是说，只有对象处于可触及状态，程序才能使用它。这就像在日常生活中，从商店购买了某样物品后，如果有用，就一直保留它，否则就把它扔到垃圾箱，由清洁工人收走。一般说来，如果物品已经被扔到垃圾箱，想再 把它捡回来使用就不可能了。<br>　　但有时候情况并不这么简单，你可能会遇到类似鸡肋一样的物品，食之无味，弃之可惜。这种物品现在已经无用了，保留它会占空间，但是立刻扔掉它也不划算，因 为也许将来还会派用场。对于这样的可有可无的物品，一种折衷的处理办法是：如果家里空间足够，就先把它保留在家里，如果家里空间不够，即使把家里所有的垃 圾清除，还是无法容纳那些必不可少的生活用品，那么再扔掉这些可有可无的物品。<br>　　从JDK1.2版本开始，把对象的引用分为四种级别，从而使程序能更加灵活的控制对象的生命周期。这四种级别由高到低依次为：强引用、软引用、弱引用和虚引用。</p>
+<h2 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h2><p>　　平时我们编程的时候例如：Object object=new Object（）；那object就是一个强引用了。如果一个对象具有强引用，那就类似于必不可少的生活用品，垃圾回收器绝不会回收它。当内存空 间不足，Java虚拟机宁愿抛出OutOfMemoryError错误，使程序异常终止，也不会靠随意回收具有强引用的对象来解决内存不足问题。</p>
+<h2 id="软引用（SoftReference）"><a href="#软引用（SoftReference）" class="headerlink" title="软引用（SoftReference）"></a>软引用（SoftReference）</h2><p>　　如果一个对象只具有软引用，那就类似于可有可物的生活用品。如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。只 要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存。 软引用可以和一个引用队列（ReferenceQueue）联 合使用，如果软引用所引用的对象被垃圾回收，Java虚拟机就会把这个软引用加入到与之关联的引用队列中。</p>
+<h2 id="弱引用（WeakReference）"><a href="#弱引用（WeakReference）" class="headerlink" title="弱引用（WeakReference）"></a>弱引用（WeakReference）</h2><p>　　如果一个对象只具有弱引用，那就类似于可有可物的生活用品。弱引用与软引用的区别在于：只具有弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它 所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。不过，由于垃圾回收器是一个优先级很低的线程， 因此不一定会很快发现那些只具有弱引用的对象。  弱引用可以和一个引用队列（ReferenceQueue）联合使用，如果弱引用所引用的对象被垃圾回 收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。 </p>
+<h2 id="虚引用（PhantomReference）"><a href="#虚引用（PhantomReference）" class="headerlink" title="虚引用（PhantomReference）"></a>虚引用（PhantomReference）</h2><p>　　“虚引用”顾名思义，就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在 任何时候都可能被垃圾回收。 虚引用主要用来跟踪对象被垃圾回收的活动。虚引用与软引用和弱引用的一个区别在于：虚引用必须和引用队列 （ReferenceQueue）联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之 关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。程序如果发现某个虚引用已经被加入到引用队 列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。 </p>
+<h2 id="相关应用"><a href="#相关应用" class="headerlink" title="相关应用"></a>相关应用</h2><p>　　在java.lang.ref包中提供了三个类：SoftReference类、WeakReference类和PhantomReference类，它 们分别代表软引用、弱引用和虚引用。ReferenceQueue类表示引用队列，它可以和这三种引用类联合使用，以便跟踪Java虚拟机回收所引用的对 象的活动。</p>
+<h2 id="使用软引用构建敏感数据的缓存"><a href="#使用软引用构建敏感数据的缓存" class="headerlink" title="使用软引用构建敏感数据的缓存"></a>使用软引用构建敏感数据的缓存</h2><h4 id="为什么需要使用软引用"><a href="#为什么需要使用软引用" class="headerlink" title="为什么需要使用软引用"></a>为什么需要使用软引用</h4><p>　　首先，我们看一个雇员信息查询系统的实例。我们将使用一个Java语言实现的雇员信息查询系统查询存储在磁盘文件或者数据库中的雇员人事档案信息。作为一 个用户，我们完全有可能需要回头去查看几分钟甚至几秒钟前查看过的雇员档案信息(同样，我们在浏览WEB页面的时候也经常会使用“后退”按钮)。这时我们 通常会有两种程序实现方式:一种是把过去查看过的雇员信息保存在内存中，每一个存储了雇员档案信息的Java对象的生命周期贯穿整个应用程序始终;另一种 是当用户开始查看其他雇员的档案信息的时候，把存储了当前所查看的雇员档案信息的Java对象结束引用，使得垃圾收集线程可以回收其所占用的内存空间，当 用户再次需要浏览该雇员的档案信息的时候，重新构建该雇员的信息。很显然，第一种实现方法将造成大量的内存浪费，而第二种实现的缺陷在于即使垃圾收集线程 还没有进行垃圾收集，包含雇员档案信息的对象仍然完好地保存在内存中，应用程序也要重新构建一个对象。我们知道，访问磁盘文件、访问网络资源、查询数据库 等操作都是影响应用程序执行性能的重要因素，如果能重新获取那些尚未被回收的Java对象的引用，必将减少不必要的访问，大大提高程序的运行速度。</p>
+<h4 id="如果使用软引用"><a href="#如果使用软引用" class="headerlink" title="如果使用软引用"></a>如果使用软引用</h4><p>　　SoftReference的特点是它的一个实例保存对一个Java对象的软引用，该软引用的存在不妨碍垃圾收集线程对该Java对象的回收。也就是说， 一旦SoftReference保存了对一个Java对象的软引用后，在垃圾线程对这个Java对象回收前，SoftReference类所提供的 get()方法返回Java对象的强引用。另外，一旦垃圾线程回收该Java对象之后，get()方法将返回null。</p>
+<h4 id="使用ReferenceQueue清除失去了软引用对象的SoftReference"><a href="#使用ReferenceQueue清除失去了软引用对象的SoftReference" class="headerlink" title="使用ReferenceQueue清除失去了软引用对象的SoftReference"></a>使用ReferenceQueue清除失去了软引用对象的SoftReference</h4><p>　　作为一个Java对象，SoftReference对象除了具有保存软引用的特殊性之外，也具有Java对象的一般性。所以，当软可及对象被回收之后， 虽然这个SoftReference对象的get()方法返回null,但这个SoftReference对象已经不再具有存在的价值，需要一个适当的清 除机制，避免大量SoftReference对象带来的内存泄漏。在java.lang.ref包里还提供了ReferenceQueue。如果在创建 SoftReference对象的时候，使用了一个ReferenceQueue对象作为参数提供给SoftReference的构造方法，如:</p>
+<p>　　那么当这个SoftReference所软引用的aMyOhject被垃圾收集器回收的同时，ref所强引用的SoftReference对象被列入 ReferenceQueue。也就是说，ReferenceQueue中保存的对象是Reference对象，而且是已经失去了它所软引用的对象的 Reference对象。另外从ReferenceQueue这个名字也可以看出，它是一个队列，当我们调用它的poll()方法的时候，如果这个队列中 不是空队列，那么将返回队列前面的那个Reference对象。<br>　　<br>　　在任何时候，我们都可以调用ReferenceQueue的poll()方法来检查是否有它所关心的非强可及对象被回收。如果队列为空，将返回一个 null,否则该方法返回队列中前面的一个Reference对象。利用这个方法，我们可以检查哪个SoftReference所软引用的对象已经被回 收。于是我们可以把这些失去所软引用的对象的SoftReference对象清除掉。常用的方式为:</p>
+<p>　　理解了ReferenceQueue的工作机制之后，我们就可以开始构造一个Java对象的高速缓存器了。</p>
+<h4 id="通过软可及对象重获方法实现Java对象的高速缓存"><a href="#通过软可及对象重获方法实现Java对象的高速缓存" class="headerlink" title="通过软可及对象重获方法实现Java对象的高速缓存"></a>通过软可及对象重获方法实现Java对象的高速缓存</h4><p>　　利用Java2平台垃圾收集机制的特性以及前述的垃圾对象重获方法，我们通过一个雇员信息查询系统的小例子来说明如何构建一种高速缓存器来避免重复构建同一个对象带来的性能损失。我们将一个雇员的档案信息定义为一个Employee类:<br>　　<br>　　这个Employee类的构造方法中我们可以预见，如果每次需要查询一个雇员的信息。哪怕是几秒中之前刚刚查询过的，都要重新构建一个实例，这是需要消耗很多时间的。下面是一个对Employee对象进行缓存的缓存器的定义:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.ref.ReferenceQueue;      </div><div class="line"><span class="keyword">import</span> java.lang.ref.SoftReference;      </div><div class="line"><span class="keyword">import</span> java.util.Hashtable;      </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeCache</span> </span>&#123;      </div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> EmployeeCache cache;<span class="comment">// 一个Cache实例      </span></div><div class="line">    <span class="keyword">private</span> Hashtable employeeRefs;<span class="comment">// 用于Cache内容的存储      </span></div><div class="line">    <span class="keyword">private</span> ReferenceQueue q;<span class="comment">// 垃圾Reference的队列      </span></div><div class="line">       </div><div class="line">    <span class="comment">// 继承SoftReference，使得每一个实例都具有可识别的标识。      </span></div><div class="line">    <span class="comment">// 并且该标识与其在HashMap内的key相同。      </span></div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeRef</span> <span class="keyword">extends</span> <span class="title">SoftReference</span> </span>&#123;      </div><div class="line">       <span class="keyword">private</span> String _key = <span class="string">""</span>;      </div><div class="line">       </div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="title">EmployeeRef</span><span class="params">(Employee em, ReferenceQueue q)</span> </span>&#123;      </div><div class="line">           <span class="keyword">super</span>(em, q);      </div><div class="line">           _key = em.getID();      </div><div class="line">       &#125;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 构建一个缓存器实例      </span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">EmployeeCache</span><span class="params">()</span> </span>&#123;      </div><div class="line">       employeeRefs = <span class="keyword">new</span> Hashtable();      </div><div class="line">       q = <span class="keyword">new</span> ReferenceQueue();      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 取得缓存器实例      </span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EmployeeCache <span class="title">getInstance</span><span class="params">()</span> </span>&#123;      </div><div class="line">       <span class="keyword">if</span> (cache == <span class="keyword">null</span>) &#123;      </div><div class="line">           cache = <span class="keyword">new</span> EmployeeCache();      </div><div class="line">       &#125;      </div><div class="line">       <span class="keyword">return</span> cache;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 以软引用的方式对一个Employee对象的实例进行引用并保存该引用      </span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cacheEmployee</span><span class="params">(Employee em)</span> </span>&#123;      </div><div class="line">       cleanCache();<span class="comment">// 清除垃圾引用      </span></div><div class="line">       EmployeeRef ref = <span class="keyword">new</span> EmployeeRef(em, q);      </div><div class="line">       employeeRefs.put(em.getID(), ref);      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 依据所指定的ID号，重新获取相应Employee对象的实例      </span></div><div class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">getEmployee</span><span class="params">(String ID)</span> </span>&#123;      </div><div class="line">       Employee em = <span class="keyword">null</span>;      </div><div class="line">       <span class="comment">// 缓存中是否有该Employee实例的软引用，如果有，从软引用中取得。      </span></div><div class="line">       <span class="keyword">if</span> (employeeRefs.containsKey(ID)) &#123;      </div><div class="line">           EmployeeRef ref = (EmployeeRef) employeeRefs.get(ID);      </div><div class="line">           em = (Employee) ref.get();      </div><div class="line">       &#125;      </div><div class="line">       <span class="comment">// 如果没有软引用，或者从软引用中得到的实例是null，重新构建一个实例，      </span></div><div class="line">       <span class="comment">// 并保存对这个新建实例的软引用      </span></div><div class="line">       <span class="keyword">if</span> (em == <span class="keyword">null</span>) &#123;      </div><div class="line">           em = <span class="keyword">new</span> Employee(ID);      </div><div class="line">           System.out.println(<span class="string">"Retrieve From EmployeeInfoCenter. ID="</span> + ID);      </div><div class="line">           <span class="keyword">this</span>.cacheEmployee(em);      </div><div class="line">       &#125;      </div><div class="line">       <span class="keyword">return</span> em;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 清除那些所软引用的Employee对象已经被回收的EmployeeRef对象      </span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cleanCache</span><span class="params">()</span> </span>&#123;      </div><div class="line">       EmployeeRef ref = <span class="keyword">null</span>;      </div><div class="line">       <span class="keyword">while</span> ((ref = (EmployeeRef) q.poll()) != <span class="keyword">null</span>) &#123;      </div><div class="line">           employeeRefs.remove(ref._key);      </div><div class="line">       &#125;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 清除Cache内的全部内容      </span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearCache</span><span class="params">()</span> </span>&#123;      </div><div class="line">       cleanCache();      </div><div class="line">       employeeRefs.clear();      </div><div class="line">       System.gc();      </div><div class="line">       System.runFinalization();      </div><div class="line">    &#125;      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用弱引用构建非敏感数据的缓存"><a href="#使用弱引用构建非敏感数据的缓存" class="headerlink" title="使用弱引用构建非敏感数据的缓存"></a>使用弱引用构建非敏感数据的缓存</h2><h5 id="全局ap造成的内存泄漏"><a href="#全局ap造成的内存泄漏" class="headerlink" title="全局ap造成的内存泄漏"></a>全局ap造成的内存泄漏</h5><p>　　无意识对象保留最常见的原因是使用Map将元数据与临时对象（transient object）相关联。假定一个对象具有中等生命周期，比分配它的那个方法调用的生命周期长，但是比应用程序的生命周期短，如客户机的套接字连接。需要将 一些元数据与这个套接字关联，如生成连接的用户的标识。在创建Socket时是不知道这些信息的，并且不能将数据添加到Socket对象上，因为不能控制 Socket 类或者它的子类。这时，典型的方法就是在一个全局 Map 中存储这些信息，如下面的 SocketManager 类所示：使用一个全局 Map 将元数据关联到一个对象。</p>
+<p>　　这种方法的问题是元数据的生命周期需要与套接字的生命周期挂钩，但是除非准确地知道什么时候程序不再需要这个套接字，并记住从 Map 中删除相应的映射，否则，Socket 和 User 对象将会永远留在 Map 中，远远超过响应了请求和关闭套接字的时间。这会阻止 Socket 和 User 对象被垃圾收集，即使应用程序不会再使用它们。这些对象留下来不受控制，很容易造成程序在长时间运行后内存爆满。除了最简单的情况，在几乎所有情况下找出 什么时候 Socket 不再被程序使用是一件很烦人和容易出错的任务，需要人工对内存进行管理。</p>
+<h4 id="如何使用WeakHashMap"><a href="#如何使用WeakHashMap" class="headerlink" title="如何使用WeakHashMap"></a>如何使用WeakHashMap</h4><p>　　在Java集合中有一种特殊的Map类型—WeakHashMap，在这种Map中存放了键对象的弱引用，当一个键对象被垃圾回收器回收时，那么相应的值 对象的引用会从Map中删除。WeakHashMap能够节约存储空间，可用来缓存那些非必须存在的数据。关于Map接口的一般用法。</p>
+<p>　　下面示例中MapCache类的main()方法创建了一个WeakHashMap对象，它存放了一组Key对象的弱引用，此外main()方法还创建了一个数组对象，它存放了部分Key对象的强引用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.WeakHashMap;      </div><div class="line">       </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Element</span> </span>&#123;      </div><div class="line">    <span class="keyword">private</span> String ident;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Element</span><span class="params">(String id)</span> </span>&#123;      </div><div class="line">       ident = id;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;      </div><div class="line">       <span class="keyword">return</span> ident;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;      </div><div class="line">       <span class="keyword">return</span> ident.hashCode();      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;      </div><div class="line">       <span class="keyword">return</span> obj <span class="keyword">instanceof</span> Element &amp;&amp; ident.equals(((Element) obj).ident);      </div><div class="line">    &#125;      </div><div class="line">          </div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span></span>&#123;      </div><div class="line">       System.out.println(<span class="string">"Finalizing "</span>+getClass().getSimpleName()+<span class="string">" "</span>+ident);      </div><div class="line">    &#125;      </div><div class="line">&#125;      </div><div class="line">       </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Key</span> <span class="keyword">extends</span> <span class="title">Element</span></span>&#123;      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Key</span><span class="params">(String id)</span></span>&#123;      </div><div class="line">       <span class="keyword">super</span>(id);      </div><div class="line">    &#125;      </div><div class="line">&#125;      </div><div class="line">       </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Value</span> <span class="keyword">extends</span> <span class="title">Element</span></span>&#123;      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Value</span> <span class="params">(String id)</span></span>&#123;      </div><div class="line">       <span class="keyword">super</span>(id);      </div><div class="line">    &#125;      </div><div class="line">&#125;      </div><div class="line">       </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CanonicalMapping</span> </span>&#123;      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;      </div><div class="line">       <span class="keyword">int</span> size=<span class="number">1000</span>;      </div><div class="line">       Key[] keys=<span class="keyword">new</span> Key[size];      </div><div class="line">       WeakHashMap map=<span class="keyword">new</span> WeakHashMap();      </div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt; SPAN&gt;    </div><div class="line">           Key k=<span class="keyword">new</span> Key(Integer.toString(i));      </div><div class="line">           Value v=<span class="keyword">new</span> Value(Integer.toString(i));      </div><div class="line">           <span class="keyword">if</span>(i%<span class="number">3</span>==<span class="number">0</span>)      </div><div class="line">              keys[i]=k;      </div><div class="line">           map.put(k, v);      </div><div class="line">       &#125;      </div><div class="line">       System.gc();      </div><div class="line">    &#125;      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>　　从打印结果可以看出，当执行System.gc()方法后，垃圾回收器只会回收那些仅仅持有弱引用的Key对象。id可以被3整除的Key对象持有强引用，因此不会被回收。</p>
+<h4 id="用-WeakHashMap-堵住泄漏"><a href="#用-WeakHashMap-堵住泄漏" class="headerlink" title="用 WeakHashMap 堵住泄漏"></a>用 WeakHashMap 堵住泄漏</h4><p>　　在 SocketManager 中防止泄漏很容易，只要用 WeakHashMap 代替 HashMap 就行了。（这里假定SocketManager不需要线程安全）。当映射的生命周期必须与键的生命周期联系在一起时，可以使用这种方法。用 WeakHashMap修复 SocketManager。</p>
+<h4 id="配合使用引用队列"><a href="#配合使用引用队列" class="headerlink" title="配合使用引用队列"></a>配合使用引用队列</h4><p>　　WeakHashMap 用弱引用承载映射键，这使得应用程序不再使用键对象时它们可以被垃圾收集，get() 实现可以根据 WeakReference.get() 是否返回 null 来区分死的映射和活的映射。但是这只是防止 Map 的内存消耗在应用程序的生命周期中不断增加所需要做的工作的一半，还需要做一些工作以便在键对象被收集后从 Map 中删除死项。否则，Map 会充满对应于死键的项。虽然这对于应用程序是不可见的，但是它仍然会造成应用程序耗尽内存。 </p>
+<p>　　引用队列是垃圾收集器向应用程序返回关于对象生命周期的信息的主要方法。弱引用有个构造函数取引用队列作为参数。如果用关联的引用队列创建弱引用，在弱引用对象成为 GC 候选对象时，这个引用对象就在引用清除后加入到引用队列中（具体参考上文软引用示例）。</p>
+<p>　　WeakHashMap 有一个名为 expungeStaleEntries() 的私有方法，大多数 Map 操作中会调用它，它去掉引用队列中所有失效的引用，并删除关联的映射。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/11/Java输入输出流/" itemprop="url">
                   Java输入输出流
                 </a>
@@ -1760,276 +2211,6 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
             
               
                 
-                <a class="post-title-link" href="/2016/09/11/Java基础 之软引用、弱引用、虚引用/" itemprop="url">
-                  Java基础 之软引用、弱引用、虚引用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T14:56:05+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java-基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java_基础</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.cnblogs.com/blogoflee/archive/2012/03/22/2411124.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>　　在JDK1.2以前的版本中，当一个对象不被任何变量引用，那么程序就无法再使用这个对象。也就是说，只有对象处于可触及状态，程序才能使用它。这就像在日常生活中，从商店购买了某样物品后，如果有用，就一直保留它，否则就把它扔到垃圾箱，由清洁工人收走。一般说来，如果物品已经被扔到垃圾箱，想再 把它捡回来使用就不可能了。<br>　　但有时候情况并不这么简单，你可能会遇到类似鸡肋一样的物品，食之无味，弃之可惜。这种物品现在已经无用了，保留它会占空间，但是立刻扔掉它也不划算，因 为也许将来还会派用场。对于这样的可有可无的物品，一种折衷的处理办法是：如果家里空间足够，就先把它保留在家里，如果家里空间不够，即使把家里所有的垃 圾清除，还是无法容纳那些必不可少的生活用品，那么再扔掉这些可有可无的物品。<br>　　从JDK1.2版本开始，把对象的引用分为四种级别，从而使程序能更加灵活的控制对象的生命周期。这四种级别由高到低依次为：强引用、软引用、弱引用和虚引用。</p>
-<h2 id="强引用"><a href="#强引用" class="headerlink" title="强引用"></a>强引用</h2><p>　　平时我们编程的时候例如：Object object=new Object（）；那object就是一个强引用了。如果一个对象具有强引用，那就类似于必不可少的生活用品，垃圾回收器绝不会回收它。当内存空 间不足，Java虚拟机宁愿抛出OutOfMemoryError错误，使程序异常终止，也不会靠随意回收具有强引用的对象来解决内存不足问题。</p>
-<h2 id="软引用（SoftReference）"><a href="#软引用（SoftReference）" class="headerlink" title="软引用（SoftReference）"></a>软引用（SoftReference）</h2><p>　　如果一个对象只具有软引用，那就类似于可有可物的生活用品。如果内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。只 要垃圾回收器没有回收它，该对象就可以被程序使用。软引用可用来实现内存敏感的高速缓存。 软引用可以和一个引用队列（ReferenceQueue）联 合使用，如果软引用所引用的对象被垃圾回收，Java虚拟机就会把这个软引用加入到与之关联的引用队列中。</p>
-<h2 id="弱引用（WeakReference）"><a href="#弱引用（WeakReference）" class="headerlink" title="弱引用（WeakReference）"></a>弱引用（WeakReference）</h2><p>　　如果一个对象只具有弱引用，那就类似于可有可物的生活用品。弱引用与软引用的区别在于：只具有弱引用的对象拥有更短暂的生命周期。在垃圾回收器线程扫描它 所管辖的内存区域的过程中，一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。不过，由于垃圾回收器是一个优先级很低的线程， 因此不一定会很快发现那些只具有弱引用的对象。  弱引用可以和一个引用队列（ReferenceQueue）联合使用，如果弱引用所引用的对象被垃圾回 收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。 </p>
-<h2 id="虚引用（PhantomReference）"><a href="#虚引用（PhantomReference）" class="headerlink" title="虚引用（PhantomReference）"></a>虚引用（PhantomReference）</h2><p>　　“虚引用”顾名思义，就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在 任何时候都可能被垃圾回收。 虚引用主要用来跟踪对象被垃圾回收的活动。虚引用与软引用和弱引用的一个区别在于：虚引用必须和引用队列 （ReferenceQueue）联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之 关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。程序如果发现某个虚引用已经被加入到引用队 列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。 </p>
-<h2 id="相关应用"><a href="#相关应用" class="headerlink" title="相关应用"></a>相关应用</h2><p>　　在java.lang.ref包中提供了三个类：SoftReference类、WeakReference类和PhantomReference类，它 们分别代表软引用、弱引用和虚引用。ReferenceQueue类表示引用队列，它可以和这三种引用类联合使用，以便跟踪Java虚拟机回收所引用的对 象的活动。</p>
-<h2 id="使用软引用构建敏感数据的缓存"><a href="#使用软引用构建敏感数据的缓存" class="headerlink" title="使用软引用构建敏感数据的缓存"></a>使用软引用构建敏感数据的缓存</h2><h4 id="为什么需要使用软引用"><a href="#为什么需要使用软引用" class="headerlink" title="为什么需要使用软引用"></a>为什么需要使用软引用</h4><p>　　首先，我们看一个雇员信息查询系统的实例。我们将使用一个Java语言实现的雇员信息查询系统查询存储在磁盘文件或者数据库中的雇员人事档案信息。作为一 个用户，我们完全有可能需要回头去查看几分钟甚至几秒钟前查看过的雇员档案信息(同样，我们在浏览WEB页面的时候也经常会使用“后退”按钮)。这时我们 通常会有两种程序实现方式:一种是把过去查看过的雇员信息保存在内存中，每一个存储了雇员档案信息的Java对象的生命周期贯穿整个应用程序始终;另一种 是当用户开始查看其他雇员的档案信息的时候，把存储了当前所查看的雇员档案信息的Java对象结束引用，使得垃圾收集线程可以回收其所占用的内存空间，当 用户再次需要浏览该雇员的档案信息的时候，重新构建该雇员的信息。很显然，第一种实现方法将造成大量的内存浪费，而第二种实现的缺陷在于即使垃圾收集线程 还没有进行垃圾收集，包含雇员档案信息的对象仍然完好地保存在内存中，应用程序也要重新构建一个对象。我们知道，访问磁盘文件、访问网络资源、查询数据库 等操作都是影响应用程序执行性能的重要因素，如果能重新获取那些尚未被回收的Java对象的引用，必将减少不必要的访问，大大提高程序的运行速度。</p>
-<h4 id="如果使用软引用"><a href="#如果使用软引用" class="headerlink" title="如果使用软引用"></a>如果使用软引用</h4><p>　　SoftReference的特点是它的一个实例保存对一个Java对象的软引用，该软引用的存在不妨碍垃圾收集线程对该Java对象的回收。也就是说， 一旦SoftReference保存了对一个Java对象的软引用后，在垃圾线程对这个Java对象回收前，SoftReference类所提供的 get()方法返回Java对象的强引用。另外，一旦垃圾线程回收该Java对象之后，get()方法将返回null。</p>
-<h4 id="使用ReferenceQueue清除失去了软引用对象的SoftReference"><a href="#使用ReferenceQueue清除失去了软引用对象的SoftReference" class="headerlink" title="使用ReferenceQueue清除失去了软引用对象的SoftReference"></a>使用ReferenceQueue清除失去了软引用对象的SoftReference</h4><p>　　作为一个Java对象，SoftReference对象除了具有保存软引用的特殊性之外，也具有Java对象的一般性。所以，当软可及对象被回收之后， 虽然这个SoftReference对象的get()方法返回null,但这个SoftReference对象已经不再具有存在的价值，需要一个适当的清 除机制，避免大量SoftReference对象带来的内存泄漏。在java.lang.ref包里还提供了ReferenceQueue。如果在创建 SoftReference对象的时候，使用了一个ReferenceQueue对象作为参数提供给SoftReference的构造方法，如:</p>
-<p>　　那么当这个SoftReference所软引用的aMyOhject被垃圾收集器回收的同时，ref所强引用的SoftReference对象被列入 ReferenceQueue。也就是说，ReferenceQueue中保存的对象是Reference对象，而且是已经失去了它所软引用的对象的 Reference对象。另外从ReferenceQueue这个名字也可以看出，它是一个队列，当我们调用它的poll()方法的时候，如果这个队列中 不是空队列，那么将返回队列前面的那个Reference对象。<br>　　<br>　　在任何时候，我们都可以调用ReferenceQueue的poll()方法来检查是否有它所关心的非强可及对象被回收。如果队列为空，将返回一个 null,否则该方法返回队列中前面的一个Reference对象。利用这个方法，我们可以检查哪个SoftReference所软引用的对象已经被回 收。于是我们可以把这些失去所软引用的对象的SoftReference对象清除掉。常用的方式为:</p>
-<p>　　理解了ReferenceQueue的工作机制之后，我们就可以开始构造一个Java对象的高速缓存器了。</p>
-<h4 id="通过软可及对象重获方法实现Java对象的高速缓存"><a href="#通过软可及对象重获方法实现Java对象的高速缓存" class="headerlink" title="通过软可及对象重获方法实现Java对象的高速缓存"></a>通过软可及对象重获方法实现Java对象的高速缓存</h4><p>　　利用Java2平台垃圾收集机制的特性以及前述的垃圾对象重获方法，我们通过一个雇员信息查询系统的小例子来说明如何构建一种高速缓存器来避免重复构建同一个对象带来的性能损失。我们将一个雇员的档案信息定义为一个Employee类:<br>　　<br>　　这个Employee类的构造方法中我们可以预见，如果每次需要查询一个雇员的信息。哪怕是几秒中之前刚刚查询过的，都要重新构建一个实例，这是需要消耗很多时间的。下面是一个对Employee对象进行缓存的缓存器的定义:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.ref.ReferenceQueue;      </div><div class="line"><span class="keyword">import</span> java.lang.ref.SoftReference;      </div><div class="line"><span class="keyword">import</span> java.util.Hashtable;      </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeCache</span> </span>&#123;      </div><div class="line">    <span class="keyword">static</span> <span class="keyword">private</span> EmployeeCache cache;<span class="comment">// 一个Cache实例      </span></div><div class="line">    <span class="keyword">private</span> Hashtable employeeRefs;<span class="comment">// 用于Cache内容的存储      </span></div><div class="line">    <span class="keyword">private</span> ReferenceQueue q;<span class="comment">// 垃圾Reference的队列      </span></div><div class="line">       </div><div class="line">    <span class="comment">// 继承SoftReference，使得每一个实例都具有可识别的标识。      </span></div><div class="line">    <span class="comment">// 并且该标识与其在HashMap内的key相同。      </span></div><div class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeRef</span> <span class="keyword">extends</span> <span class="title">SoftReference</span> </span>&#123;      </div><div class="line">       <span class="keyword">private</span> String _key = <span class="string">""</span>;      </div><div class="line">       </div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="title">EmployeeRef</span><span class="params">(Employee em, ReferenceQueue q)</span> </span>&#123;      </div><div class="line">           <span class="keyword">super</span>(em, q);      </div><div class="line">           _key = em.getID();      </div><div class="line">       &#125;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 构建一个缓存器实例      </span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">EmployeeCache</span><span class="params">()</span> </span>&#123;      </div><div class="line">       employeeRefs = <span class="keyword">new</span> Hashtable();      </div><div class="line">       q = <span class="keyword">new</span> ReferenceQueue();      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 取得缓存器实例      </span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EmployeeCache <span class="title">getInstance</span><span class="params">()</span> </span>&#123;      </div><div class="line">       <span class="keyword">if</span> (cache == <span class="keyword">null</span>) &#123;      </div><div class="line">           cache = <span class="keyword">new</span> EmployeeCache();      </div><div class="line">       &#125;      </div><div class="line">       <span class="keyword">return</span> cache;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 以软引用的方式对一个Employee对象的实例进行引用并保存该引用      </span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cacheEmployee</span><span class="params">(Employee em)</span> </span>&#123;      </div><div class="line">       cleanCache();<span class="comment">// 清除垃圾引用      </span></div><div class="line">       EmployeeRef ref = <span class="keyword">new</span> EmployeeRef(em, q);      </div><div class="line">       employeeRefs.put(em.getID(), ref);      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 依据所指定的ID号，重新获取相应Employee对象的实例      </span></div><div class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">getEmployee</span><span class="params">(String ID)</span> </span>&#123;      </div><div class="line">       Employee em = <span class="keyword">null</span>;      </div><div class="line">       <span class="comment">// 缓存中是否有该Employee实例的软引用，如果有，从软引用中取得。      </span></div><div class="line">       <span class="keyword">if</span> (employeeRefs.containsKey(ID)) &#123;      </div><div class="line">           EmployeeRef ref = (EmployeeRef) employeeRefs.get(ID);      </div><div class="line">           em = (Employee) ref.get();      </div><div class="line">       &#125;      </div><div class="line">       <span class="comment">// 如果没有软引用，或者从软引用中得到的实例是null，重新构建一个实例，      </span></div><div class="line">       <span class="comment">// 并保存对这个新建实例的软引用      </span></div><div class="line">       <span class="keyword">if</span> (em == <span class="keyword">null</span>) &#123;      </div><div class="line">           em = <span class="keyword">new</span> Employee(ID);      </div><div class="line">           System.out.println(<span class="string">"Retrieve From EmployeeInfoCenter. ID="</span> + ID);      </div><div class="line">           <span class="keyword">this</span>.cacheEmployee(em);      </div><div class="line">       &#125;      </div><div class="line">       <span class="keyword">return</span> em;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 清除那些所软引用的Employee对象已经被回收的EmployeeRef对象      </span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cleanCache</span><span class="params">()</span> </span>&#123;      </div><div class="line">       EmployeeRef ref = <span class="keyword">null</span>;      </div><div class="line">       <span class="keyword">while</span> ((ref = (EmployeeRef) q.poll()) != <span class="keyword">null</span>) &#123;      </div><div class="line">           employeeRefs.remove(ref._key);      </div><div class="line">       &#125;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="comment">// 清除Cache内的全部内容      </span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clearCache</span><span class="params">()</span> </span>&#123;      </div><div class="line">       cleanCache();      </div><div class="line">       employeeRefs.clear();      </div><div class="line">       System.gc();      </div><div class="line">       System.runFinalization();      </div><div class="line">    &#125;      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="使用弱引用构建非敏感数据的缓存"><a href="#使用弱引用构建非敏感数据的缓存" class="headerlink" title="使用弱引用构建非敏感数据的缓存"></a>使用弱引用构建非敏感数据的缓存</h2><h5 id="全局ap造成的内存泄漏"><a href="#全局ap造成的内存泄漏" class="headerlink" title="全局ap造成的内存泄漏"></a>全局ap造成的内存泄漏</h5><p>　　无意识对象保留最常见的原因是使用Map将元数据与临时对象（transient object）相关联。假定一个对象具有中等生命周期，比分配它的那个方法调用的生命周期长，但是比应用程序的生命周期短，如客户机的套接字连接。需要将 一些元数据与这个套接字关联，如生成连接的用户的标识。在创建Socket时是不知道这些信息的，并且不能将数据添加到Socket对象上，因为不能控制 Socket 类或者它的子类。这时，典型的方法就是在一个全局 Map 中存储这些信息，如下面的 SocketManager 类所示：使用一个全局 Map 将元数据关联到一个对象。</p>
-<p>　　这种方法的问题是元数据的生命周期需要与套接字的生命周期挂钩，但是除非准确地知道什么时候程序不再需要这个套接字，并记住从 Map 中删除相应的映射，否则，Socket 和 User 对象将会永远留在 Map 中，远远超过响应了请求和关闭套接字的时间。这会阻止 Socket 和 User 对象被垃圾收集，即使应用程序不会再使用它们。这些对象留下来不受控制，很容易造成程序在长时间运行后内存爆满。除了最简单的情况，在几乎所有情况下找出 什么时候 Socket 不再被程序使用是一件很烦人和容易出错的任务，需要人工对内存进行管理。</p>
-<h4 id="如何使用WeakHashMap"><a href="#如何使用WeakHashMap" class="headerlink" title="如何使用WeakHashMap"></a>如何使用WeakHashMap</h4><p>　　在Java集合中有一种特殊的Map类型—WeakHashMap，在这种Map中存放了键对象的弱引用，当一个键对象被垃圾回收器回收时，那么相应的值 对象的引用会从Map中删除。WeakHashMap能够节约存储空间，可用来缓存那些非必须存在的数据。关于Map接口的一般用法。</p>
-<p>　　下面示例中MapCache类的main()方法创建了一个WeakHashMap对象，它存放了一组Key对象的弱引用，此外main()方法还创建了一个数组对象，它存放了部分Key对象的强引用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.WeakHashMap;      </div><div class="line">       </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Element</span> </span>&#123;      </div><div class="line">    <span class="keyword">private</span> String ident;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Element</span><span class="params">(String id)</span> </span>&#123;      </div><div class="line">       ident = id;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;      </div><div class="line">       <span class="keyword">return</span> ident;      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;      </div><div class="line">       <span class="keyword">return</span> ident.hashCode();      </div><div class="line">    &#125;      </div><div class="line">       </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;      </div><div class="line">       <span class="keyword">return</span> obj <span class="keyword">instanceof</span> Element &amp;&amp; ident.equals(((Element) obj).ident);      </div><div class="line">    &#125;      </div><div class="line">          </div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span></span>&#123;      </div><div class="line">       System.out.println(<span class="string">"Finalizing "</span>+getClass().getSimpleName()+<span class="string">" "</span>+ident);      </div><div class="line">    &#125;      </div><div class="line">&#125;      </div><div class="line">       </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Key</span> <span class="keyword">extends</span> <span class="title">Element</span></span>&#123;      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Key</span><span class="params">(String id)</span></span>&#123;      </div><div class="line">       <span class="keyword">super</span>(id);      </div><div class="line">    &#125;      </div><div class="line">&#125;      </div><div class="line">       </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Value</span> <span class="keyword">extends</span> <span class="title">Element</span></span>&#123;      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Value</span> <span class="params">(String id)</span></span>&#123;      </div><div class="line">       <span class="keyword">super</span>(id);      </div><div class="line">    &#125;      </div><div class="line">&#125;      </div><div class="line">       </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CanonicalMapping</span> </span>&#123;      </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;      </div><div class="line">       <span class="keyword">int</span> size=<span class="number">1000</span>;      </div><div class="line">       Key[] keys=<span class="keyword">new</span> Key[size];      </div><div class="line">       WeakHashMap map=<span class="keyword">new</span> WeakHashMap();      </div><div class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt; SPAN&gt;    </div><div class="line">           Key k=<span class="keyword">new</span> Key(Integer.toString(i));      </div><div class="line">           Value v=<span class="keyword">new</span> Value(Integer.toString(i));      </div><div class="line">           <span class="keyword">if</span>(i%<span class="number">3</span>==<span class="number">0</span>)      </div><div class="line">              keys[i]=k;      </div><div class="line">           map.put(k, v);      </div><div class="line">       &#125;      </div><div class="line">       System.gc();      </div><div class="line">    &#125;      </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>　　从打印结果可以看出，当执行System.gc()方法后，垃圾回收器只会回收那些仅仅持有弱引用的Key对象。id可以被3整除的Key对象持有强引用，因此不会被回收。</p>
-<h4 id="用-WeakHashMap-堵住泄漏"><a href="#用-WeakHashMap-堵住泄漏" class="headerlink" title="用 WeakHashMap 堵住泄漏"></a>用 WeakHashMap 堵住泄漏</h4><p>　　在 SocketManager 中防止泄漏很容易，只要用 WeakHashMap 代替 HashMap 就行了。（这里假定SocketManager不需要线程安全）。当映射的生命周期必须与键的生命周期联系在一起时，可以使用这种方法。用 WeakHashMap修复 SocketManager。</p>
-<h4 id="配合使用引用队列"><a href="#配合使用引用队列" class="headerlink" title="配合使用引用队列"></a>配合使用引用队列</h4><p>　　WeakHashMap 用弱引用承载映射键，这使得应用程序不再使用键对象时它们可以被垃圾收集，get() 实现可以根据 WeakReference.get() 是否返回 null 来区分死的映射和活的映射。但是这只是防止 Map 的内存消耗在应用程序的生命周期中不断增加所需要做的工作的一半，还需要做一些工作以便在键对象被收集后从 Map 中删除死项。否则，Map 会充满对应于死键的项。虽然这对于应用程序是不可见的，但是它仍然会造成应用程序耗尽内存。 </p>
-<p>　　引用队列是垃圾收集器向应用程序返回关于对象生命周期的信息的主要方法。弱引用有个构造函数取引用队列作为参数。如果用关联的引用队列创建弱引用，在弱引用对象成为 GC 候选对象时，这个引用对象就在引用清除后加入到引用队列中（具体参考上文软引用示例）。</p>
-<p>　　WeakHashMap 有一个名为 expungeStaleEntries() 的私有方法，大多数 Map 操作中会调用它，它去掉引用队列中所有失效的引用，并删除关联的映射。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/11/聊聊并发-Java中的Copy-On-Write容器/" itemprop="url">
-                  聊聊并发-Java中的Copy-On-Write容器
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T14:56:05+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java-基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java_基础</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://ifeve.com/java-copy-on-write/" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
-<p>　　Copy-On-Write简称COW，是一种用于程序设计中的优化策略。其基本思路是，从一开始大家都在共享同一个内容，当某个人想要修改这个内容的时候，才会真正把内容Copy出去形成一个新的内容然后再改，这是一种延时懒惰策略。从JDK1.5开始Java并发包里提供了两个使用CopyOnWrite机制实现的并发容器,它们是CopyOnWriteArrayList和CopyOnWriteArraySet。CopyOnWrite容器非常有用，可以在非常多的并发场景中使用到。</p>
-<h2 id="什么是CopyOnWrite容器"><a href="#什么是CopyOnWrite容器" class="headerlink" title="什么是CopyOnWrite容器"></a>什么是CopyOnWrite容器</h2><p>　　CopyOnWrite容器即写时复制的容器。通俗的理解是当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器。这样做的好处是我们可以对CopyOnWrite容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以CopyOnWrite容器也是一种读写分离的思想，读和写不同的容器。</p>
-<h2 id="CopyOnWriteArrayList的实现原理"><a href="#CopyOnWriteArrayList的实现原理" class="headerlink" title="CopyOnWriteArrayList的实现原理"></a>CopyOnWriteArrayList的实现原理</h2><p>　　在使用CopyOnWriteArrayList之前，我们先阅读其源码了解下它是如何实现的。以下代码是向ArrayList里添加元素，可以发现在添加的时候是需要加锁的，否则多线程写的时候会Copy出N个副本出来。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(T e)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</div><div class="line">    lock.lock();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">        Object[] elements = getArray();</div><div class="line">        <span class="keyword">int</span> len = elements.length;</div><div class="line">        <span class="comment">// 复制出新数组</span></div><div class="line">        Object[] newElements = Arrays.copyOf(elements, len + <span class="number">1</span>);</div><div class="line">        <span class="comment">// 把新元素添加到新数组里</span></div><div class="line">        newElements[len] = e;</div><div class="line">        <span class="comment">// 把原数组引用指向新数组</span></div><div class="line">        setArray(newElements);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        lock.unlock();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setArray</span><span class="params">(Object[] a)</span> </span>&#123;</div><div class="line">    array = a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>　　读的时候不需要加锁，如果读的时候有多个线程正在向ArrayList添加数据，读还是会读到旧的数据，因为写的时候不会锁住旧的ArrayList。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> get(getArray(), index);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>　　JDK中并没有提供CopyOnWriteMap，我们可以参考CopyOnWriteArrayList来实现一个，基本代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Collection;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CopyOnWriteMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;, <span class="title">Cloneable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> Map&lt;K, V&gt; internalMap;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CopyOnWriteMap</span><span class="params">()</span> </span>&#123;</div><div class="line">        internalMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            Map&lt;K, V&gt; newMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;(internalMap);</div><div class="line">            V val = newMap.put(key, value);</div><div class="line">            internalMap = newMap;</div><div class="line">            <span class="keyword">return</span> val;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> internalMap.get(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; newData)</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            Map&lt;K, V&gt; newMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;(internalMap);</div><div class="line">            newMap.putAll(newData);</div><div class="line">            internalMap = newMap;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>　　实现很简单，只要了解了CopyOnWrite机制，我们可以实现各种CopyOnWrite容器，并且在不同的应用场景中使用。</p>
-<h2 id="CopyOnWrite的应用场景"><a href="#CopyOnWrite的应用场景" class="headerlink" title="CopyOnWrite的应用场景"></a>CopyOnWrite的应用场景</h2><p>　　CopyOnWrite并发容器用于读多写少的并发场景。比如白名单，黑名单，商品类目的访问和更新场景，假如我们有一个搜索网站，用户在这个网站的搜索框中，输入关键字搜索内容，但是某些关键字不允许被搜索。这些不能被搜索的关键字会被放在一个黑名单当中，黑名单每天晚上更新一次。当用户搜索时，会检查当前关键字在不在黑名单当中，如果在，则提示不能搜索。实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.ifeve.book;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> com.ifeve.book.forkjoin.CopyOnWriteMap;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 黑名单服务</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span> fangtengfei</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlackListServiceImpl</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CopyOnWriteMap&lt;String, Boolean&gt; blackListMap = <span class="keyword">new</span> CopyOnWriteMap&lt;String, Boolean&gt;(</div><div class="line">            <span class="number">1000</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isBlackList</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> blackListMap.get(id) == <span class="keyword">null</span> ? <span class="keyword">false</span> : <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addBlackList</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        blackListMap.put(id, Boolean.TRUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 批量添加黑名单</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> ids</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addBlackList</span><span class="params">(Map&lt;String,Boolean&gt; ids)</span> </span>&#123;</div><div class="line">        blackListMap.putAll(ids);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>代码很简单，但是使用CopyOnWriteMap需要注意两件事情：</strong></p>
-<ol>
-<li>减少扩容开销。根据实际需要，初始化CopyOnWriteMap的大小，避免写时CopyOnWriteMap扩容的开销。</li>
-<li>使用批量添加。因为每次添加，容器每次都会进行复制，所以减少添加次数，可以减少容器的复制次数。如使用上面代码里的addBlackList方法。</li>
-</ol>
-<h2 id="CopyOnWrite的缺点"><a href="#CopyOnWrite的缺点" class="headerlink" title="CopyOnWrite的缺点"></a>CopyOnWrite的缺点</h2><p>　　CopyOnWrite容器有很多优点，但是同时也存在两个问题，即内存占用问题和数据一致性问题。所以在开发的时候需要注意一下。</p>
-<p>　　内存占用问题。因为CopyOnWrite的写时复制机制，所以在进行写操作的时候，内存里会同时驻扎两个对象的内存，旧的对象和新写入的对象（注意:在复制的时候只是复制容器里的引用，只是在写的时候会创建新对象添加到新容器里，而旧容器的对象还在使用，所以有两份对象内存）。如果这些对象占用的内存比较大，比如说200M左右，那么再写入100M数据进去，内存就会占用300M，那么这个时候很有可能造成频繁的Yong GC和Full GC。之前我们系统中使用了一个服务由于每晚使用CopyOnWrite机制更新大对象，造成了每晚15秒的Full GC，应用响应时间也随之变长。</p>
-<p>　　针对内存占用问题，可以通过压缩容器中的元素的方法来减少大对象的内存消耗，比如，如果元素全是10进制的数字，可以考虑把它压缩成36进制或64进制。或者不使用CopyOnWrite容器，而使用其他的并发容器，如ConcurrentHashMap。</p>
-<p>　　数据一致性问题。CopyOnWrite容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的的数据，马上能读到，请不要使用CopyOnWrite容器。</p>
-<p>　　关于C++的STL中，曾经也有过Copy-On-Write的玩法，参见陈皓的《C++ STL String类中的Copy-On-Write》，后来，因为有很多线程安全上的事，就被去掉了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/09/11/详细介绍Java垃圾回收机制/" itemprop="url">
                   详细介绍Java垃圾回收机制
                 </a>
@@ -2173,136 +2354,6 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/11/java中Date, DateFormat的一些方法总结/" itemprop="url">
-                  java中Date, DateFormat的一些方法总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T10:34:07+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java-基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java_基础</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://blog.csdn.net/woshisap/article/details/6617118/" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
-<p><strong>DateDemo1.java</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/* </span></div><div class="line"> * 取得系统的时间 </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo1</span> </span>&#123;  </div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">		System.out.println(System.currentTimeMillis());  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>输出为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">1311060393171</span></div></pre></td></tr></table></figure></p>
-<p>　　执行结果会显示从1970年1月1日开始到取得系统时间为止所经过的毫秒数，例如1115346430703这个数字，但这样的数字没有人确切了解它的意 义是什么，您可以使用Date类别来让这个数字变的更有意义一些</p>
-<p><strong>DateDemo2.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo2</span> </span>&#123;  </div><div class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"deprecation"</span>)  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">          </div><div class="line">        System.out.println(<span class="string">"date.toString: "</span> + date.toString());  </div><div class="line">        System.out.println(<span class="string">"date: "</span> + date.getDate());  </div><div class="line">        System.out.println(<span class="string">"day: "</span> + date.getDay());  </div><div class="line">        System.out.println(<span class="string">"hour: "</span> + date.getHours());  </div><div class="line">        System.out.println(<span class="string">"minutes: "</span> + date.getMinutes());  </div><div class="line">        System.out.println(<span class="string">"month: "</span> + (date.getMonth() + <span class="number">1</span>));  </div><div class="line">        System.out.println(<span class="string">"seconds: "</span> + date.getSeconds());  </div><div class="line">        System.out.println(<span class="string">"time: "</span> + date.getTime());  </div><div class="line">        System.out.println(<span class="string">"timezone: "</span> + date.getTimezoneOffset());  </div><div class="line">        System.out.println(<span class="string">"year: "</span> + (date.getYear() + <span class="number">1900</span>));  </div><div class="line">          </div><div class="line">        Calendar calendar = Calendar.getInstance();  </div><div class="line">        <span class="keyword">int</span> year = calendar.get(Calendar.YEAR);  </div><div class="line">        <span class="keyword">int</span> month = calendar.get(Calendar.MONTH) + <span class="number">1</span>;  </div><div class="line">        <span class="keyword">int</span> day = calendar.get(Calendar.DATE);  </div><div class="line">        <span class="keyword">int</span> hour = calendar.get(Calendar.HOUR);  </div><div class="line">        <span class="keyword">int</span> minute = calendar.get(Calendar.MINUTE);  </div><div class="line">        <span class="keyword">int</span> second = calendar.get(Calendar.SECOND);  </div><div class="line">          </div><div class="line">        System.out.println(<span class="string">"----------Calendar-------"</span>);  </div><div class="line">        System.out.println(<span class="string">"year: "</span> + year);  </div><div class="line">        System.out.println(<span class="string">"month: "</span> + month);  </div><div class="line">        System.out.println(<span class="string">"day: "</span> + day);  </div><div class="line">        System.out.println(<span class="string">"hour: "</span> + hour);  </div><div class="line">        System.out.println(<span class="string">"minute: "</span> + minute);  </div><div class="line">        System.out.println(<span class="string">"second: "</span> + second);  </div><div class="line">          </div><div class="line">    	&#125;  </div><div class="line">	&#125;    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>　　用date获得时间的值，如时、分、秒、月、日、年得方法已经过时，需要改用Calendar的方法来获取时间的值,输出结果为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">date.toString: Tue Jul <span class="number">19</span> <span class="number">15</span>:<span class="number">32</span>:<span class="number">42</span> CST <span class="number">2011</span>  </div><div class="line">date: <span class="number">19</span>  </div><div class="line">day: <span class="number">2</span>  </div><div class="line">hour: <span class="number">15</span>  </div><div class="line">minutes: <span class="number">32</span>  </div><div class="line">month: <span class="number">7</span>  </div><div class="line">seconds: <span class="number">42</span>  </div><div class="line">time: <span class="number">1311060762362</span>  </div><div class="line">timezone: -<span class="number">480</span>  </div><div class="line">year: <span class="number">2011</span>  </div><div class="line">----------Calendar-------  </div><div class="line">year: <span class="number">2011</span>  </div><div class="line">month: <span class="number">7</span>  </div><div class="line">day: <span class="number">19</span>  </div><div class="line">hour: <span class="number">3</span>  </div><div class="line">minute: <span class="number">32</span>  </div><div class="line">second: <span class="number">42</span></div></pre></td></tr></table></figure>
-<p><strong>DateDemo3.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo3</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">          </div><div class="line">        <span class="comment">/* </span></div><div class="line">         * DateFormat会依电脑上的区域设定显示时间格式，EE表示星期，MM表示月份、dd表示日期，而yyyy是西元，每个字元的设定都各有其意义 </div><div class="line">         * 从Date--&gt;String </div><div class="line">         */  </div><div class="line">        DateFormat dateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"EE-MM-dd-yyyy"</span>);  </div><div class="line">        System.out.println(dateFormat.format(date));  </div><div class="line">          </div><div class="line">        DateFormat format1 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);  </div><div class="line">        System.out.println(format1.format(date));  </div><div class="line">          </div><div class="line">        DateFormat format2 = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);  </div><div class="line">        System.out.println(format2.format(date));  </div><div class="line">      </div><div class="line">        <span class="comment">/* </span></div><div class="line">         * 从String--&gt;Date </div><div class="line">         */  </div><div class="line">        String dateStr = <span class="string">"2011-7-19"</span>;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            Date dateTrans = format1.parse(dateStr);  </div><div class="line">            <span class="comment">//System.out.println(dateTrans.toString());   </span></div><div class="line">            System.out.println(dateTrans.toLocaleString());  <span class="comment">//转换为本地的形式  </span></div><div class="line">        &#125; <span class="keyword">catch</span> (ParseException e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">          </div><div class="line">    &#125;  </div><div class="line">&#125;</div><div class="line">```  </div><div class="line"></div><div class="line"> 　　使用DateFormat来格式化日期数据，上面部分为从Date--&gt;String，下面的部分为从String--&gt;Date，输出结果为：</div><div class="line"></div><div class="line">``` java</div><div class="line">星期二-<span class="number">07</span>-<span class="number">19</span>-<span class="number">2011</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">19</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">07</span>-<span class="number">19</span> <span class="number">15</span>:<span class="number">33</span>:<span class="number">27</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">7</span>-<span class="number">19</span> <span class="number">0</span>:<span class="number">00</span>:<span class="number">00</span></div></pre></td></tr></table></figure></p>
-<p><strong>DateDemo4.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo4</span> </span>&#123;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">          </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">        DateFormat shortFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);  </div><div class="line">        DateFormat mediumFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);  </div><div class="line">        DateFormat longFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);  </div><div class="line">        DateFormat fullFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);  </div><div class="line">          </div><div class="line">        System.out.println(shortFormat.format(date));  </div><div class="line">        System.out.println(mediumFormat.format(date));  </div><div class="line">        System.out.println(longFormat.format(date));  </div><div class="line">        System.out.println(fullFormat.format(date));  </div><div class="line">          </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>输出结果为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">11</span>-<span class="number">7</span>-<span class="number">19</span> 下午<span class="number">3</span>:<span class="number">33</span>  </div><div class="line"><span class="number">2011</span>-<span class="number">7</span>-<span class="number">19</span> <span class="number">15</span>:<span class="number">33</span>:<span class="number">54</span>  </div><div class="line"><span class="number">2011</span>年<span class="number">7</span>月<span class="number">19</span>日 下午<span class="number">03</span>时<span class="number">33</span>分<span class="number">54</span>秒  </div><div class="line"><span class="number">2011</span>年<span class="number">7</span>月<span class="number">19</span>日 星期二 下午<span class="number">03</span>时<span class="number">33</span>分<span class="number">54</span>秒 CST</div></pre></td></tr></table></figure></p>
-<p><strong>DateDemo5.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateDemo5</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;  </div><div class="line">        Date date = <span class="keyword">new</span> Date();  </div><div class="line">          </div><div class="line">        Locale locale = <span class="keyword">new</span> Locale(<span class="string">"en"</span>, <span class="string">"US"</span>);  </div><div class="line">          </div><div class="line">        DateFormat shortDateFormat = DateFormat.getDateInstance(DateFormat.SHORT, locale);  </div><div class="line">        DateFormat mediumDateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);  </div><div class="line">        DateFormat longDateFormat = DateFormat.getDateInstance(DateFormat.LONG, locale);  </div><div class="line">        DateFormat fullDateFormat = DateFormat.getDateInstance(DateFormat.FULL, locale);  </div><div class="line">          </div><div class="line">        System.out.println(shortDateFormat.format(date));  </div><div class="line">        System.out.println(mediumDateFormat.format(date));  </div><div class="line">        System.out.println(longDateFormat.format(date));  </div><div class="line">        System.out.println(fullDateFormat.format(date));  </div><div class="line">          </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>输出结果为：</p>
-<pre><code class="java"><span class="number">7</span>/<span class="number">19</span>/<span class="number">11</span>  
-Jul <span class="number">19</span>, <span class="number">2011</span>  
-July <span class="number">19</span>, <span class="number">2011</span>  
-Tuesday, July <span class="number">19</span>, <span class="number">2011</span>
-</code></pre>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2348,7 +2399,7 @@ Tuesday, July <span class="number">19</span>, <span class="number">2011</span>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2365,7 +2416,7 @@ Tuesday, July <span class="number">19</span>, <span class="number">2011</span>
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
