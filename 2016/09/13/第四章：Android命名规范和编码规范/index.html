@@ -102,7 +102,7 @@ Android命名规范Java类文件命名规范
 Activity：以Activity作为后缀，比如PersonActivity。
 Adapter：以Adapter作为后缀，比如PersonAdapter。
 Entity：大多以Enti">
-<meta property="og:updated_time" content="2016-09-15T14:50:18.729Z">
+<meta property="og:updated_time" content="2016-09-15T15:27:50.734Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第四章：Android命名规范和编码规范">
 <meta name="twitter:description" content="制定规范不需要太多的理论知识，只要记住两点就够了：尽量简单，多写注释！
@@ -351,26 +351,22 @@ Entity：大多以Enti">
 <li><p>Layout中的常量，要在strings.xml中定义，</p>
 </li>
 <li>Layout中所有控件的字体大小，都定义在dinens.xml中</li>
-<li>在Activity中定义新的生命周期</li>
-</ol>
-<ul>
+<li>在Activity中定义新的生命周期<ul>
 <li>initVariables：初始化变量，包括Intent带的数据和Activity内的变量</li>
 <li>initViews：加载Layout布局文件，初始化控件，为控件挂上事件的方法</li>
 <li>loadData：获取数据</li>
 </ul>
-<ol>
+</li>
 <li>坚持使用fastJSON自定义实体来作为MobileAPI的数据载体（不知道为什么不提GSON。。）<br>像JSONObject，JSONArray，Map<string, object="">，ArrayList&lt; Object&gt;,这些不能序列化的实体，都禁止使用，除非仅仅是在方法内部。</string,></li>
 <li>页面之间传值，坚持使用Intent携带序列化实体数据的方式，禁止为了方便使用全局变量</li>
 <li>为控件添加事件，使用匿名内部类</li>
 <li>Activity中不要嵌套内部类，</li>
-<li>Adapter的编码规范</li>
-</ol>
-<ul>
+<li>Adapter的编码规范<ul>
 <li>所有Adapter，都放在adapter这个包中</li>
 <li>Adapter绑定的数据，一律为ArrayList&lt;自定义可序列化实体&gt;</li>
 <li>在Adapter中创建适合于列表自身的ViewHolder实体类，统一命名为ViewHolder</li>
 </ul>
-<ol>
+</li>
 <li>实体类不要再不同模块之间共享，但是可以在同一模块的不同页面之间共享</li>
 <li>为了节省内存，可以使用ArrayList而不是HashMap</li>
 <li>大量的图片，使用ImageLoader或者Fresco来进行异步加载</li>
