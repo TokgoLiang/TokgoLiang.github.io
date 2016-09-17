@@ -1,0 +1,704 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,原创,App研发录,规范," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="制定规范不需要太多的理论知识，只要记住两点就够了：尽量简单，多写注释！
+
+但是也很多人认为注释是越少也好，我更赞同，当然这是建立在你的代码非常容易理解的基础之上！！
+Android命名规范Java类文件命名规范
+Activity：以Activity作为后缀，比如PersonActivity。
+Adapter：以Adapter作为后缀，比如PersonAdapter。
+Entity：大多以Enti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四章：Android命名规范和编码规范">
+<meta property="og:url" content="http://yoursite.com/2016/09/14/第四章：Android命名规范和编码规范/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="制定规范不需要太多的理论知识，只要记住两点就够了：尽量简单，多写注释！
+
+但是也很多人认为注释是越少也好，我更赞同，当然这是建立在你的代码非常容易理解的基础之上！！
+Android命名规范Java类文件命名规范
+Activity：以Activity作为后缀，比如PersonActivity。
+Adapter：以Adapter作为后缀，比如PersonAdapter。
+Entity：大多以Enti">
+<meta property="og:updated_time" content="2016-09-17T14:24:28.472Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第四章：Android命名规范和编码规范">
+<meta name="twitter:description" content="制定规范不需要太多的理论知识，只要记住两点就够了：尽量简单，多写注释！
+
+但是也很多人认为注释是越少也好，我更赞同，当然这是建立在你的代码非常容易理解的基础之上！！
+Android命名规范Java类文件命名规范
+Activity：以Activity作为后缀，比如PersonActivity。
+Adapter：以Adapter作为后缀，比如PersonAdapter。
+Entity：大多以Enti">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/14/第四章：Android命名规范和编码规范/"/>
+
+  <title> 第四章：Android命名规范和编码规范 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第四章：Android命名规范和编码规范
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-14T22:31:06+08:00" content="2016-09-14">
+              2016-09-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>制定规范不需要太多的理论知识，只要记住两点就够了：尽量简单，多写注释！</p>
+</blockquote>
+<p><strong>但是也很多人认为注释是越少也好，我更赞同，当然这是建立在你的代码非常容易理解的基础之上！！</strong></p>
+<h1 id="Android命名规范"><a href="#Android命名规范" class="headerlink" title="Android命名规范"></a>Android命名规范</h1><h2 id="Java类文件命名规范"><a href="#Java类文件命名规范" class="headerlink" title="Java类文件命名规范"></a>Java类文件命名规范</h2><ul>
+<li>Activity：以Activity作为后缀，比如PersonActivity。</li>
+<li>Adapter：以Adapter作为后缀，比如PersonAdapter。</li>
+<li>Entity：大多以Entity作为后缀，比如PersonEntity，值得注意的是User是全局变量，不算是实体，不受此约束。</li>
+</ul>
+<h2 id="资源文件命名规范"><a href="#资源文件命名规范" class="headerlink" title="资源文件命名规范"></a>资源文件命名规范</h2><p><strong>layout目录下的文件</strong></p>
+<ul>
+<li>页面布局文件，以act_为前缀，Activity所在Package为中缀，Activity名称（去掉Activity）作为后缀，都是小写。例如Person模块下AddCustomerActivity对应的layout文件该是：act_person_addcustomer，不过我自己习惯activity_add_customer；</li>
+<li>ListView中的item布局文件，以item_为前缀，列表项的名称为后缀，如item_users;</li>
+<li>Dialog布局文件，以dlg_为前缀，Dialog的功能名称为后缀，如dlg_hint，我还是习惯dialog_hint。</li>
+</ul>
+<p><strong>drawable（或者mipmap）目录下文件命名规范：</strong></p>
+<ul>
+<li>drawable目录下的资源，大部分是图片，此外，还有一部分xml文件。无论是图片还是xml文件，都应该遵循以下的命名规范：</li>
+<li>对于只在一个页面使用的资源，就以该页面的名称做前缀。</li>
+<li>对于只在一个模块下多个页面是用的资源，就以该模块的名称作为前缀，</li>
+<li>对于在各个模块，各个页面都有可能使用的资源，比如上导航，下导航，，以common最为前缀。</li>
+</ul>
+<h2 id="Java类中控件对象命名规范"><a href="#Java类中控件对象命名规范" class="headerlink" title="Java类中控件对象命名规范"></a>Java类中控件对象命名规范</h2><p>控件类型缩写+控件逻辑名称，如btnLogin</p>
+<h2 id="Layout中控件对象命名规范"><a href="#Layout中控件对象命名规范" class="headerlink" title="Layout中控件对象命名规范"></a>Layout中控件对象命名规范</h2><ul>
+<li>形式一：和Activity中对应的控件名保持一致</li>
+<li>形式二：功能名_控件类型，如login_button</li>
+</ul>
+<p>我还是习惯btn_login</p>
+<h2 id="strings-xml中常量命名规范"><a href="#strings-xml中常量命名规范" class="headerlink" title="strings.xml中常量命名规范"></a>strings.xml中常量命名规范</h2><p>出现在Activity或者Layout中的，Activity名作为前缀，后面接控件名称，在后面随意例如loginActivity_btnLogin_text(我不习惯这样的。。)，如果涉及和公共模块相关，则以common做前缀</p>
+<h2 id="常量命名"><a href="#常量命名" class="headerlink" title="常量命名"></a>常量命名</h2><p>遵循Java的命名规范，只包含字母和下划线，字母全部大写，单词之间用下划线隔开</p>
+<h1 id="Android编码规范"><a href="#Android编码规范" class="headerlink" title="Android编码规范"></a>Android编码规范</h1><ol>
+<li>要分门别类的存放各种类，</li>
+<li><p>findViewById，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">TextView tvName;</div><div class="line">initView() &#123;</div><div class="line">    tvName = (TextView) findViewById(R.id.tv_name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Layout中的常量，要在strings.xml中定义，</p>
+</li>
+<li>Layout中所有控件的字体大小，都定义在dinens.xml中</li>
+<li>在Activity中定义新的生命周期<ul>
+<li>initVariables：初始化变量，包括Intent带的数据和Activity内的变量</li>
+<li>initViews：加载Layout布局文件，初始化控件，为控件挂上事件的方法</li>
+<li>loadData：获取数据</li>
+</ul>
+</li>
+<li>坚持使用fastJSON自定义实体来作为MobileAPI的数据载体（不知道为什么不提GSON。。）<br>像JSONObject，JSONArray，Map<string, object="">，ArrayList&lt; Object&gt;,这些不能序列化的实体，都禁止使用，除非仅仅是在方法内部。</string,></li>
+<li>页面之间传值，坚持使用Intent携带序列化实体数据的方式，禁止为了方便使用全局变量</li>
+<li>为控件添加事件，使用匿名内部类</li>
+<li>Activity中不要嵌套内部类，</li>
+<li>Adapter的编码规范<ul>
+<li>所有Adapter，都放在adapter这个包中</li>
+<li>Adapter绑定的数据，一律为ArrayList&lt;自定义可序列化实体&gt;</li>
+<li>在Adapter中创建适合于列表自身的ViewHolder实体类，统一命名为ViewHolder</li>
+</ul>
+</li>
+<li>实体类不要再不同模块之间共享，但是可以在同一模块的不同页面之间共享</li>
+<li>为了节省内存，可以使用ArrayList而不是HashMap</li>
+<li>大量的图片，使用ImageLoader或者Fresco来进行异步加载</li>
+<li>什么时候使用SharedPreferences？简单配置信息，设置页面的各种开关。但是对于复杂的对象，还是要存储到本地文件中。</li>
+<li>尽量使用ApplicationContext代替Context，否则会引起内存泄露，当然也不是任何地方都适用。</li>
+<li>数据类型转换一定要进行验证。</li>
+<li>使用常量代替枚举，</li>
+</ol>
+<h1 id="统一代码格式"><a href="#统一代码格式" class="headerlink" title="统一代码格式"></a>统一代码格式</h1><p>在Eclipse中导入Android源码中用于统一代码格式的android-formatting.xml，然后执行快键键Ctrl+shift+f，</p>
+<p>导入方法如下：window–preference–Java–code style–Formatter 导入android-formatting.xml</p>
+<p>推荐一个自动检查工具，checkstyle，</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/原创/" rel="tag">#原创</a>
+          
+            <a href="/tags/App研发录/" rel="tag">#App研发录</a>
+          
+            <a href="/tags/规范/" rel="tag">#规范</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/13/我所理解的OOP——UML六种关系/" rel="next" title="我所理解的OOP——UML六种关系">
+                <i class="fa fa-chevron-left"></i> 我所理解的OOP——UML六种关系
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/17/第五章：Crash异常收集与统计/" rel="prev" title="第五章：Crash异常收集与统计">
+                第五章：Crash异常收集与统计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://qiushao.net/" title="qiushao的博客" target="_blank">qiushao的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android命名规范"><span class="nav-number">1.</span> <span class="nav-text">Android命名规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java类文件命名规范"><span class="nav-number">1.1.</span> <span class="nav-text">Java类文件命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源文件命名规范"><span class="nav-number">1.2.</span> <span class="nav-text">资源文件命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java类中控件对象命名规范"><span class="nav-number">1.3.</span> <span class="nav-text">Java类中控件对象命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layout中控件对象命名规范"><span class="nav-number">1.4.</span> <span class="nav-text">Layout中控件对象命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strings-xml中常量命名规范"><span class="nav-number">1.5.</span> <span class="nav-text">strings.xml中常量命名规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量命名"><span class="nav-number">1.6.</span> <span class="nav-text">常量命名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android编码规范"><span class="nav-number">2.</span> <span class="nav-text">Android编码规范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#统一代码格式"><span class="nav-number">3.</span> <span class="nav-text">统一代码格式</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
