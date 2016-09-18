@@ -248,6 +248,292 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/18/第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常/" itemprop="url">
+                  第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-18T22:56:35+08:00" content="2016-09-18">
+              2016-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Android之所以存在千奇百怪的Crash，主要归结于一下几种情况</p>
+<ol>
+<li>Android系统的碎片化。</li>
+<li>MobileAPI返回了脏数据。</li>
+<li>混淆时没有Keep要使用的类或者方法。</li>
+</ol>
+<h1 id="Java语法相关的异常"><a href="#Java语法相关的异常" class="headerlink" title="Java语法相关的异常"></a>Java语法相关的异常</h1><h2 id="空指针"><a href="#空指针" class="headerlink" title="空指针"></a>空指针</h2><blockquote>
+<p>异常中的关键字：NullPointException</p>
+</blockquote>
+<ol>
+<li>方法需要对传入的参数判空后再使用</li>
+<li>对于外部接口调用，需要确保返回值不为空，甚至需要确保执行该接口不会抛出其他异常导致程序退出</li>
+<li>尽量不要使用全局变量，具体参见3.5节“消灭全局变量”</li>
+</ol>
+<h2 id="角标越界"><a href="#角标越界" class="headerlink" title="角标越界"></a>角标越界</h2><blockquote>
+<p>异常中的关键字：IndexOutOfBoundsExpection，StringIndexOutOfBoundsExpection，ArrayIndexOutOfBoundsExpection</p>
+</blockquote>
+<p>这类Crash也是由于程序的不严谨导致，解决方案是：</p>
+<ol>
+<li>在遍历一个数组/集合时，要预判数组/集合是否为空，长度是否大于0</li>
+<li>在使用数组/集合中的元素时，要预判数组/集合长度是否有这么长</li>
+<li>字符串也是数组，在使用subString(start ,end)这样的函数时要注意start或者end</li>
+</ol>
+<h2 id="试图调用一个空对象的方法"><a href="#试图调用一个空对象的方法" class="headerlink" title="试图调用一个空对象的方法"></a>试图调用一个空对象的方法</h2><blockquote>
+<p>异常中的关键字：Attempt to invoke virtual method on a null object reference</p>
+</blockquote>
+<p>常见情况：</p>
+<ul>
+<li>在if…else..的一个分支中初始化对象，程序未走这个分支</li>
+<li>在ActivityA中调用ActivityB的方法，为此在B中建立一个static变量，当这个变量被回收时</li>
+<li>点击推送消息，根据事先定好的协议，跳过首页直接进入二级甚至三级页面，这是二级页面要使用首页某个对象</li>
+</ul>
+<h2 id="类型转换异常"><a href="#类型转换异常" class="headerlink" title="类型转换异常"></a>类型转换异常</h2><blockquote>
+<p>异常中的关键字：ClassCastException：Class A cannot be cast to classB</p>
+</blockquote>
+<p>这类Crash都是由强制类型转换导致的，解决方案是，使用安全类型转换，参加第一章，1.6节</p>
+<h2 id="数字转换错误"><a href="#数字转换错误" class="headerlink" title="数字转换错误"></a>数字转换错误</h2><blockquote>
+<p>异常中的关键字：NumberFormatException</p>
+</blockquote>
+<p>在数据类型转换过程中，如果转换不成功，一般抛出ClassCastException：Class 的异常，只有一个例外情况，当字符型转换为数字失败时，会抛出NumberFormatException</p>
+<p>这种情况多发生在服务器返回数据，没有按照约定返回整数而死字符串，客户端必须要事先考虑到这种情况，如果转换失败，必须有默认值而不是直接奔溃。</p>
+<h2 id="声明数组时长度为-1"><a href="#声明数组时长度为-1" class="headerlink" title="声明数组时长度为-1"></a>声明数组时长度为-1</h2><blockquote>
+<p>异常中的关键字：NegativeArraySizeException</p>
+</blockquote>
+<p>当使用负数创建数组时会抛出该异常，但程序员不会犯int arr = new int[-1]；这样低级的错误，后来，作者发现了下述语句：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String[] arg1 = <span class="keyword">new</span> String[args.length - <span class="number">1</span>];</div></pre></td></tr></table></figure></p>
+<p>当args数组中没有元素时，就会出现该异常，此外，声明int arr = new int[0];并不会报错，只是毫无意义。在声明一个数组时，如果数组长度是由另外一个变量动态得到的，要保证[]中的值必须大于0.</p>
+<h2 id="遍历集合同时删除其中元素"><a href="#遍历集合同时删除其中元素" class="headerlink" title="遍历集合同时删除其中元素"></a>遍历集合同时删除其中元素</h2><blockquote>
+<p>异常中的关键字：ConcurrentModificationException</p>
+</blockquote>
+<p>但凡有点编程常识的程序员都知道在遍历一个集合时不能删除该集合中的元素，，，解决方案是，再定义一个delList，用来保存需要删除的对象，</p>
+<p>还有另外一种情况产生这种崩溃，那就是在多个线程中修改和遍历同一个集和。解决方法是，使用Copy-On-Write容器</p>
+<h2 id="比较器使用不当"><a href="#比较器使用不当" class="headerlink" title="比较器使用不当"></a>比较器使用不当</h2><blockquote>
+<p>异常中的关键字：Comarison method violastes its general contract!</p>
+</blockquote>
+<p>Comparator，是基于插入排序算法与归并排序算法相结合的产物，信息信息<a href="http://blog.2baxb.me/archives/993" target="_blank" rel="external">http://blog.2baxb.me/archives/993</a> </p>
+<p><strong>正确的用法：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">List&lt;Double&gt; list = <span class="keyword">new</span> ArrayList&lt;Double&gt;();</div><div class="line">list.add(<span class="number">11.4</span>);</div><div class="line">list.add(<span class="number">12.4</span>);</div><div class="line">list.add(<span class="number">11.4</span>);</div><div class="line">list.add(<span class="number">11.7</span>);</div><div class="line">Collections.sort(list, comparator);</div><div class="line">   Comparator&lt;Double&gt; comparator = <span class="keyword">new</span> Comparator&lt;Double&gt;() &#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Double lhs, Double rhs)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span>(lhs &lt; rhs) &#123;</div><div class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (lhs &gt; rhs) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><strong>错误用法:（忽略了相等的情况）</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Comparator&lt;Double&gt; comparator = <span class="keyword">new</span> Comparator&lt;Double&gt;() &#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Double lhs, Double rhs)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> lhs &gt; rhs ? <span class="number">1</span> : -<span class="number">1</span>;</div><div class="line">	&#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>为了预防这类Crash发生，作者的解决方案是，对每个自定义比较器进行单元测试。</p>
+<h2 id="当除数为0"><a href="#当除数为0" class="headerlink" title="当除数为0"></a>当除数为0</h2><blockquote>
+<p>异常中的关键字：java.lang.ArithmeticException:divide by zero</p>
+</blockquote>
+<p>多发生在第三方控件中，比如GifView，注意其中moive的duration，这个值表示动画的持续时间，在接下来得代码中将会作为除数，如果为0就会抛出上述异常，这时候要将其默认值设置为1.</p>
+<h2 id="不能随便使用的asList"><a href="#不能随便使用的asList" class="headerlink" title="不能随便使用的asList"></a>不能随便使用的asList</h2><blockquote>
+<p>异常中的关键字：<br>    java.lang.UnsupportedOperationException<br>    java.util.AbstraactList.remove(AbstractList.java:144) at<br>    java.util.AbstraactList$Itr.remove(AbstractList.java:306) at<br>    java.util.AbstraactCollection.remove(AbstractCollection.java:252) at</p>
+</blockquote>
+<p>Arrays.asList()的返回值类型为java.util.Array$ArrayList，而不是ArrayList，他两的父类都是AbstractList，但是只有ArrayList实现了父类的add和remove。</p>
+<h2 id="又有类找不到了（一）：ClassNotFoundException"><a href="#又有类找不到了（一）：ClassNotFoundException" class="headerlink" title="又有类找不到了（一）：ClassNotFoundException"></a>又有类找不到了（一）：ClassNotFoundException</h2><blockquote>
+<p>异常中的关键字：ClassNotFoundException</p>
+</blockquote>
+<p>常见原因：</p>
+<ul>
+<li>Class.forName(“com.company.package.class”);</li>
+<li>ClassLoader中的findClass(classname);</li>
+<li>ClassLoader中的loadClass(classname);</li>
+</ul>
+<h2 id="又有类找不到了（二）：NoClassDefFoundException"><a href="#又有类找不到了（二）：NoClassDefFoundException" class="headerlink" title="又有类找不到了（二）：NoClassDefFoundException"></a>又有类找不到了（二）：NoClassDefFoundException</h2><blockquote>
+<p>异常中的关键字：NoClassDefFoundException</p>
+</blockquote>
+<p>在B类中声明一个A类的实例，ClassA obj = new ClassA();</p>
+<p>但是打包是A和B分别位于不同的dex中，这时如果A所在的dex吧A删除了，那么在运行时候执行到这句就会抛出NoClassDefFoundException</p>
+<p>通常插件化编程的时候会牵扯到这个异常。</p>
+<h1 id="Activity相关的异常"><a href="#Activity相关的异常" class="headerlink" title="Activity相关的异常"></a>Activity相关的异常</h1><h2 id="找不到Activity"><a href="#找不到Activity" class="headerlink" title="找不到Activity"></a>找不到Activity</h2><blockquote>
+<p>异常中的关键字：android.content.ActivityNotFoundException:No Activity found to handle Intent{…}</p>
+</blockquote>
+<p>出错原因：</p>
+<ol>
+<li><p>Uri不是以http开头</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uri uri = Uri.parse(<span class="string">"www.baidu.com"</span>);</div><div class="line">Intent intent  = <span class="keyword">new</span> Intent(Intent.Action_VIEW, uri);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+<li><p>当我们要打开SD卡上的一个HTML页面时，没有为Intent指定打开该HTML的浏览器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Uri uri = Uri.parse(<span class="string">"file://sdcard/104.html"</span>);</div><div class="line">Intent intent  = <span class="keyword">new</span> Intent(Intent.Action_VIEW, uri);</div><div class="line"><span class="comment">//此处指定系统自带浏览器包名和Activity名称</span></div><div class="line"><span class="comment">//intent.setClassName("com.android.browser","com.android.browser.BrowserActivity");</span></div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果调用百度地图的openBaiduMapNavi方法导致的Crash，有可能是没有安装百度地图客户端</p>
+</li>
+</ol>
+<h2 id="不能实例化Activity"><a href="#不能实例化Activity" class="headerlink" title="不能实例化Activity"></a>不能实例化Activity</h2><blockquote>
+<p>异常中的关键字：java.lang.RuntimeException:Unable to instantiate activity ComponentInfo</p>
+</blockquote>
+<p>通常是因为没有在AndroidManifest.xml文件中注册该Activity，或者在创建完Activity后，修改了包名或者类名，而配置清单中没有修改，还有可能是系统处于异常状态，关机，内存不足等。。</p>
+<h2 id="找不到Service"><a href="#找不到Service" class="headerlink" title="找不到Service"></a>找不到Service</h2><blockquote>
+<p>异常中的关键字：java.lang.RuntimeException:Unable to instantiate service</p>
+</blockquote>
+<p>对于Manifest文件中写错的类似问题就不研究了。</p>
+<p>首先检查代码中是否有Class.forName(“class1”)这样的语句，对于此，ProGuard会将class1混淆，从而找不到class1这个类。        </p>
+<h2 id="不能启动BroadcastReceiver"><a href="#不能启动BroadcastReceiver" class="headerlink" title="不能启动BroadcastReceiver"></a>不能启动BroadcastReceiver</h2><blockquote>
+<p>异常中的关键字：Unable to start receiver</p>
+</blockquote>
+<p>在使用Activity以外的context来startActivity，会抛出以上异常，<br>解决方法：  intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);</p>
+<p>作者这里提到了setFlags和addFlags，但是没有没有说两者的区别，这里我把源码贴出来<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Intent <span class="title">setFlags</span><span class="params">(<span class="keyword">int</span> flags)</span> </span>&#123;</div><div class="line">    mFlags = flags;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> Intent <span class="title">addFlags</span><span class="params">(<span class="keyword">int</span> flags)</span> </span>&#123;</div><div class="line">    mFlags |= flags;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>作者推荐<a href="http://www.it165.net/pro/html/201406/15547.html" target="_blank" rel="external">http://www.it165.net/pro/html/201406/15547.html</a></p>
+<h2 id="startActivityForResult不能回传"><a href="#startActivityForResult不能回传" class="headerlink" title="startActivityForResult不能回传"></a>startActivityForResult不能回传</h2><blockquote>
+<p>异常中的关键字：Failure delivering result ResultInfo{who=null,request=0,result=-1}</p>
+</blockquote>
+<p>导致原因：传回来的key是A，但是却按照B这个key来取值</p>
+<h2 id="猴急的Fragment"><a href="#猴急的Fragment" class="headerlink" title="猴急的Fragment"></a>猴急的Fragment</h2><blockquote>
+<p>异常中的关键字：Fragment not attached to Activity</p>
+</blockquote>
+<p>导致原因：Fragment还没有Attach到Activity时，调用了诸如getResource这样的方法。</p>
+<p>解决方法：加isAdded判断<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(isAdded) &#123;</div><div class="line">    getResources().getString(R.string.app_name);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="序列化相关的异常"><a href="#序列化相关的异常" class="headerlink" title="序列化相关的异常"></a>序列化相关的异常</h1><p>Android中的序列化分两种，一种是Java原生的Serializable，另一种是Android为了提升性能而量身打造的Parcelable。</p>
+<h2 id="实体对象不支持序列化"><a href="#实体对象不支持序列化" class="headerlink" title="实体对象不支持序列化"></a>实体对象不支持序列化</h2><blockquote>
+<p>异常中的关键字：Parcelable encountered IOException writing serializable object </p>
+</blockquote>
+<p>不仅类自身要实现Serializable/Parcelable，类中的成员变量也要支持序列化<br>提示：JSONObject，JSONArray不支持序列化。</p>
+<h2 id="序列化时未指定ClassLoader"><a href="#序列化时未指定ClassLoader" class="headerlink" title="序列化时未指定ClassLoader"></a>序列化时未指定ClassLoader</h2><blockquote>
+<p>异常中的关键字：BadParcelableException:</p>
+</blockquote>
+<p>在使用Parcelable机制的时候，会遇到上述异常，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyParcelable</span> <span class="keyword">implements</span> <span class="title">Parcelable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String mStr;</div><div class="line">    <span class="keyword">private</span> ClassA a;</div><div class="line">    ......</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">MyParcelable</span><span class="params">(Parcel in)</span> </span>&#123;</div><div class="line">        mStr = in.readString();</div><div class="line">        a = in.readParcelable(<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>崩溃出在最后一句，对a的反序列化上，改为 a= in.readParcelable(ClassA.class.getClassLoader());就不会崩溃了。</p>
+<p><strong>ClassLoader的概念：</strong></p>
+<p>当ClassLoader为空时，系统会采用默认的ClassLoader。</p>
+<p>Android有两种不同的ClassLoader：framework ClassLoader和apk ClassLoader，其中framework ClassLoader只知道怎么加载Android系统内部的类，apk ClassLoader即知道怎么加载我们自己写的类，也知道怎么加载Android系统内部的类。</p>
+<p>在App刚启动的时候，默认ClassLoader是apk ClassLoader，但在系统内存不足应用被系统回收再次启动，默认的ClassLoader会变为framework ClassLoader，所以对我们自己的类会报ClassNotFoundException。</p>
+<h2 id="反序列化时发现类找不到：被ProGuard混淆导致的崩溃"><a href="#反序列化时发现类找不到：被ProGuard混淆导致的崩溃" class="headerlink" title="反序列化时发现类找不到：被ProGuard混淆导致的崩溃"></a>反序列化时发现类找不到：被ProGuard混淆导致的崩溃</h2><blockquote>
+<p>异常中的关键字：Parcelable encountered ClassNotFoundException reading a Serializable object…..</p>
+</blockquote>
+<p>ProGuard对于Class.forName(className)中的class是无能为力的，它会将这个class混淆的面目全非，于是在反序列化这个类的时候却发现找不到这个类了</p>
+<p>解决方案：在ProGuard文件中keep这个类</p>
+<h2 id="反序列化出错"><a href="#反序列化出错" class="headerlink" title="反序列化出错"></a>反序列化出错</h2><blockquote>
+<p>异常中的关键字：Could not read input Chanel file descriptors from parcel …..</p>
+</blockquote>
+<p>出现这个异常，一般是因为Intent传递的数据太大了，貌似大于1MB就会崩溃。</p>
+<p>此外，网上也有人说是因为FileDescripter太多而且没有关闭，或looper太多没有退出而导致的，仅供参考。</p>
+<h1 id="列表相关的异常"><a href="#列表相关的异常" class="headerlink" title="列表相关的异常"></a>列表相关的异常</h1><p>在有Adapter的地方就有ListView，就有因此而产生的异常。这些异常基本是因为下拉刷新数据时处理不当导致的。这主要是Android本身没有提供标准的下拉刷新数据的列表控件，而网上的千奇百怪的下拉刷新控件有都有这样那样的缺陷。分装的再完善的下拉刷新列表空间，也只能确保在大部分急性上工作良好。</p>
+<h2 id="Adapter数据源变化但是没有通知ListView"><a href="#Adapter数据源变化但是没有通知ListView" class="headerlink" title="Adapter数据源变化但是没有通知ListView"></a>Adapter数据源变化但是没有通知ListView</h2><blockquote>
+<p>异常中的关键字：The content of the adapter has changed but ListView did not receive a notification.Make sure the content of your adapter is not modified from a background thread,but only from the UI thread.</p>
+</blockquote>
+<p>就是说Adapter内部变化了，但是没哟通知相应的ListView，请保证Adapter的数据在主线程修改。</p>
+<p>解决方案：</p>
+<p>首先，一种极端的方案是，每次设置Adapter中的集合数据时，都要将其clone一份，而不是直接传递一个集合过来，但是这样会比较消耗性能。</p>
+<p>其次，要确保每次在Activity中设置adapter的值，而不是在后台线程，有以下几种办法：</p>
+<ol>
+<li><p>调用Activity的runOnUIThread()方法，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    <span class="keyword">new</span> Thread()&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">            MainActivity.<span class="keyword">this</span>.runOnUiThread(<span class="keyword">new</span> Runnable()&#123;</div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    textView1.setText(<span class="string">"Hello World!"</span>);   </div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>调用Handler，通知主线程修改Adapter，</p>
+</li>
+<li><p>使用AsyncTask也是一个不错的选择，虽然他也有很多缺陷</p>
+</li>
+</ol>
+<p>最后，只要修改了adapter机集合数据的值，就要马上调用notifyDataSetChanged方法。</p>
+<h2 id="ListView滚动时点击刷新按钮后崩溃"><a href="#ListView滚动时点击刷新按钮后崩溃" class="headerlink" title="ListView滚动时点击刷新按钮后崩溃"></a>ListView滚动时点击刷新按钮后崩溃</h2><blockquote>
+<p>异常中的关键字：java.lang.IndexOutOfBoundsException:Invalid index….                               java.util.ArrayList.throwIndexOutOfBoundsException<br>java.util.ArrayList.get(ArrayList.java:304) at android.widget.HeaderViewListAdapter.getView(HeaderViewListAdapter.java225)  </p>
+</blockquote>
+<p>ListView滚动的时候，表示它已经获取了adapter的getCounts()，可能是30或者更大，回调getView(),这时候将数据clear掉了，所以奔溃</p>
+<p>解决方案是，ListView滚动的时候，将刷新按钮设置为可以点击，如下所示<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> refresh&#123;</div><div class="line">    startLocation()；</div><div class="line">    pageNo = <span class="number">0</span>;</div><div class="line">    hasMore = <span class="keyword">true</span>;</div><div class="line">    dataList.clear();</div><div class="line">    moreBtn.setVisibility(View.GONE);</div><div class="line">    loadFirstPageData();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="AbsListView的obtainView返回空指针"><a href="#AbsListView的obtainView返回空指针" class="headerlink" title="AbsListView的obtainView返回空指针"></a>AbsListView的obtainView返回空指针</h2><blockquote>
+<p>异常中的关键字：java.lang.NullPointerException at android.widget.AbsListView.obtainView(AbsListView.java:1521)at android.widget.ListView.makeAndAddView</p>
+</blockquote>
+<p>导致空指针的罪魁祸首就是AbsListview的obtainView方法获取不到View，究其原因，是getView方法在某些时候返回了null。解决方案很简单，getView的第二个参数是不会为null的，在getView返回值的时候判断一下是否为空，如果为null，怎返货convertView。</p>
+<h2 id="Adapter数据源变化但是没有调用notifyDataSetChanged"><a href="#Adapter数据源变化但是没有调用notifyDataSetChanged" class="headerlink" title="Adapter数据源变化但是没有调用notifyDataSetChanged"></a>Adapter数据源变化但是没有调用notifyDataSetChanged</h2><blockquote>
+<p>异常中的关键字：The applications PagerAdapter changed the adapters contents without calling PagerAdapter#notifyDataSetChanged</p>
+</blockquote>
+<p>PagerAdapter对于notifyDataSetChanged()和getCount的执行顺序是非常严格的，系统跟踪count的值，如果这个值和getCount返回的值不一致，就会抛出这个异常。所以为了保证getCount总是返回一个正确的值，那么在初始化ViewPager时，应先给adapter初始化内容后再将该adapter传给ViewPager，如果不这样处理，在更新adapter的内容后，应该调用一下notifyDataSetChanged。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/17/第五章：Crash异常收集与统计/" itemprop="url">
                   第五章：Crash异常收集与统计
                 </a>
@@ -661,138 +947,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/09/13/我所理解的OOP——UML六种关系/" itemprop="url">
-                  我所理解的OOP——UML六种关系
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-13T23:21:50+08:00" content="2016-09-13">
-              2016-09-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.cnblogs.com/dolphinX/p/3296681.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
-<p>UML定义的关系主要有：泛化、实现、依赖、关联、聚合、组合，这六种关系紧密程度依次加强，分别看一下</p>
-<h1 id="泛化"><a href="#泛化" class="headerlink" title="泛化"></a>泛化</h1><p>概念：泛化是一种一般与特殊、一般与具体之间关系的描述，具体描述建立在一般描述的基础之上，并对其进行了扩展。在程序中是通过继承类实现的。比如狗是对动物的具体描述，在面向对象设计的时候一般把狗设计为动物的子类。</p>
-<p>表示方法：空心三角形箭头的实线，子类指向父类</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E6%B3%9B%E5%8C%96.png" alt="泛化"></p>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>概念：实现是一种类与接口的关系，表示类是接口所有特征和行为的实现，在程序中一般通过类实现接口来描述</p>
-<p>表示方法：空心三角形箭头的虚线，实现类指向接口</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%AE%9E%E7%8E%B0.png" alt="实现"></p>
-<h1 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h1><p>概念：是一种使用的关系，即一个类的实现需要另一个类的协助，所以要尽量不使用双向的互相依赖，在程序中一般表现为类A中的方法需要类B的实例作为其参数或者变量，而类A本身并不需要引用类B的实例作为其成员变量。</p>
-<p>表示方法：虚线箭头，类A指向类B。</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E4%BE%9D%E8%B5%96.png" alt="依赖"></p>
-<h1 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h1><p>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的，在程序中被关联类B以类属性的形式出现在关联类A中，也可能是关联类A引用了一个类型为被关联类B的全局变量</p>
-<p>表示方法：实线箭头，类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%85%B3%E8%81%94.png" alt="关联"></p>
-<h1 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h1><p>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</p>
-<p>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%81%9A%E5%90%88.png" alt="聚合"></p>
-<h1 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h1><p>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</p>
-<p>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E7%BB%84%E5%90%88.png" alt="组合"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/09/13/理解Android编译命令/" itemprop="url">
                   理解Android编译命令
                 </a>
@@ -1125,6 +1279,138 @@ LOCAL_MODULE := demo
 <span class="comment"># 将当前模块编译成一个静态的Java库</span>
 include $(BUILD_STATIC_JAVA_LIBRARY)
 </code></pre>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/13/我所理解的OOP——UML六种关系/" itemprop="url">
+                  我所理解的OOP——UML六种关系
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-13T23:21:50+08:00" content="2016-09-13">
+              2016-09-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.cnblogs.com/dolphinX/p/3296681.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
+<p>UML定义的关系主要有：泛化、实现、依赖、关联、聚合、组合，这六种关系紧密程度依次加强，分别看一下</p>
+<h1 id="泛化"><a href="#泛化" class="headerlink" title="泛化"></a>泛化</h1><p>概念：泛化是一种一般与特殊、一般与具体之间关系的描述，具体描述建立在一般描述的基础之上，并对其进行了扩展。在程序中是通过继承类实现的。比如狗是对动物的具体描述，在面向对象设计的时候一般把狗设计为动物的子类。</p>
+<p>表示方法：空心三角形箭头的实线，子类指向父类</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E6%B3%9B%E5%8C%96.png" alt="泛化"></p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>概念：实现是一种类与接口的关系，表示类是接口所有特征和行为的实现，在程序中一般通过类实现接口来描述</p>
+<p>表示方法：空心三角形箭头的虚线，实现类指向接口</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%AE%9E%E7%8E%B0.png" alt="实现"></p>
+<h1 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h1><p>概念：是一种使用的关系，即一个类的实现需要另一个类的协助，所以要尽量不使用双向的互相依赖，在程序中一般表现为类A中的方法需要类B的实例作为其参数或者变量，而类A本身并不需要引用类B的实例作为其成员变量。</p>
+<p>表示方法：虚线箭头，类A指向类B。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E4%BE%9D%E8%B5%96.png" alt="依赖"></p>
+<h1 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h1><p>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的，在程序中被关联类B以类属性的形式出现在关联类A中，也可能是关联类A引用了一个类型为被关联类B的全局变量</p>
+<p>表示方法：实线箭头，类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%85%B3%E8%81%94.png" alt="关联"></p>
+<h1 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h1><p>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</p>
+<p>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%81%9A%E5%90%88.png" alt="聚合"></p>
+<h1 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h1><p>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</p>
+<p>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E7%BB%84%E5%90%88.png" alt="组合"></p>
 
           
         
@@ -1849,140 +2135,6 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
             
               
                 
-                <a class="post-title-link" href="/2016/09/11/聊聊并发-Java中的Copy-On-Write容器/" itemprop="url">
-                  聊聊并发-Java中的Copy-On-Write容器
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-11T14:56:05+08:00" content="2016-09-11">
-              2016-09-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java-基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java_基础</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://ifeve.com/java-copy-on-write/" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
-<p>　　Copy-On-Write简称COW，是一种用于程序设计中的优化策略。其基本思路是，从一开始大家都在共享同一个内容，当某个人想要修改这个内容的时候，才会真正把内容Copy出去形成一个新的内容然后再改，这是一种延时懒惰策略。从JDK1.5开始Java并发包里提供了两个使用CopyOnWrite机制实现的并发容器,它们是CopyOnWriteArrayList和CopyOnWriteArraySet。CopyOnWrite容器非常有用，可以在非常多的并发场景中使用到。</p>
-<h2 id="什么是CopyOnWrite容器"><a href="#什么是CopyOnWrite容器" class="headerlink" title="什么是CopyOnWrite容器"></a>什么是CopyOnWrite容器</h2><p>　　CopyOnWrite容器即写时复制的容器。通俗的理解是当我们往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器。这样做的好处是我们可以对CopyOnWrite容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以CopyOnWrite容器也是一种读写分离的思想，读和写不同的容器。</p>
-<h2 id="CopyOnWriteArrayList的实现原理"><a href="#CopyOnWriteArrayList的实现原理" class="headerlink" title="CopyOnWriteArrayList的实现原理"></a>CopyOnWriteArrayList的实现原理</h2><p>　　在使用CopyOnWriteArrayList之前，我们先阅读其源码了解下它是如何实现的。以下代码是向ArrayList里添加元素，可以发现在添加的时候是需要加锁的，否则多线程写的时候会Copy出N个副本出来。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(T e)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</div><div class="line">    lock.lock();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">        Object[] elements = getArray();</div><div class="line">        <span class="keyword">int</span> len = elements.length;</div><div class="line">        <span class="comment">// 复制出新数组</span></div><div class="line">        Object[] newElements = Arrays.copyOf(elements, len + <span class="number">1</span>);</div><div class="line">        <span class="comment">// 把新元素添加到新数组里</span></div><div class="line">        newElements[len] = e;</div><div class="line">        <span class="comment">// 把原数组引用指向新数组</span></div><div class="line">        setArray(newElements);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        lock.unlock();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setArray</span><span class="params">(Object[] a)</span> </span>&#123;</div><div class="line">    array = a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>　　读的时候不需要加锁，如果读的时候有多个线程正在向ArrayList添加数据，读还是会读到旧的数据，因为写的时候不会锁住旧的ArrayList。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> get(getArray(), index);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>　　JDK中并没有提供CopyOnWriteMap，我们可以参考CopyOnWriteArrayList来实现一个，基本代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Collection;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> java.util.Set;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CopyOnWriteMap</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;, <span class="title">Cloneable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> Map&lt;K, V&gt; internalMap;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CopyOnWriteMap</span><span class="params">()</span> </span>&#123;</div><div class="line">        internalMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            Map&lt;K, V&gt; newMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;(internalMap);</div><div class="line">            V val = newMap.put(key, value);</div><div class="line">            internalMap = newMap;</div><div class="line">            <span class="keyword">return</span> val;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> internalMap.get(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; newData)</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">            Map&lt;K, V&gt; newMap = <span class="keyword">new</span> HashMap&lt;K, V&gt;(internalMap);</div><div class="line">            newMap.putAll(newData);</div><div class="line">            internalMap = newMap;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>　　实现很简单，只要了解了CopyOnWrite机制，我们可以实现各种CopyOnWrite容器，并且在不同的应用场景中使用。</p>
-<h2 id="CopyOnWrite的应用场景"><a href="#CopyOnWrite的应用场景" class="headerlink" title="CopyOnWrite的应用场景"></a>CopyOnWrite的应用场景</h2><p>　　CopyOnWrite并发容器用于读多写少的并发场景。比如白名单，黑名单，商品类目的访问和更新场景，假如我们有一个搜索网站，用户在这个网站的搜索框中，输入关键字搜索内容，但是某些关键字不允许被搜索。这些不能被搜索的关键字会被放在一个黑名单当中，黑名单每天晚上更新一次。当用户搜索时，会检查当前关键字在不在黑名单当中，如果在，则提示不能搜索。实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.ifeve.book;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> com.ifeve.book.forkjoin.CopyOnWriteMap;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 黑名单服务</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span> fangtengfei</div><div class="line"> *</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlackListServiceImpl</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CopyOnWriteMap&lt;String, Boolean&gt; blackListMap = <span class="keyword">new</span> CopyOnWriteMap&lt;String, Boolean&gt;(</div><div class="line">            <span class="number">1000</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isBlackList</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> blackListMap.get(id) == <span class="keyword">null</span> ? <span class="keyword">false</span> : <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addBlackList</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        blackListMap.put(id, Boolean.TRUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 批量添加黑名单</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> ids</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addBlackList</span><span class="params">(Map&lt;String,Boolean&gt; ids)</span> </span>&#123;</div><div class="line">        blackListMap.putAll(ids);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>代码很简单，但是使用CopyOnWriteMap需要注意两件事情：</strong></p>
-<ol>
-<li>减少扩容开销。根据实际需要，初始化CopyOnWriteMap的大小，避免写时CopyOnWriteMap扩容的开销。</li>
-<li>使用批量添加。因为每次添加，容器每次都会进行复制，所以减少添加次数，可以减少容器的复制次数。如使用上面代码里的addBlackList方法。</li>
-</ol>
-<h2 id="CopyOnWrite的缺点"><a href="#CopyOnWrite的缺点" class="headerlink" title="CopyOnWrite的缺点"></a>CopyOnWrite的缺点</h2><p>　　CopyOnWrite容器有很多优点，但是同时也存在两个问题，即内存占用问题和数据一致性问题。所以在开发的时候需要注意一下。</p>
-<p>　　内存占用问题。因为CopyOnWrite的写时复制机制，所以在进行写操作的时候，内存里会同时驻扎两个对象的内存，旧的对象和新写入的对象（注意:在复制的时候只是复制容器里的引用，只是在写的时候会创建新对象添加到新容器里，而旧容器的对象还在使用，所以有两份对象内存）。如果这些对象占用的内存比较大，比如说200M左右，那么再写入100M数据进去，内存就会占用300M，那么这个时候很有可能造成频繁的Yong GC和Full GC。之前我们系统中使用了一个服务由于每晚使用CopyOnWrite机制更新大对象，造成了每晚15秒的Full GC，应用响应时间也随之变长。</p>
-<p>　　针对内存占用问题，可以通过压缩容器中的元素的方法来减少大对象的内存消耗，比如，如果元素全是10进制的数字，可以考虑把它压缩成36进制或64进制。或者不使用CopyOnWrite容器，而使用其他的并发容器，如ConcurrentHashMap。</p>
-<p>　　数据一致性问题。CopyOnWrite容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的的数据，马上能读到，请不要使用CopyOnWrite容器。</p>
-<p>　　关于C++的STL中，曾经也有过Copy-On-Write的玩法，参见陈皓的《C++ STL String类中的Copy-On-Write》，后来，因为有很多线程安全上的事，就被去掉了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/09/11/Java基础 之软引用、弱引用、虚引用/" itemprop="url">
                   Java基础 之软引用、弱引用、虚引用
                 </a>
@@ -2477,7 +2629,7 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

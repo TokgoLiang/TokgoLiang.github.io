@@ -1,0 +1,827 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="原创,android,App研发录,Crash," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Android之所以存在千奇百怪的Crash，主要归结于一下几种情况
+
+Android系统的碎片化。
+MobileAPI返回了脏数据。
+混淆时没有Keep要使用的类或者方法。
+
+Java语法相关的异常空指针
+异常中的关键字：NullPointException
+
+
+方法需要对传入的参数判空后再使用
+对于外部接口调用，需要确保返回值不为空，甚至需要确保执行该接口不会抛出其他异常导致程序退出
+尽量不要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常">
+<meta property="og:url" content="http://yoursite.com/2016/09/18/第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="Android之所以存在千奇百怪的Crash，主要归结于一下几种情况
+
+Android系统的碎片化。
+MobileAPI返回了脏数据。
+混淆时没有Keep要使用的类或者方法。
+
+Java语法相关的异常空指针
+异常中的关键字：NullPointException
+
+
+方法需要对传入的参数判空后再使用
+对于外部接口调用，需要确保返回值不为空，甚至需要确保执行该接口不会抛出其他异常导致程序退出
+尽量不要">
+<meta property="og:updated_time" content="2016-09-18T14:56:37.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常">
+<meta name="twitter:description" content="Android之所以存在千奇百怪的Crash，主要归结于一下几种情况
+
+Android系统的碎片化。
+MobileAPI返回了脏数据。
+混淆时没有Keep要使用的类或者方法。
+
+Java语法相关的异常空指针
+异常中的关键字：NullPointException
+
+
+方法需要对传入的参数判空后再使用
+对于外部接口调用，需要确保返回值不为空，甚至需要确保执行该接口不会抛出其他异常导致程序退出
+尽量不要">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/18/第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常/"/>
+
+  <title> 第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-18T22:56:35+08:00" content="2016-09-18">
+              2016-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Android之所以存在千奇百怪的Crash，主要归结于一下几种情况</p>
+<ol>
+<li>Android系统的碎片化。</li>
+<li>MobileAPI返回了脏数据。</li>
+<li>混淆时没有Keep要使用的类或者方法。</li>
+</ol>
+<h1 id="Java语法相关的异常"><a href="#Java语法相关的异常" class="headerlink" title="Java语法相关的异常"></a>Java语法相关的异常</h1><h2 id="空指针"><a href="#空指针" class="headerlink" title="空指针"></a>空指针</h2><blockquote>
+<p>异常中的关键字：NullPointException</p>
+</blockquote>
+<ol>
+<li>方法需要对传入的参数判空后再使用</li>
+<li>对于外部接口调用，需要确保返回值不为空，甚至需要确保执行该接口不会抛出其他异常导致程序退出</li>
+<li>尽量不要使用全局变量，具体参见3.5节“消灭全局变量”</li>
+</ol>
+<h2 id="角标越界"><a href="#角标越界" class="headerlink" title="角标越界"></a>角标越界</h2><blockquote>
+<p>异常中的关键字：IndexOutOfBoundsExpection，StringIndexOutOfBoundsExpection，ArrayIndexOutOfBoundsExpection</p>
+</blockquote>
+<p>这类Crash也是由于程序的不严谨导致，解决方案是：</p>
+<ol>
+<li>在遍历一个数组/集合时，要预判数组/集合是否为空，长度是否大于0</li>
+<li>在使用数组/集合中的元素时，要预判数组/集合长度是否有这么长</li>
+<li>字符串也是数组，在使用subString(start ,end)这样的函数时要注意start或者end</li>
+</ol>
+<h2 id="试图调用一个空对象的方法"><a href="#试图调用一个空对象的方法" class="headerlink" title="试图调用一个空对象的方法"></a>试图调用一个空对象的方法</h2><blockquote>
+<p>异常中的关键字：Attempt to invoke virtual method on a null object reference</p>
+</blockquote>
+<p>常见情况：</p>
+<ul>
+<li>在if…else..的一个分支中初始化对象，程序未走这个分支</li>
+<li>在ActivityA中调用ActivityB的方法，为此在B中建立一个static变量，当这个变量被回收时</li>
+<li>点击推送消息，根据事先定好的协议，跳过首页直接进入二级甚至三级页面，这是二级页面要使用首页某个对象</li>
+</ul>
+<h2 id="类型转换异常"><a href="#类型转换异常" class="headerlink" title="类型转换异常"></a>类型转换异常</h2><blockquote>
+<p>异常中的关键字：ClassCastException：Class A cannot be cast to classB</p>
+</blockquote>
+<p>这类Crash都是由强制类型转换导致的，解决方案是，使用安全类型转换，参加第一章，1.6节</p>
+<h2 id="数字转换错误"><a href="#数字转换错误" class="headerlink" title="数字转换错误"></a>数字转换错误</h2><blockquote>
+<p>异常中的关键字：NumberFormatException</p>
+</blockquote>
+<p>在数据类型转换过程中，如果转换不成功，一般抛出ClassCastException：Class 的异常，只有一个例外情况，当字符型转换为数字失败时，会抛出NumberFormatException</p>
+<p>这种情况多发生在服务器返回数据，没有按照约定返回整数而死字符串，客户端必须要事先考虑到这种情况，如果转换失败，必须有默认值而不是直接奔溃。</p>
+<h2 id="声明数组时长度为-1"><a href="#声明数组时长度为-1" class="headerlink" title="声明数组时长度为-1"></a>声明数组时长度为-1</h2><blockquote>
+<p>异常中的关键字：NegativeArraySizeException</p>
+</blockquote>
+<p>当使用负数创建数组时会抛出该异常，但程序员不会犯int arr = new int[-1]；这样低级的错误，后来，作者发现了下述语句：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String[] arg1 = <span class="keyword">new</span> String[args.length - <span class="number">1</span>];</div></pre></td></tr></table></figure></p>
+<p>当args数组中没有元素时，就会出现该异常，此外，声明int arr = new int[0];并不会报错，只是毫无意义。在声明一个数组时，如果数组长度是由另外一个变量动态得到的，要保证[]中的值必须大于0.</p>
+<h2 id="遍历集合同时删除其中元素"><a href="#遍历集合同时删除其中元素" class="headerlink" title="遍历集合同时删除其中元素"></a>遍历集合同时删除其中元素</h2><blockquote>
+<p>异常中的关键字：ConcurrentModificationException</p>
+</blockquote>
+<p>但凡有点编程常识的程序员都知道在遍历一个集合时不能删除该集合中的元素，，，解决方案是，再定义一个delList，用来保存需要删除的对象，</p>
+<p>还有另外一种情况产生这种崩溃，那就是在多个线程中修改和遍历同一个集和。解决方法是，使用Copy-On-Write容器</p>
+<h2 id="比较器使用不当"><a href="#比较器使用不当" class="headerlink" title="比较器使用不当"></a>比较器使用不当</h2><blockquote>
+<p>异常中的关键字：Comarison method violastes its general contract!</p>
+</blockquote>
+<p>Comparator，是基于插入排序算法与归并排序算法相结合的产物，信息信息<a href="http://blog.2baxb.me/archives/993" target="_blank" rel="external">http://blog.2baxb.me/archives/993</a> </p>
+<p><strong>正确的用法：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">List&lt;Double&gt; list = <span class="keyword">new</span> ArrayList&lt;Double&gt;();</div><div class="line">list.add(<span class="number">11.4</span>);</div><div class="line">list.add(<span class="number">12.4</span>);</div><div class="line">list.add(<span class="number">11.4</span>);</div><div class="line">list.add(<span class="number">11.7</span>);</div><div class="line">Collections.sort(list, comparator);</div><div class="line">   Comparator&lt;Double&gt; comparator = <span class="keyword">new</span> Comparator&lt;Double&gt;() &#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Double lhs, Double rhs)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span>(lhs &lt; rhs) &#123;</div><div class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (lhs &gt; rhs) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><strong>错误用法:（忽略了相等的情况）</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Comparator&lt;Double&gt; comparator = <span class="keyword">new</span> Comparator&lt;Double&gt;() &#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Double lhs, Double rhs)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> lhs &gt; rhs ? <span class="number">1</span> : -<span class="number">1</span>;</div><div class="line">	&#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>为了预防这类Crash发生，作者的解决方案是，对每个自定义比较器进行单元测试。</p>
+<h2 id="当除数为0"><a href="#当除数为0" class="headerlink" title="当除数为0"></a>当除数为0</h2><blockquote>
+<p>异常中的关键字：java.lang.ArithmeticException:divide by zero</p>
+</blockquote>
+<p>多发生在第三方控件中，比如GifView，注意其中moive的duration，这个值表示动画的持续时间，在接下来得代码中将会作为除数，如果为0就会抛出上述异常，这时候要将其默认值设置为1.</p>
+<h2 id="不能随便使用的asList"><a href="#不能随便使用的asList" class="headerlink" title="不能随便使用的asList"></a>不能随便使用的asList</h2><blockquote>
+<p>异常中的关键字：<br>    java.lang.UnsupportedOperationException<br>    java.util.AbstraactList.remove(AbstractList.java:144) at<br>    java.util.AbstraactList$Itr.remove(AbstractList.java:306) at<br>    java.util.AbstraactCollection.remove(AbstractCollection.java:252) at</p>
+</blockquote>
+<p>Arrays.asList()的返回值类型为java.util.Array$ArrayList，而不是ArrayList，他两的父类都是AbstractList，但是只有ArrayList实现了父类的add和remove。</p>
+<h2 id="又有类找不到了（一）：ClassNotFoundException"><a href="#又有类找不到了（一）：ClassNotFoundException" class="headerlink" title="又有类找不到了（一）：ClassNotFoundException"></a>又有类找不到了（一）：ClassNotFoundException</h2><blockquote>
+<p>异常中的关键字：ClassNotFoundException</p>
+</blockquote>
+<p>常见原因：</p>
+<ul>
+<li>Class.forName(“com.company.package.class”);</li>
+<li>ClassLoader中的findClass(classname);</li>
+<li>ClassLoader中的loadClass(classname);</li>
+</ul>
+<h2 id="又有类找不到了（二）：NoClassDefFoundException"><a href="#又有类找不到了（二）：NoClassDefFoundException" class="headerlink" title="又有类找不到了（二）：NoClassDefFoundException"></a>又有类找不到了（二）：NoClassDefFoundException</h2><blockquote>
+<p>异常中的关键字：NoClassDefFoundException</p>
+</blockquote>
+<p>在B类中声明一个A类的实例，ClassA obj = new ClassA();</p>
+<p>但是打包是A和B分别位于不同的dex中，这时如果A所在的dex吧A删除了，那么在运行时候执行到这句就会抛出NoClassDefFoundException</p>
+<p>通常插件化编程的时候会牵扯到这个异常。</p>
+<h1 id="Activity相关的异常"><a href="#Activity相关的异常" class="headerlink" title="Activity相关的异常"></a>Activity相关的异常</h1><h2 id="找不到Activity"><a href="#找不到Activity" class="headerlink" title="找不到Activity"></a>找不到Activity</h2><blockquote>
+<p>异常中的关键字：android.content.ActivityNotFoundException:No Activity found to handle Intent{…}</p>
+</blockquote>
+<p>出错原因：</p>
+<ol>
+<li><p>Uri不是以http开头</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Uri uri = Uri.parse(<span class="string">"www.baidu.com"</span>);</div><div class="line">Intent intent  = <span class="keyword">new</span> Intent(Intent.Action_VIEW, uri);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+<li><p>当我们要打开SD卡上的一个HTML页面时，没有为Intent指定打开该HTML的浏览器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Uri uri = Uri.parse(<span class="string">"file://sdcard/104.html"</span>);</div><div class="line">Intent intent  = <span class="keyword">new</span> Intent(Intent.Action_VIEW, uri);</div><div class="line"><span class="comment">//此处指定系统自带浏览器包名和Activity名称</span></div><div class="line"><span class="comment">//intent.setClassName("com.android.browser","com.android.browser.BrowserActivity");</span></div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果调用百度地图的openBaiduMapNavi方法导致的Crash，有可能是没有安装百度地图客户端</p>
+</li>
+</ol>
+<h2 id="不能实例化Activity"><a href="#不能实例化Activity" class="headerlink" title="不能实例化Activity"></a>不能实例化Activity</h2><blockquote>
+<p>异常中的关键字：java.lang.RuntimeException:Unable to instantiate activity ComponentInfo</p>
+</blockquote>
+<p>通常是因为没有在AndroidManifest.xml文件中注册该Activity，或者在创建完Activity后，修改了包名或者类名，而配置清单中没有修改，还有可能是系统处于异常状态，关机，内存不足等。。</p>
+<h2 id="找不到Service"><a href="#找不到Service" class="headerlink" title="找不到Service"></a>找不到Service</h2><blockquote>
+<p>异常中的关键字：java.lang.RuntimeException:Unable to instantiate service</p>
+</blockquote>
+<p>对于Manifest文件中写错的类似问题就不研究了。</p>
+<p>首先检查代码中是否有Class.forName(“class1”)这样的语句，对于此，ProGuard会将class1混淆，从而找不到class1这个类。        </p>
+<h2 id="不能启动BroadcastReceiver"><a href="#不能启动BroadcastReceiver" class="headerlink" title="不能启动BroadcastReceiver"></a>不能启动BroadcastReceiver</h2><blockquote>
+<p>异常中的关键字：Unable to start receiver</p>
+</blockquote>
+<p>在使用Activity以外的context来startActivity，会抛出以上异常，<br>解决方法：  intent.addFlags(intent.FLAG_ACTIVITY_NEW_TASK);</p>
+<p>作者这里提到了setFlags和addFlags，但是没有没有说两者的区别，这里我把源码贴出来<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Intent <span class="title">setFlags</span><span class="params">(<span class="keyword">int</span> flags)</span> </span>&#123;</div><div class="line">    mFlags = flags;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> Intent <span class="title">addFlags</span><span class="params">(<span class="keyword">int</span> flags)</span> </span>&#123;</div><div class="line">    mFlags |= flags;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>作者推荐<a href="http://www.it165.net/pro/html/201406/15547.html" target="_blank" rel="external">http://www.it165.net/pro/html/201406/15547.html</a></p>
+<h2 id="startActivityForResult不能回传"><a href="#startActivityForResult不能回传" class="headerlink" title="startActivityForResult不能回传"></a>startActivityForResult不能回传</h2><blockquote>
+<p>异常中的关键字：Failure delivering result ResultInfo{who=null,request=0,result=-1}</p>
+</blockquote>
+<p>导致原因：传回来的key是A，但是却按照B这个key来取值</p>
+<h2 id="猴急的Fragment"><a href="#猴急的Fragment" class="headerlink" title="猴急的Fragment"></a>猴急的Fragment</h2><blockquote>
+<p>异常中的关键字：Fragment not attached to Activity</p>
+</blockquote>
+<p>导致原因：Fragment还没有Attach到Activity时，调用了诸如getResource这样的方法。</p>
+<p>解决方法：加isAdded判断<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(isAdded) &#123;</div><div class="line">    getResources().getString(R.string.app_name);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="序列化相关的异常"><a href="#序列化相关的异常" class="headerlink" title="序列化相关的异常"></a>序列化相关的异常</h1><p>Android中的序列化分两种，一种是Java原生的Serializable，另一种是Android为了提升性能而量身打造的Parcelable。</p>
+<h2 id="实体对象不支持序列化"><a href="#实体对象不支持序列化" class="headerlink" title="实体对象不支持序列化"></a>实体对象不支持序列化</h2><blockquote>
+<p>异常中的关键字：Parcelable encountered IOException writing serializable object </p>
+</blockquote>
+<p>不仅类自身要实现Serializable/Parcelable，类中的成员变量也要支持序列化<br>提示：JSONObject，JSONArray不支持序列化。</p>
+<h2 id="序列化时未指定ClassLoader"><a href="#序列化时未指定ClassLoader" class="headerlink" title="序列化时未指定ClassLoader"></a>序列化时未指定ClassLoader</h2><blockquote>
+<p>异常中的关键字：BadParcelableException:</p>
+</blockquote>
+<p>在使用Parcelable机制的时候，会遇到上述异常，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyParcelable</span> <span class="keyword">implements</span> <span class="title">Parcelable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String mStr;</div><div class="line">    <span class="keyword">private</span> ClassA a;</div><div class="line">    ......</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">MyParcelable</span><span class="params">(Parcel in)</span> </span>&#123;</div><div class="line">        mStr = in.readString();</div><div class="line">        a = in.readParcelable(<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>崩溃出在最后一句，对a的反序列化上，改为 a= in.readParcelable(ClassA.class.getClassLoader());就不会崩溃了。</p>
+<p><strong>ClassLoader的概念：</strong></p>
+<p>当ClassLoader为空时，系统会采用默认的ClassLoader。</p>
+<p>Android有两种不同的ClassLoader：framework ClassLoader和apk ClassLoader，其中framework ClassLoader只知道怎么加载Android系统内部的类，apk ClassLoader即知道怎么加载我们自己写的类，也知道怎么加载Android系统内部的类。</p>
+<p>在App刚启动的时候，默认ClassLoader是apk ClassLoader，但在系统内存不足应用被系统回收再次启动，默认的ClassLoader会变为framework ClassLoader，所以对我们自己的类会报ClassNotFoundException。</p>
+<h2 id="反序列化时发现类找不到：被ProGuard混淆导致的崩溃"><a href="#反序列化时发现类找不到：被ProGuard混淆导致的崩溃" class="headerlink" title="反序列化时发现类找不到：被ProGuard混淆导致的崩溃"></a>反序列化时发现类找不到：被ProGuard混淆导致的崩溃</h2><blockquote>
+<p>异常中的关键字：Parcelable encountered ClassNotFoundException reading a Serializable object…..</p>
+</blockquote>
+<p>ProGuard对于Class.forName(className)中的class是无能为力的，它会将这个class混淆的面目全非，于是在反序列化这个类的时候却发现找不到这个类了</p>
+<p>解决方案：在ProGuard文件中keep这个类</p>
+<h2 id="反序列化出错"><a href="#反序列化出错" class="headerlink" title="反序列化出错"></a>反序列化出错</h2><blockquote>
+<p>异常中的关键字：Could not read input Chanel file descriptors from parcel …..</p>
+</blockquote>
+<p>出现这个异常，一般是因为Intent传递的数据太大了，貌似大于1MB就会崩溃。</p>
+<p>此外，网上也有人说是因为FileDescripter太多而且没有关闭，或looper太多没有退出而导致的，仅供参考。</p>
+<h1 id="列表相关的异常"><a href="#列表相关的异常" class="headerlink" title="列表相关的异常"></a>列表相关的异常</h1><p>在有Adapter的地方就有ListView，就有因此而产生的异常。这些异常基本是因为下拉刷新数据时处理不当导致的。这主要是Android本身没有提供标准的下拉刷新数据的列表控件，而网上的千奇百怪的下拉刷新控件有都有这样那样的缺陷。分装的再完善的下拉刷新列表空间，也只能确保在大部分急性上工作良好。</p>
+<h2 id="Adapter数据源变化但是没有通知ListView"><a href="#Adapter数据源变化但是没有通知ListView" class="headerlink" title="Adapter数据源变化但是没有通知ListView"></a>Adapter数据源变化但是没有通知ListView</h2><blockquote>
+<p>异常中的关键字：The content of the adapter has changed but ListView did not receive a notification.Make sure the content of your adapter is not modified from a background thread,but only from the UI thread.</p>
+</blockquote>
+<p>就是说Adapter内部变化了，但是没哟通知相应的ListView，请保证Adapter的数据在主线程修改。</p>
+<p>解决方案：</p>
+<p>首先，一种极端的方案是，每次设置Adapter中的集合数据时，都要将其clone一份，而不是直接传递一个集合过来，但是这样会比较消耗性能。</p>
+<p>其次，要确保每次在Activity中设置adapter的值，而不是在后台线程，有以下几种办法：</p>
+<ol>
+<li><p>调用Activity的runOnUIThread()方法，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    <span class="keyword">new</span> Thread()&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</div><div class="line">            MainActivity.<span class="keyword">this</span>.runOnUiThread(<span class="keyword">new</span> Runnable()&#123;</div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    textView1.setText(<span class="string">"Hello World!"</span>);   </div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line">    &#125;.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>调用Handler，通知主线程修改Adapter，</p>
+</li>
+<li><p>使用AsyncTask也是一个不错的选择，虽然他也有很多缺陷</p>
+</li>
+</ol>
+<p>最后，只要修改了adapter机集合数据的值，就要马上调用notifyDataSetChanged方法。</p>
+<h2 id="ListView滚动时点击刷新按钮后崩溃"><a href="#ListView滚动时点击刷新按钮后崩溃" class="headerlink" title="ListView滚动时点击刷新按钮后崩溃"></a>ListView滚动时点击刷新按钮后崩溃</h2><blockquote>
+<p>异常中的关键字：java.lang.IndexOutOfBoundsException:Invalid index….                               java.util.ArrayList.throwIndexOutOfBoundsException<br>java.util.ArrayList.get(ArrayList.java:304) at android.widget.HeaderViewListAdapter.getView(HeaderViewListAdapter.java225)  </p>
+</blockquote>
+<p>ListView滚动的时候，表示它已经获取了adapter的getCounts()，可能是30或者更大，回调getView(),这时候将数据clear掉了，所以奔溃</p>
+<p>解决方案是，ListView滚动的时候，将刷新按钮设置为可以点击，如下所示<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> refresh&#123;</div><div class="line">    startLocation()；</div><div class="line">    pageNo = <span class="number">0</span>;</div><div class="line">    hasMore = <span class="keyword">true</span>;</div><div class="line">    dataList.clear();</div><div class="line">    moreBtn.setVisibility(View.GONE);</div><div class="line">    loadFirstPageData();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="AbsListView的obtainView返回空指针"><a href="#AbsListView的obtainView返回空指针" class="headerlink" title="AbsListView的obtainView返回空指针"></a>AbsListView的obtainView返回空指针</h2><blockquote>
+<p>异常中的关键字：java.lang.NullPointerException at android.widget.AbsListView.obtainView(AbsListView.java:1521)at android.widget.ListView.makeAndAddView</p>
+</blockquote>
+<p>导致空指针的罪魁祸首就是AbsListview的obtainView方法获取不到View，究其原因，是getView方法在某些时候返回了null。解决方案很简单，getView的第二个参数是不会为null的，在getView返回值的时候判断一下是否为空，如果为null，怎返货convertView。</p>
+<h2 id="Adapter数据源变化但是没有调用notifyDataSetChanged"><a href="#Adapter数据源变化但是没有调用notifyDataSetChanged" class="headerlink" title="Adapter数据源变化但是没有调用notifyDataSetChanged"></a>Adapter数据源变化但是没有调用notifyDataSetChanged</h2><blockquote>
+<p>异常中的关键字：The applications PagerAdapter changed the adapters contents without calling PagerAdapter#notifyDataSetChanged</p>
+</blockquote>
+<p>PagerAdapter对于notifyDataSetChanged()和getCount的执行顺序是非常严格的，系统跟踪count的值，如果这个值和getCount返回的值不一致，就会抛出这个异常。所以为了保证getCount总是返回一个正确的值，那么在初始化ViewPager时，应先给adapter初始化内容后再将该adapter传给ViewPager，如果不这样处理，在更新adapter的内容后，应该调用一下notifyDataSetChanged。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/原创/" rel="tag">#原创</a>
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/App研发录/" rel="tag">#App研发录</a>
+          
+            <a href="/tags/Crash/" rel="tag">#Crash</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/17/第五章：Crash异常收集与统计/" rel="next" title="第五章：Crash异常收集与统计">
+                <i class="fa fa-chevron-left"></i> 第五章：Crash异常收集与统计
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://qiushao.net/" title="qiushao的博客" target="_blank">qiushao的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java语法相关的异常"><span class="nav-number">1.</span> <span class="nav-text">Java语法相关的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#空指针"><span class="nav-number">1.1.</span> <span class="nav-text">空指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角标越界"><span class="nav-number">1.2.</span> <span class="nav-text">角标越界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#试图调用一个空对象的方法"><span class="nav-number">1.3.</span> <span class="nav-text">试图调用一个空对象的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型转换异常"><span class="nav-number">1.4.</span> <span class="nav-text">类型转换异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数字转换错误"><span class="nav-number">1.5.</span> <span class="nav-text">数字转换错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明数组时长度为-1"><span class="nav-number">1.6.</span> <span class="nav-text">声明数组时长度为-1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历集合同时删除其中元素"><span class="nav-number">1.7.</span> <span class="nav-text">遍历集合同时删除其中元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较器使用不当"><span class="nav-number">1.8.</span> <span class="nav-text">比较器使用不当</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当除数为0"><span class="nav-number">1.9.</span> <span class="nav-text">当除数为0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不能随便使用的asList"><span class="nav-number">1.10.</span> <span class="nav-text">不能随便使用的asList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#又有类找不到了（一）：ClassNotFoundException"><span class="nav-number">1.11.</span> <span class="nav-text">又有类找不到了（一）：ClassNotFoundException</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#又有类找不到了（二）：NoClassDefFoundException"><span class="nav-number">1.12.</span> <span class="nav-text">又有类找不到了（二）：NoClassDefFoundException</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity相关的异常"><span class="nav-number">2.</span> <span class="nav-text">Activity相关的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#找不到Activity"><span class="nav-number">2.1.</span> <span class="nav-text">找不到Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不能实例化Activity"><span class="nav-number">2.2.</span> <span class="nav-text">不能实例化Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#找不到Service"><span class="nav-number">2.3.</span> <span class="nav-text">找不到Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不能启动BroadcastReceiver"><span class="nav-number">2.4.</span> <span class="nav-text">不能启动BroadcastReceiver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#startActivityForResult不能回传"><span class="nav-number">2.5.</span> <span class="nav-text">startActivityForResult不能回传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#猴急的Fragment"><span class="nav-number">2.6.</span> <span class="nav-text">猴急的Fragment</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#序列化相关的异常"><span class="nav-number">3.</span> <span class="nav-text">序列化相关的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实体对象不支持序列化"><span class="nav-number">3.1.</span> <span class="nav-text">实体对象不支持序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化时未指定ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">序列化时未指定ClassLoader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反序列化时发现类找不到：被ProGuard混淆导致的崩溃"><span class="nav-number">3.3.</span> <span class="nav-text">反序列化时发现类找不到：被ProGuard混淆导致的崩溃</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反序列化出错"><span class="nav-number">3.4.</span> <span class="nav-text">反序列化出错</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表相关的异常"><span class="nav-number">4.</span> <span class="nav-text">列表相关的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Adapter数据源变化但是没有通知ListView"><span class="nav-number">4.1.</span> <span class="nav-text">Adapter数据源变化但是没有通知ListView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ListView滚动时点击刷新按钮后崩溃"><span class="nav-number">4.2.</span> <span class="nav-text">ListView滚动时点击刷新按钮后崩溃</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AbsListView的obtainView返回空指针"><span class="nav-number">4.3.</span> <span class="nav-text">AbsListView的obtainView返回空指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adapter数据源变化但是没有调用notifyDataSetChanged"><span class="nav-number">4.4.</span> <span class="nav-text">Adapter数据源变化但是没有调用notifyDataSetChanged</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
