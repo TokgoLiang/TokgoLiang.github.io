@@ -1,0 +1,812 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,原创,App研发录,Crash," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="窗体相关异常这种Crash很有名，原因基本都是在执行dismiss方法销毁对话框的时候，Activity已经不存在了。但是随着场景不同，抛出的异常信息却又大不相同。
+窗口句柄泄露
+异常中的关键字：android.view.WindowLeader:Activity xxx has leaked window com.android.internal.policy.impl.PhoneWindow$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六章：Crash异常分析——窗体、资源、系统碎片相关异常">
+<meta property="og:url" content="http://yoursite.com/2016/09/19/第六章：Crash异常分析——窗体、资源、系统碎片相关异常/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="窗体相关异常这种Crash很有名，原因基本都是在执行dismiss方法销毁对话框的时候，Activity已经不存在了。但是随着场景不同，抛出的异常信息却又大不相同。
+窗口句柄泄露
+异常中的关键字：android.view.WindowLeader:Activity xxx has leaked window com.android.internal.policy.impl.PhoneWindow$">
+<meta property="og:updated_time" content="2016-09-19T14:27:34.327Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第六章：Crash异常分析——窗体、资源、系统碎片相关异常">
+<meta name="twitter:description" content="窗体相关异常这种Crash很有名，原因基本都是在执行dismiss方法销毁对话框的时候，Activity已经不存在了。但是随着场景不同，抛出的异常信息却又大不相同。
+窗口句柄泄露
+异常中的关键字：android.view.WindowLeader:Activity xxx has leaked window com.android.internal.policy.impl.PhoneWindow$">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/19/第六章：Crash异常分析——窗体、资源、系统碎片相关异常/"/>
+
+  <title> 第六章：Crash异常分析——窗体、资源、系统碎片相关异常 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第六章：Crash异常分析——窗体、资源、系统碎片相关异常
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T22:27:32+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="窗体相关异常"><a href="#窗体相关异常" class="headerlink" title="窗体相关异常"></a>窗体相关异常</h1><p>这种Crash很有名，原因基本都是在执行dismiss方法销毁对话框的时候，Activity已经不存在了。但是随着场景不同，抛出的异常信息却又大不相同。</p>
+<h2 id="窗口句柄泄露"><a href="#窗口句柄泄露" class="headerlink" title="窗口句柄泄露"></a>窗口句柄泄露</h2><blockquote>
+<p>异常中的关键字：android.view.WindowLeader:Activity xxx has leaked window com.android.internal.policy.impl.PhoneWindow$DecorView{xxxx} that was originally added here.</p>
+</blockquote>
+<p>原因，Activity销毁之前没有解除对Dialog等的引用，包括手动finish和切换横竖屏等。。</p>
+<p>解决方法，在Activity的onDestroy中调用dialog.dismiss()；</p>
+<h2 id="View-not-attached-to-window-manger"><a href="#View-not-attached-to-window-manger" class="headerlink" title="View not attached to window manger"></a>View not attached to window manger</h2><blockquote>
+<p>异常中的关键字：java.lang.IllegalArgumentException：View not attached to window manager</p>
+</blockquote>
+<p>发生这类Exception的场景是，一个费事的线程任务，在任务开始的时候显示一个对话框，然后任务完了再销毁对话框，在此期间如果Activity因为某种原因被杀掉且又重新启动了，那么当dialog调用dismiss方法的时候WindowManager检查发现Dialog所属的Activity已经不存在了，所以会报View not attached to window mange。有关这个Crash的更详细描述，参见<a href="http://blog.csdn.net/yihongyuelan/article/details/9829313" target="_blank" rel="external">http://blog.csdn.net/yihongyuelan/article/details/9829313</a></p>
+<p>要想避免此类Exception，就要正确使用对话框，也要正确使用线程，有以下几个点需要注意。</p>
+<ol>
+<li><p>正确使用对话框，不要再非UI线程使用对话框创建，显示，和取消对话框。对于异步操作显示对话框，Activity都有相应操作的回调，比如，onCreateDialog，showDialog，dismissDialog，removeDialog，这些都是Activity的方法，</p>
+</li>
+<li><p>一定要让对话框对象在Activity的可控制范围内和生命周期内，比如，对话框一定要死Activity的成员变量，并且让对话框活跃在Activity的onCreate和onDestroy之间。</p>
+</li>
+</ol>
+<p>还有另外一种完美的解决方案，从派生SafeDialog，通过 复写dismiss方法，在dismiss方法执行之前判断Activity是否存在。</p>
+<h2 id="窗体在不恰当的时候获取了焦点"><a href="#窗体在不恰当的时候获取了焦点" class="headerlink" title="窗体在不恰当的时候获取了焦点"></a>窗体在不恰当的时候获取了焦点</h2><blockquote>
+<p>异常中的关键字：java.lang.NullPointerException:android.widget.PopupWindow$PopupViewContainer.dispatchKeyEvent</p>
+</blockquote>
+<p>这个问题是因为在PopupWindow显示之前，就把焦点赋予了它，这类问题只在Android2.3版本才会偶然出现，Android系统4.0的源码修改了方法，在底层对这个问题进行了规避。</p>
+<p>但是对于2.3的android系统，解决方法是，在创建PopupWindow的时候不立即调用setFocusable(true),而是在showAtLocation后再调用setFocusable(true)，同时，在调用dismiss的时候调用setFocusable(false)。</p>
+<p><strong>注意：PopupWindow调用setFocusable(true)是为了让它里面的控件能够实现监听事件。</strong></p>
+<h2 id="token-null-is-not-for-an-application"><a href="#token-null-is-not-for-an-application" class="headerlink" title="token null is not for an application"></a>token null is not for an application</h2><blockquote>
+<p>异常中的关键字：android.view.WindowManager$BadTokenException：Unable to add window – token null is not for an application </p>
+</blockquote>
+<p>在实现Android浮窗时，有时会包这个异常，根据以往的经验，出现这问题一般是我们的Context不正确，以下代码会报这个异常<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> AlertDialog.Builder(getApplicationContext());</div></pre></td></tr></table></figure></p>
+<p>问题出在AlertDialog.Builder(mcontext)这句，所接受的参数不能使getApplicationContext()获得的Context，而应该是Activity实例，因为只有一个Activity才能添加一个窗体，</p>
+<h2 id="permission-denied-for-this-window-type"><a href="#permission-denied-for-this-window-type" class="headerlink" title="permission denied for this window type"></a>permission denied for this window type</h2><blockquote>
+<p>异常中的关键字：Android.view.WindowManger$BadTokenException:Unable to add window android.view.ViewRootImpl$W@411da608 – permission denied for this window type</p>
+</blockquote>
+<p>使用WindowManger.LayoutParams.TYPE_SYSTEM_ALERT涉及window type权限问题。这种错误多发生在使用WindowManager自定义弹出框时，没有设置权限。</p>
+<p>解决方案是，在AndroidManifest.xml配置文件中添加一下两个uses-permission：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">   <span class="comment">&lt;!-- 显示系统窗口权限 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.SYSTEM_ALERT_WINDOW"</span>/&gt;</span></div><div class="line"><span class="comment">&lt;!-- 在频幕顶部显示addView --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.SYSTEM_OVERLAY_WINDOW"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="is-your-activity-running"><a href="#is-your-activity-running" class="headerlink" title="is your activity running"></a>is your activity running</h2><blockquote>
+<p>异常中的关键字：android.view.WindowManager$BadTokenException:Unable to add window –token android.app.LocalActivityManager$LocalActivityRecord@45a58ee0 is not valid;is your activity running?</p>
+</blockquote>
+<p>这种Crash与弹出框密切相关，是由于ActivityA依附于另一个ActivityB的，当被依附的ActivityB产生错误的时候，ActivityA因为没有了靠山而产生错误（或者调用了一个已经被finish的Activity）。比如，在onCreate方法中，想要弹出PopupWindow，如下所示<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">		</div><div class="line">		<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">		setContentView(R.layout.activity_main);</div><div class="line">		PopupWindow popupWindow = <span class="keyword">new</span> PopupWindow(</div><div class="line">				getLayoutInflater().inflate(R.layout.grid_item, <span class="keyword">null</span>),</div><div class="line">				ViewGroup.LayoutParams.WRAP_CONTENT,</div><div class="line">				ViewGroup.LayoutParams.WRAP_CONTENT);</div><div class="line">		popupWindow.showAtLocation(findViewById(R.id.action_settings), </div><div class="line">				Gravity.CENTER, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">		popupWindow.update();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们看一下PopupWindow的showAtLocation方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> android.widget.PopupWindow.showAtLocation(View parent, <span class="keyword">int</span> gravity, <span class="keyword">int</span> x, <span class="keyword">int</span> y);</div></pre></td></tr></table></figure></p>
+<p>当参数parent为空时，就会报上述的错误，说token为空，无效了由于PopupWindow要依赖于一个Activity，而activity的onCreate()还没执行完，因此就要让showAtLocation的调用再晚一点，，可以使用handler解决</p>
+<h2 id="添加窗体失败"><a href="#添加窗体失败" class="headerlink" title="添加窗体失败"></a>添加窗体失败</h2><blockquote>
+<p>异常中的关键字：java.lang.RuntimeException:Adding window failed at<br>              android.view.RootImpl.setView(ViewRootImpl.java:511) at<br>              android.view.WindowManagerImpl.addView(WindowManagerImpl.java:301) at …</p>
+</blockquote>
+<p>作者不能复现，智能在线上看到异常信息，不知道发生原因，也没有解决方案，检查Android系统源码，这个Crash是在ViewRoot的setView方法中捕获到的，如下所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    res = sWindowSession.add(mWindow, MWindowAttribute,</div><div class="line">          getHostVisibility(), mAttachInfo.mContentInsets);</div><div class="line">&#125; <span class="keyword">catch</span>(RemoteException e) &#123;</div><div class="line">    mAdded = <span class="keyword">false</span>;</div><div class="line">    mView = <span class="keyword">null</span>;</div><div class="line">    mAttachInfo.mRootView = <span class="keyword">null</span>;</div><div class="line">    unscheduleTraversals();</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Adding windows failed"</span>, ex);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="AlertDialog-resolveDialogTheme"><a href="#AlertDialog-resolveDialogTheme" class="headerlink" title="AlertDialog.resolveDialogTheme"></a>AlertDialog.resolveDialogTheme</h2><blockquote>
+<p>异常中的关键字：java.lang.NullPointerException at<br>              android.app.AlertDialog.resolveDialogTheme(AlertDialog,java:142) at<br>              android.app.AlertDialog$Builder.<init>(AlertDialog,java:359) at</init></p>
+</blockquote>
+<p>场景1：在B页面写了一个show方法，控制AlertDialog.Builder的弹出和隐藏，在A页面却要调用B页面的show方法</p>
+<p>解决方案：</p>
+<pre><code>1. 把ActivityB中的show方法，复制到A中
+2. 把show方法放到BaseActivity中
+3. 创建一个单独的类，把show方法转移过去，只需要传递正确的context参数即可。
+</code></pre><p>场景2：在TabActivity中切换Tab时，容易产生这个Crash。这是因为，在new对话框的时候，参数context指定成this了，即指向当前子Activity的context，但子Activity是动态创建的，不能保证一直存在。其父Activity的context则是稳定存在的，所以把this替换为getParent()即可。</p>
+<h2 id="The-specified-child-already-has-a-parent"><a href="#The-specified-child-already-has-a-parent" class="headerlink" title="The specified child already has a parent"></a>The specified child already has a parent</h2><blockquote>
+<p>异常中的关键字：The specified child already has a parent.You must call removeView() on the childs parent first.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">	</div><div class="line">	LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);</div><div class="line">	RelativeLayout parent = (RelativeLayout)inflater.inflate(R.layout.activity_main, <span class="keyword">null</span>);</div><div class="line">	</div><div class="line">	<span class="comment">//setContentView(parent); 					这样是可以的</span></div><div class="line">	GridView gridView = (GridView)parent.findViewById(R.id.id_gridView);</div><div class="line">	setContentView(gridView);					<span class="comment">//这样会报上述Crash</span></div><div class="line">	</div><div class="line">	<span class="comment">/*加remove就可以了		</span></div><div class="line"> 		parent.removeView(gridView);</div><div class="line">	setContentView(gridView);  */</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>关于这个异常的分析，还有一篇文章<a href="http://blog.csdn.net/lissdy/article/details/8453433，作者不能复现，仅供参考" target="_blank" rel="external">http://blog.csdn.net/lissdy/article/details/8453433，作者不能复现，仅供参考</a></p>
+<h2 id="子线程不能修改UI"><a href="#子线程不能修改UI" class="headerlink" title="子线程不能修改UI"></a>子线程不能修改UI</h2><blockquote>
+<p>异常中的关键字：android.view.ViewRootImpl$CalledFrom Wrong ThreadException:Only the original thread that created a view hierarchy can touch its views</p>
+</blockquote>
+<p>首先，“子线程不能修改UI”是不准确的，作者认为在onCreate的时候，是requestLayout方法没有执行——layout布局文件还没有创建完成，导致我们还可以在onCreate方法内在其他子线程操作UI。但是网上有人认为，“线程能否刷新UI的关键在于ViewRoot是否属于该线程”，参见<a href="http://blog.csdn.net/imyfriend/article/details/6877959。" target="_blank" rel="external">http://blog.csdn.net/imyfriend/article/details/6877959。</a></p>
+<p>解决方法：Handler，runOnUiThread(Runnable)，AsyncTask。</p>
+<h2 id="不能再子线程操作AlertDialog和Toast"><a href="#不能再子线程操作AlertDialog和Toast" class="headerlink" title="不能再子线程操作AlertDialog和Toast"></a>不能再子线程操作AlertDialog和Toast</h2><blockquote>
+<p>异常中的关键字：Cant create handler inside thread that has not called Looper.prepare()</p>
+</blockquote>
+<p>解决方案，使用Looper<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">		<span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">				Looper.prepare();</div><div class="line">				<span class="keyword">new</span> AlertDialog.Builder(TestActivity.<span class="keyword">this</span>).</div><div class="line">						setTitle(<span class="string">"title"</span>).</div><div class="line">						setMessage(<span class="string">"message"</span>).</div><div class="line">						setPositiveButton(<span class="string">"ok"</span>, <span class="keyword">null</span>).show();</div><div class="line">				Looper.loop();</div><div class="line">			&#125;</div><div class="line">		&#125;).start();</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showAlertByRunnable</span><span class="params">(<span class="keyword">final</span> Context context, <span class="keyword">final</span> CharSequence text, <span class="keyword">final</span> <span class="keyword">int</span> duration)</span> </span>&#123;</div><div class="line">		Handler handler = <span class="keyword">new</span> Handler(Looper.getMainLooper());</div><div class="line">		handler.post(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">				<span class="keyword">new</span> AlertDialog.Builder(TestActivity.<span class="keyword">this</span>).</div><div class="line">				setTitle(<span class="string">"title"</span>).</div><div class="line">				setMessage(<span class="string">"message"</span>).</div><div class="line">				setPositiveButton(<span class="string">"ok"</span>, <span class="keyword">null</span>).show();</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="资源相关的异常"><a href="#资源相关的异常" class="headerlink" title="资源相关的异常"></a>资源相关的异常</h1><p>资源相关的异常，基本都容易解决。但是有一种情况非常恶心，就是明明apk包中有这个资源文件，但是仍然抛出该资源找不到的异常，对此我们只好认为是内存溢出（OOM）了。</p>
+<h2 id="Resources-NotFoundException"><a href="#Resources-NotFoundException" class="headerlink" title="Resources$NotFoundException"></a>Resources$NotFoundException</h2><blockquote>
+<p>异常中的关键字：android.content.res.Resources$NotFoundException:String resource ID..</p>
+</blockquote>
+<p>一般都是我们在setText()时候误将一个非资源ID的int型的值传入，解决方法是将该值转换为String，比如String.valueof(intValue)或者intValue+””；</p>
+<blockquote>
+<p>stackoverflowerror</p>
+<p>异常中的关键字：stackoverflowerror</p>
+</blockquote>
+<p>发生的主要原因是Layout布局文件结构嵌套层次太深。我们应该尽量控制在5层以下。要经常使用Hierarchy View对其进行优化移除不必要的试图。</p>
+<p>这种Crash的第二种原因是，在App退出的时候，如果App中有多个线程，那么在退出App的时候可能不能完全关闭App，即使使用finish方法也做不到，必须使用System.exit(0)这样的语句才可以。</p>
+<p>无论是哪种情况导致的stackoverflowerror，都是由无限递归引起的。在JVM中有一个栈，预设了一个深度，当超出这个深度时，就会抛出stackoverflowerror。</p>
+<h2 id="UnsatisfiedLinkError"><a href="#UnsatisfiedLinkError" class="headerlink" title="UnsatisfiedLinkError"></a>UnsatisfiedLinkError</h2><blockquote>
+<p>异常中的关键字：java.lang. UnsatisfiedLinkError:dalvik.system.PathClassLoader….</p>
+</blockquote>
+<p>遇到这个Crash，肯定是so格式文件没有加载到，检查libs的armeabi目录下的so文件是否存在。此外不能只看armeabi文件夹，还要看x86目录，如果没有，在x86的设备上仍然不能运行。参见：<a href="http://www.cnblogs.com/devinzhang/archive/2012/02/29/2373729.html" target="_blank" rel="external">http://www.cnblogs.com/devinzhang/archive/2012/02/29/2373729.html</a></p>
+<h2 id="InfiateException之FileNotFoundExceptin"><a href="#InfiateException之FileNotFoundExceptin" class="headerlink" title="InfiateException之FileNotFoundExceptin"></a>InfiateException之FileNotFoundExceptin</h2><p>异常中的关键字：Caused by: android.view.InfiateException:Binary XML file line #18:Error infiating class&lt;unkonwnat android.view.LayoutInfiater.createView Caused by:java.io.FileNotFoundException:</p>
+<p>比较靠谱的说法是GC导致的，Activity销毁了但是里面涉及的资源文件没有被回收，于是便产生了内存泄露，但表现为FileNotFoundException。对此，解决方案是，在Activity的onStop方法中，手动释放每一张图片资源。详细信息，参见：<a href="http://blog.csdn.net/yiding_he/article/details/38597703" target="_blank" rel="external">http://blog.csdn.net/yiding_he/article/details/38597703</a></p>
+<h2 id="InfiateException之缺少构造器"><a href="#InfiateException之缺少构造器" class="headerlink" title="InfiateException之缺少构造器"></a>InfiateException之缺少构造器</h2><blockquote>
+<p>异常中的关键字： android.view.InfiateException:Binary XML file line #:Error infiating com.xxx.ccc…</p>
+</blockquote>
+<p>创建自定义View的时候，构造器不全会导致上述Crash。自定义控件若需要在xml文件中使用，就必须重写如下构造方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">TestView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">	<span class="keyword">super</span>(context, attrs);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="InfiateException之style与android-textStyle的区别"><a href="#InfiateException之style与android-textStyle的区别" class="headerlink" title="InfiateException之style与android:textStyle的区别"></a>InfiateException之style与android:textStyle的区别</h2><blockquote>
+<p>异常中的关键字：android.view.InfiateException:Binary XML file line #14:Error infiating class</p>
+</blockquote>
+<p>引用自定义style文件时，使用android:style 而不是 android:textStyle</p>
+<h2 id="TransactionTooLargeException"><a href="#TransactionTooLargeException" class="headerlink" title="TransactionTooLargeException"></a>TransactionTooLargeException</h2><blockquote>
+<p>异常中的关键字：android.view.InfiateException:Binary XML file line #14:Error infiating class</p>
+</blockquote>
+<p>官方文档里的解释是，Binder最大通常限制为1MB，如果大于1MB的话，就会抛出TransactionTooLargeException。</p>
+<p>解决方法是：不要将大量数据传入Binder，比如说图片。</p>
+<h1 id="系统碎片化相关异常"><a href="#系统碎片化相关异常" class="headerlink" title="系统碎片化相关异常"></a>系统碎片化相关异常</h1><p>这类Crash由两部分组成，一方面是和Android系统的版本不同有关，比如说在Android4.2的手机执行了Android5.0的语法；另一方面和ROM的不同有关，即使是相同的Android4.2版本，由于各个硬件厂商随意定制自己的ROM，改写其中的系统方法，那么就会表现为App的某个页面，不同手机看到不同的效果，甚至是崩溃。</p>
+<h2 id="NoSuchMethodError"><a href="#NoSuchMethodError" class="headerlink" title="NoSuchMethodError"></a>NoSuchMethodError</h2><blockquote>
+<p>异常中的关键字：java.lang.NoSuchMethodError </p>
+</blockquote>
+<p>在旧的版本上使用新的方法，会抛出此异常。</p>
+<p>NoSuchMethodError异常，智能防范，不能根治，因为Android碎片化问题很严重。解决方案，在DailyBuild机器上准备不同版本的SDK，自动打包时，把App在这些SDK上都编译一遍；在开发阶段检查Android Lint，里面有被废弃的方法警告，谨慎使用；如果一定要是新方法或者废弃的旧方法，在使用时，要进行Android版本的判断。</p>
+<h2 id="RemoteViews"><a href="#RemoteViews" class="headerlink" title="RemoteViews"></a>RemoteViews</h2><blockquote>
+<p>异常中的关键字：android.widget.RemoteViews$RefiectionAction.writeToParcel(RemoteViews.java:763)</p>
+</blockquote>
+<p>RemoteViews一般使用在两个地方，一个是在AppWidget，另外一个是Notification。对于应用类App而言，有机会用到的是后者。比如说，App都有下载更新的功能，一般都是用AsyncTask来做，下载过程显示的进度条就是使用Notification，它有一个contentView属性，就是RemoteViews类型的，我们要为其设置2个很关键的值：</p>
+<p>给ImageView绑定图片资源id<br>给TextView绑定字符串资源id</p>
+<p>如下面的例子所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">notification.contentView = <span class="keyword">new</span> RemoteViews(context.getPackageName(), R.layout.activity_main);</div><div class="line">notification.contentView.setImageViewResource(R.id.tv, R.drawable.ic_launcher);</div><div class="line">notification.contentView.setProgressBar(R.id.btn, <span class="number">100</span>, <span class="number">0</span>, <span class="keyword">false</span>);</div><div class="line">notification.contentView.setTextViewText(R.id.tv, <span class="string">"正在更新。。。。"</span>);</div></pre></td></tr></table></figure></p>
+<p>异常就是在绑定时出现的，而且有特定的情况：</p>
+<ul>
+<li>当你的Bitmap为null时，</li>
+<li>当你的String为“”或者null时，</li>
+<li>当Android版本是4.0.3和4.0.4时，</li>
+</ul>
+<p>如果Android版本时4.1以上的，则不会出现上述的异常</p>
+<h2 id="pointerIndex-out-of-range"><a href="#pointerIndex-out-of-range" class="headerlink" title="pointerIndex out of range"></a>pointerIndex out of range</h2><blockquote>
+<p>异常中的关键字：java.lang.IllegalArgumentException:pointerIndex out of range at android.view.MotionEvent.nativeGetAxisValue(Native Method)</p>
+</blockquote>
+<p>在做多点触控放大缩小，操作自己所绘制的图形时发生这个异常，如果是操作图片的放大缩小，多点触控不会出现这个错误。这个bug是android系统原因导致的，所以简单有效的办法是在绘图时捕获这个异常，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">spacing</span> <span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">	<span class="keyword">try</span>&#123;</div><div class="line">		x = event.getX(<span class="number">0</span>) - event.getX(<span class="number">1</span>);</div><div class="line">		y = event.getY(<span class="number">0</span>) - event.getY(<span class="number">1</span>);</div><div class="line">	&#125; <span class="keyword">catch</span>(IllegalArgumentException ex) &#123;</div><div class="line">		ex.printStackTrace();</div><div class="line">	&#125;</div><div class="line">       ......</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>另一种解决方案是：</p>
+<ol>
+<li>创建一个自定义View继承原View（可能是ScrollView，WebView，MapView等）</li>
+<li>重新这个View的onInterceptTouchEvent和onTouchEvent方法。</li>
+<li>为上述两个方法增加try…catch…语句，捕获已知异常</li>
+</ol>
+<h2 id="SecurityException之一：Intent图片太大"><a href="#SecurityException之一：Intent图片太大" class="headerlink" title="SecurityException之一：Intent图片太大"></a>SecurityException之一：Intent图片太大</h2><blockquote>
+<p>异常中的关键字：Unable to find app for caller android.app.ApplicationThreadProxy@41868f10(pid=24370) when stopping service Intent {cmp=xxxx}</p>
+</blockquote>
+<p>在跳转Activity的过程中携带的extras中有Bitmap，应尽量减小传输图片的体积，或者通过保存图片到SD卡中或者通过URL方式传递图片参数；否则图片太大，就会报上述异常信息。一般而言，超过1MB的数据，就不要通过Intent来传递了。</p>
+<h2 id="SecurityException之二：动态加载其他apk的Activity"><a href="#SecurityException之二：动态加载其他apk的Activity" class="headerlink" title="SecurityException之二：动态加载其他apk的Activity"></a>SecurityException之二：动态加载其他apk的Activity</h2><blockquote>
+<p>异常中的关键字：java.lang. SecurityException:Given caller package com.xxx.xx is not running in process ProcessRecord ….</p>
+</blockquote>
+<p>如果在apk中使用了动态注册BroadCastReceiver，那么Luncher动态加载该apk时，就有肯能出现java.lang. SecurityException异常</p>
+<p>相应的解决方法，修改之前注册BroadcastReceiver的地方，通过ContextHolder()来注册BroadcastReceiver，把APK重新部署验证，问题解决。<a href="http://blog.csdn.net/zhao_3546/article/details/11195881" target="_blank" rel="external">http://blog.csdn.net/zhao_3546/article/details/11195881</a></p>
+<h2 id="SecurityException之三：No-permission-to-modify-thread"><a href="#SecurityException之三：No-permission-to-modify-thread" class="headerlink" title="SecurityException之三：No permission to modify thread"></a>SecurityException之三：No permission to modify thread</h2><blockquote>
+<p>异常中的关键字：java.lang. SecurityException:No permission to modify given thread at<br>              android.os.Process.setThreadPriority(Native Method) at<br>              android..webkit.WebViewCore$WebCoreThread$1.handleMessage(WebViewCore.java:764)</p>
+</blockquote>
+<p>App经常会申请一些权限，而有些手机的ROM出于安全考虑，会禁止这些权限，那么当App使用到这些权限时，就会发生崩溃，相应的解决方法是，在执行某些安全相关的操作时，要么加if,要么使用try…catch…捕获这类异常。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">PackageManager pm = getPackageManager();</div><div class="line"><span class="keyword">boolean</span> hasPermission = pm.checkPermission(Manifest.permission.CALL_PHONE, </div><div class="line">		getPackageName()) == PackageManager.PERMISSION_GRANTED;</div><div class="line"><span class="keyword">if</span>(hasPermission) &#123;</div><div class="line">	Intent intent = <span class="keyword">new</span> Intent(Intent.ACTION_CALL,Uri.parse(<span class="string">"tel:13215464"</span>));</div><div class="line">	startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="view的getDrawingCache-返回null"><a href="#view的getDrawingCache-返回null" class="headerlink" title="view的getDrawingCache()返回null"></a>view的getDrawingCache()返回null</h2><blockquote>
+<p>异常中的关键字：java.lang.NullPointerException at<br>              android.view.View.buildDrawingCache(View.java:6578) at<br>              android.view.View.getDrawingCache(VIew.java:6428) at………..</p>
+</blockquote>
+<p>当背景图太大，超过了屏幕的大小，就会导致getDrawingCache()返回的结果是null，从而抛出NullPointerException 的异常。解决方法就是控制图片的大小，裁剪或者等比缩放。关于这个Crash的详细分析，参见<a href="http://zartzwj.iteye.com/blog/1098839" target="_blank" rel="external">http://zartzwj.iteye.com/blog/1098839</a></p>
+<h2 id="DeadObjectException"><a href="#DeadObjectException" class="headerlink" title="DeadObjectException"></a>DeadObjectException</h2><blockquote>
+<p>异常中的关键字：DeadObjectException</p>
+</blockquote>
+<p>在没有Root权限额时候，可以制造一个android.os.DeadObjectException，来重启Android设备。</p>
+<h2 id="Android2-1不支持SSL"><a href="#Android2-1不支持SSL" class="headerlink" title="Android2.1不支持SSL"></a>Android2.1不支持SSL</h2><blockquote>
+<p>异常中的关键字：java.lang.NullPointerException at<br>              android.webkit.SslErrorHandler.handleMessage</p>
+</blockquote>
+<p>Android2.1版本不支持SSL，所以发起https请求会导致崩溃，解决方案是调用https的网络请求时，先判断Android系统版本。</p>
+<h2 id="ViewFlipper引发的血案"><a href="#ViewFlipper引发的血案" class="headerlink" title="ViewFlipper引发的血案"></a>ViewFlipper引发的血案</h2><blockquote>
+<p>异常中的关键字：java.lang.IllegalArgumentException:Receiver not registered:<br>              android.widget.ViewFlipper$1@4083a4d0 at<br>              android.app.LoadedApk.foretReceiverDispatcher</p>
+</blockquote>
+<p>在Activity中使用ViewFlipper控件，进行横竖屏切换操作时就会发送这种异常。这是由于onDetachedFromWindow在onAttachedToWindow之前被调用所致。</p>
+<p>业界公认的解决方法是，重写ViewFlipper的onDetachedFromWindow方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetachedFromWindow</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="keyword">super</span>.onDetachedFromWindow();</div><div class="line">	&#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</div><div class="line">		stopFlipping();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="ActivityNotFoundException"><a href="#ActivityNotFoundException" class="headerlink" title="ActivityNotFoundException"></a>ActivityNotFoundException</h2><blockquote>
+<p>异常中的关键字：android.content.ActivityNotFoundException:Unable to find explicit activity class {com.android.settings/com.android.settings.WirelessSettings};have you declared this activity in your AndroidManifest.xml?</p>
+</blockquote>
+<p>只有4.0以上才会出现这类错误，原因是，4.0以上把原来的打开网络设置方式舍弃了，如下修改代码可以解决这个问题：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//3.2以上打开设置页面</span></div><div class="line"><span class="comment">//也可以直接用ACTION_WIRELESS_SETTINGS打开到WiFi页面</span></div><div class="line"><span class="keyword">if</span>(Build.VERSION.SDK_INT &gt; <span class="number">13</span>) &#123;</div><div class="line">	startActivity(<span class="keyword">new</span> Intent(</div><div class="line">			android.provider.Settings.ACTION_SETTINGS));</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	startActivity(<span class="keyword">new</span> Intent(</div><div class="line">			android.provider.Settings.ACTION_WIRELESS_SETTINGS));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="Android2-2不支持xlargsScreens"><a href="#Android2-2不支持xlargsScreens" class="headerlink" title="Android2.2不支持xlargsScreens"></a>Android2.2不支持xlargsScreens</h2><blockquote>
+<p>异常中的关键字：No resource identifier found for attritute ‘xlargsScreens’ in package ‘android’</p>
+</blockquote>
+<p>错误出现在AndroidManifest.xml文件的supports-screens标记中，原因是xlargsScreens属性在API9（Android2.3）中才支持</p>
+<p>解决方法：将Android2.2移除，添加Android2.3</p>
+<h2 id="Packagemanager-has-died"><a href="#Packagemanager-has-died" class="headerlink" title="Packagemanager has died"></a>Packagemanager has died</h2><blockquote>
+<p>异常中的关键字：Packagemanager has died at<br>              android.app.ApplicationPackageManager.getApplicationInfo(ApplicationPackageManager.java:123)</p>
+</blockquote>
+<p>PackageManager如果已经died，说明该进程不存在了，由于某些错误原因PackageManager进程已经退出，此时任何向他的请求都将失败，让设备重启可能是一个办法。还有一种情况是，App本身已经处于崩溃，这个时候如果App已经弹出错误匡，再调用PackageManager也会出错或卡死。</p>
+<p>解决方案就是每次获取PackageManager的时候有try…catch…捕获异常。如下所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">	String channelId = getPackageManager().</div><div class="line">			getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA)</div><div class="line">			.metaData.getString(<span class="string">"UMENG_CHANNEL"</span>);</div><div class="line">&#125; <span class="keyword">catch</span> (PackageManager.NameNotFoundException e) &#123;</div><div class="line">	e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="SpannableString与富文本字符串"><a href="#SpannableString与富文本字符串" class="headerlink" title="SpannableString与富文本字符串"></a>SpannableString与富文本字符串</h2><blockquote>
+<p>异常中的关键字：java.lang.IndexOutOfBoundsException:setSpan(-1…-1) starts before 0 at<br>              android.text.SpannableStringBuilder.checkRange(SpannableStringBuilder.java:951) at …</p>
+</blockquote>
+<p>从上面的异常信息看，是SpannableString的setSpan方法越界，导致崩溃，但是我们没有使用这个方法。TextView钥匙的富文本恰好要被换行符阶段的时候，因为富文本使用SpannableString技术来显示，所以会报这种异常，所幸，这个Crash不是必现的，取决于机型，分辨率，字体大小，文字和样式等很多因素。</p>
+<p>相应的解决方案是，在执行TextView的setText方法是，加上try…catch…语句捕获IndexOutOfBoundsException:setSpan。因为这种情况发生的概率极小，所以即使抛出异常，最多是不显示文本，也不会崩溃。</p>
+<p>还有一种情况是，长按一段文本时，有些Android系统对于EditText的getSelectionStart方法，会返回-1，就会导致上述异常情抛出，如下所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTextChanged</span><span class="params">(Editable s)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span>(StrngUtils.isNullOrEmpty(s.toString())) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> editStart = mTxInput.getSelectionStart();</div><div class="line">	<span class="keyword">int</span> editEnd = mTxInput.getSelectionEnd();</div><div class="line">	mTxInput.removeTextChangedListener(<span class="keyword">this</span>);</div><div class="line">	<span class="keyword">while</span>((s.toString().length()) &gt; MAX_INPUT) &#123;</div><div class="line">		s.delete(editStart-<span class="number">1</span>, editEnd);</div><div class="line">		editStart --;</div><div class="line">		editEnd --;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用getSelectionStart方法获得值的时候，要判断这个值是否为-1；</p>
+<h2 id="Can-not-perform-this-action-after-onSaveInstanceSate"><a href="#Can-not-perform-this-action-after-onSaveInstanceSate" class="headerlink" title="Can not perform this action after onSaveInstanceSate"></a>Can not perform this action after onSaveInstanceSate</h2><blockquote>
+<p>异常中的关键字：java.lang.IllegalStateException:<br>              Can not perform this action after onSaveInstanceState at<br>              android.support.v4.app.FragmentMangerImpl.checkStateLoss(FragmentManager.java:1314)……<br>              android.support.v4.app.BackStackRecord.commit(BackStackRecord.java595)</p>
+</blockquote>
+<p>commit方法在Activity的onSaveInstanceSate之后调用就会出错，因为onSaveInstanceSate方法是Activity即将被销毁前调用，以保存Activity数据的，如果在保存状态之后给它添加Fragment就会出错。解决办法就是，把commit方法替换成commitAllowStateLoss。此外有时候按后退键触发onBackPressed方法也会引发类似的异常，网上有一篇文章分析了这类问题的发生原因和解决方案。<a href="http://zhiweiofli.iteye.com/blog/1539467" target="_blank" rel="external">http://zhiweiofli.iteye.com/blog/1539467</a></p>
+<h2 id="Service-Intent-must-be-explicit"><a href="#Service-Intent-must-be-explicit" class="headerlink" title="Service Intent must be explicit"></a>Service Intent must be explicit</h2><blockquote>
+<p>异常中的关键字：Service Intent must be explicit</p>
+</blockquote>
+<p>android在升级到5.0系统后会产生这样的崩溃，直接通过action启动service，就会导致这个问题，所以我们必须指定component或package才能避免这类问题，如下所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">intent.setAction(<span class="string">"action name"</span>);</div><div class="line">intent.setPackage(getPackageName());</div><div class="line">context.startService(intent);</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/原创/" rel="tag">#原创</a>
+          
+            <a href="/tags/App研发录/" rel="tag">#App研发录</a>
+          
+            <a href="/tags/Crash/" rel="tag">#Crash</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/18/第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常/" rel="next" title="第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常">
+                <i class="fa fa-chevron-left"></i> 第六章：Crash异常分析——Java语法、Activity、序列化、列表相关的异常
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/19/第七章：ProGuard技术详解/" rel="prev" title="第七章：ProGuard技术详解">
+                第七章：ProGuard技术详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://qiushao.net/" title="qiushao的博客" target="_blank">qiushao的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#窗体相关异常"><span class="nav-number">1.</span> <span class="nav-text">窗体相关异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口句柄泄露"><span class="nav-number">1.1.</span> <span class="nav-text">窗口句柄泄露</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View-not-attached-to-window-manger"><span class="nav-number">1.2.</span> <span class="nav-text">View not attached to window manger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗体在不恰当的时候获取了焦点"><span class="nav-number">1.3.</span> <span class="nav-text">窗体在不恰当的时候获取了焦点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#token-null-is-not-for-an-application"><span class="nav-number">1.4.</span> <span class="nav-text">token null is not for an application</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#permission-denied-for-this-window-type"><span class="nav-number">1.5.</span> <span class="nav-text">permission denied for this window type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-your-activity-running"><span class="nav-number">1.6.</span> <span class="nav-text">is your activity running</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加窗体失败"><span class="nav-number">1.7.</span> <span class="nav-text">添加窗体失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AlertDialog-resolveDialogTheme"><span class="nav-number">1.8.</span> <span class="nav-text">AlertDialog.resolveDialogTheme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-specified-child-already-has-a-parent"><span class="nav-number">1.9.</span> <span class="nav-text">The specified child already has a parent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子线程不能修改UI"><span class="nav-number">1.10.</span> <span class="nav-text">子线程不能修改UI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不能再子线程操作AlertDialog和Toast"><span class="nav-number">1.11.</span> <span class="nav-text">不能再子线程操作AlertDialog和Toast</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资源相关的异常"><span class="nav-number">2.</span> <span class="nav-text">资源相关的异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Resources-NotFoundException"><span class="nav-number">2.1.</span> <span class="nav-text">Resources$NotFoundException</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UnsatisfiedLinkError"><span class="nav-number">2.2.</span> <span class="nav-text">UnsatisfiedLinkError</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InfiateException之FileNotFoundExceptin"><span class="nav-number">2.3.</span> <span class="nav-text">InfiateException之FileNotFoundExceptin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InfiateException之缺少构造器"><span class="nav-number">2.4.</span> <span class="nav-text">InfiateException之缺少构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InfiateException之style与android-textStyle的区别"><span class="nav-number">2.5.</span> <span class="nav-text">InfiateException之style与android:textStyle的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TransactionTooLargeException"><span class="nav-number">2.6.</span> <span class="nav-text">TransactionTooLargeException</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统碎片化相关异常"><span class="nav-number">3.</span> <span class="nav-text">系统碎片化相关异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NoSuchMethodError"><span class="nav-number">3.1.</span> <span class="nav-text">NoSuchMethodError</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RemoteViews"><span class="nav-number">3.2.</span> <span class="nav-text">RemoteViews</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pointerIndex-out-of-range"><span class="nav-number">3.3.</span> <span class="nav-text">pointerIndex out of range</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SecurityException之一：Intent图片太大"><span class="nav-number">3.4.</span> <span class="nav-text">SecurityException之一：Intent图片太大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SecurityException之二：动态加载其他apk的Activity"><span class="nav-number">3.5.</span> <span class="nav-text">SecurityException之二：动态加载其他apk的Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SecurityException之三：No-permission-to-modify-thread"><span class="nav-number">3.6.</span> <span class="nav-text">SecurityException之三：No permission to modify thread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#view的getDrawingCache-返回null"><span class="nav-number">3.7.</span> <span class="nav-text">view的getDrawingCache()返回null</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DeadObjectException"><span class="nav-number">3.8.</span> <span class="nav-text">DeadObjectException</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android2-1不支持SSL"><span class="nav-number">3.9.</span> <span class="nav-text">Android2.1不支持SSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewFlipper引发的血案"><span class="nav-number">3.10.</span> <span class="nav-text">ViewFlipper引发的血案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ActivityNotFoundException"><span class="nav-number">3.11.</span> <span class="nav-text">ActivityNotFoundException</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android2-2不支持xlargsScreens"><span class="nav-number">3.12.</span> <span class="nav-text">Android2.2不支持xlargsScreens</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Packagemanager-has-died"><span class="nav-number">3.13.</span> <span class="nav-text">Packagemanager has died</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpannableString与富文本字符串"><span class="nav-number">3.14.</span> <span class="nav-text">SpannableString与富文本字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Can-not-perform-this-action-after-onSaveInstanceSate"><span class="nav-number">3.15.</span> <span class="nav-text">Can not perform this action after onSaveInstanceSate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-Intent-must-be-explicit"><span class="nav-number">3.16.</span> <span class="nav-text">Service Intent must be explicit</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
