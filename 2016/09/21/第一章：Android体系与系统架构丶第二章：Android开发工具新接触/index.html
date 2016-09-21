@@ -1,0 +1,681 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,原创,Android群英传,开发工具," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Android体系与系统架构Android系统架构　　如下图所示，这是一张讲解Android系统架构的经典示意图。它将Android大致分为了四层，即Linux内核层，库和运行时，Framwork层和应用层。Android的系统架构鼓励系统组建重用，共享组件间的数据，并且定义组件间的访问权限控制。可以说，这些层次结构既相互独立又是互相关联的。
+
+　　有人说，Android是一个用于连接设备的软件集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章：Android体系与系统架构丶第二章：Android开发工具新接触">
+<meta property="og:url" content="http://yoursite.com/2016/09/21/第一章：Android体系与系统架构丶第二章：Android开发工具新接触/index.html">
+<meta property="og:site_name" content="TokgoLiang的博客">
+<meta property="og:description" content="Android体系与系统架构Android系统架构　　如下图所示，这是一张讲解Android系统架构的经典示意图。它将Android大致分为了四层，即Linux内核层，库和运行时，Framwork层和应用层。Android的系统架构鼓励系统组建重用，共享组件间的数据，并且定义组件间的访问权限控制。可以说，这些层次结构既相互独立又是互相关联的。
+
+　　有人说，Android是一个用于连接设备的软件集">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/Android%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.gif">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/Android%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88.png">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/Framework.png">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/Libraries.png">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/ndkapp.png">
+<meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/sdkapp.png">
+<meta property="og:updated_time" content="2016-09-21T15:55:55.748Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第一章：Android体系与系统架构丶第二章：Android开发工具新接触">
+<meta name="twitter:description" content="Android体系与系统架构Android系统架构　　如下图所示，这是一张讲解Android系统架构的经典示意图。它将Android大致分为了四层，即Linux内核层，库和运行时，Framwork层和应用层。Android的系统架构鼓励系统组建重用，共享组件间的数据，并且定义组件间的访问权限控制。可以说，这些层次结构既相互独立又是互相关联的。
+
+　　有人说，Android是一个用于连接设备的软件集">
+<meta name="twitter:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/Android%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/21/第一章：Android体系与系统架构丶第二章：Android开发工具新接触/"/>
+
+  <title> 第一章：Android体系与系统架构丶第二章：Android开发工具新接触 | TokgoLiang的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">TokgoLiang的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第一章：Android体系与系统架构丶第二章：Android开发工具新接触
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-21T23:55:36+08:00" content="2016-09-21">
+              2016-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/Android群英传/" itemprop="url" rel="index">
+                    <span itemprop="name">Android群英传</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Android体系与系统架构"><a href="#Android体系与系统架构" class="headerlink" title="Android体系与系统架构"></a>Android体系与系统架构</h1><h2 id="Android系统架构"><a href="#Android系统架构" class="headerlink" title="Android系统架构"></a>Android系统架构</h2><p>　　如下图所示，这是一张讲解Android系统架构的经典示意图。它将Android大致分为了四层，即Linux内核层，库和运行时，Framwork层和应用层。Android的系统架构鼓励系统组建重用，共享组件间的数据，并且定义组件间的访问权限控制。可以说，这些层次结构既相互独立又是互相关联的。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Android%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.gif" alt="Android系统架构"></p>
+<p>　　有人说，Android是一个用于连接设备的软件集合，下图就代表了一个最抽象的Android系统架构。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Android%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88.png" alt="android架构总览"></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>　　Linux层，Android最底层最核心的部分。当我们打开手机Setting，选择about phone选项，这一选项所显示的内核版本，就是我们所用的Linux内核的版本。Linux层包含了Android系统的核心服务，包括硬件驱动丶进程管理丶安全系统，等等。</p>
+<h3 id="Dalvik与ART"><a href="#Dalvik与ART" class="headerlink" title="Dalvik与ART"></a>Dalvik与ART</h3><p>　　Dalvik包含了一整套的Android运行环境虚拟机，每个App都会分配Dalvik虚拟机来保证互相之间不受干扰，并保持独立。它的特点是在运行时编译。打个比方，就好比你买了一辆折叠自行车，平时是折叠的，只有在骑得时候，才需要组装起来用。而在Android5.X版本开始，ART模式已经取代了Dalvik，ART采用的是安装时就进行编译，以后运行时就不用编译了，这就好比你买了辆组装好了的自行车，装好了就可以骑了。当然，对在其虚拟机环境中运行的大部分App来说，它们都运行着同样的代码。</p>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p>　　下图为Android App Framework 的详细版。它包含了整个Android Framework的重点，如果以后要研究Framework的具体流程，基本就是在和它们打交道。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Framework.png" alt="framework"></p>
+<h3 id="Standard-Libraries"><a href="#Standard-Libraries" class="headerlink" title="Standard Libraries"></a>Standard Libraries</h3><p>　　下图为Standard Libraries的详细版，这里包含的是Android中的一些标准库，所谓标准，就是开发者在开源环境中可以使用的开发库。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Libraries.png" alt="libraries"></p>
+<h3 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h3><p>　　下面两图分别表示了使用NDK开发和Java开发的App的主要构成。可以看出，不管那种App，它们都有Android Manifest 文件，Dalvik Classes，Resource Bundle这几个东西，相信解压过Apk的朋友应该注意到了，这些就是我们解压Apk后的文件。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/ndkapp.png" alt="ndk"></p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/sdkapp.png" alt="sdk"></p>
+<p>　　对于开发者来说，与Android系统最直接的接触就是SDK，应用开发者应当关注每个版本的SDK修改，从而提高应用的兼容性，如果站在Android设计者的角度上来看整个Android的架构，设计者希望Android的架构层能够起到承上启下的功能，让应用的各个组件之间解耦，并通过框架来进行统一的调度，管理。</p>
+<h2 id="Android-App-组件架构"><a href="#Android-App-组件架构" class="headerlink" title="Android App 组件架构"></a>Android App 组件架构</h2><p>　　在应用层，Android的App组件架构，痛就是我们所说的四大组件，指的是Activity，BroadCastReciver,ContentProvider和Service，它们是构成一个AndroidApp的最基本元素。</p>
+<h3 id="Android四大组件如何协同工作"><a href="#Android四大组件如何协同工作" class="headerlink" title="Android四大组件如何协同工作"></a>Android四大组件如何协同工作</h3><p>　　Activity作为人机交互的第一界面，负责向用户展示信息和处理结果，而这些信息的来源，可以是通过资源获取，也可以是通过Conten Provider 来获取其他应用的信息，或是Service从后台计算，下载，处理的结果，当然也可以是通过BroadCast Reciver获取到的广播信息。同时，Android系统还提供了要给信使——Intent，作为信息传递的载体。组件与组件之间通过Intent来通信，传递信息，交换数据，正式通过这样要给方式，四大组件形成了各自独立而又紧密联系的关系，让整个Android系统“活”了起来。</p>
+<h3 id="应用运行上下文对象"><a href="#应用运行上下文对象" class="headerlink" title="应用运行上下文对象"></a>应用运行上下文对象</h3><p>　　Android系统中的上下文对象，即在Context中，为我们封装了这样一个“语境”。Activity，Service，Application都是继承自Context。</p>
+<p>　　Android应用程序会在如下所示的几个时间点创建上下文Context。</p>
+<ul>
+<li>创建 Application</li>
+<li>创建Activity</li>
+<li>创建Service</li>
+</ul>
+<p>　　不难发现，创建Context的时机就是创建Context的实现类的时候。当应用程序第一次启动时，Android系统都会创建一个Application对象，同时创建Application Conetext，所有的组件都共同拥有这个Context对象，这个应用上下文对象贯穿了整个应用进程的生命周期，为应用全局提供了功能和环境支持。</p>
+<p>　　而创建Activity和Service组件时，系统也会给他们提供运行时的上下文环境，即创建Activity实例，Service实例的Context对象。所以在Activity中获取Context对象时，可以直接使用this，而在匿名内部类中，就必须指定XXXActivity.this 才可以获得该Activity的Context对象。</p>
+<p>　　当然也可以通过getApplicationContext()方法来获取整个App的Context，但是通过getApplicationContext()方法获得的是整个应用的上下文引用，这与某个组件的上下文应用，在某些时候还有有区别的。</p>
+<h2 id="Android系统源代码目录与系统目录"><a href="#Android系统源代码目录与系统目录" class="headerlink" title="Android系统源代码目录与系统目录"></a>Android系统源代码目录与系统目录</h2><h3 id="Android系统源代码目录"><a href="#Android系统源代码目录" class="headerlink" title="Android系统源代码目录"></a>Android系统源代码目录</h3><blockquote>
+<p>想要看懂整个Android的源代码，你要懂C，懂脚本，懂Java，不仅仅要软硬兼通，而且要有一颗耐得住寂寞，忍得了枯燥的心。。。。。。</p>
+</blockquote>
+<p>作者推荐了一个查看Android源代码的网站：<a href="http://androidxref.com/" title="androidxref" target="_blank" rel="external">androidxref</a></p>
+<p>还有一个非常好的不需要翻墙的网站<a href="https://developer.android.com/index.html" title="Android Developers" target="_blank" rel="external">Android Developers</a></p>
+<p>Android源码大概目录如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- Makefile</div><div class="line">- bionic				（bionic C 库）</div><div class="line">- bootable			（启动引导相关代码）</div><div class="line">- build				（存放系统编译规则等基础开发包配置）</div><div class="line">- cts				（Google 兼容性测试标准）</div><div class="line">- dalvik            （dalvik虚拟机）</div><div class="line">- development		（应用程序开发相关）</div><div class="line">- external          （android 使用的一些开源的模块）</div><div class="line">- framework         （Framework框架核心）</div><div class="line">- hardware			（厂商硬件适配层HAL代码）</div><div class="line">- out				（编译完成后的代码输出目录）</div><div class="line">- packages			（应用程序包）</div><div class="line">- prebuilt			（x86和arm架构下预编译资源）</div><div class="line">- sdk				 (sdk及模拟器）</div><div class="line">- system				（底层文件系统库，应用及组件）</div><div class="line">- vendor				（厂商定制代码）</div></pre></td></tr></table></figure>
+<p>　　不过并不是所有的源代码结构都是这样，只有AOSP的Android项目才是这样一个结构。</p>
+<p>　　Eclipse，AndroidStudio都属于开发IDE，Android源码的编译需要通过Makefile机制。</p>
+<p>　　一个像Andoid这样的大型工程，它的源文件不计其数，不同的功能，模块，按类型分别放置在不同的目录中，这些模块通常会有一个叫Makefile的文件来进行管理。它定义了一系列的规则来制定模块，哪些文件需要编译，以及这些文件该按照怎样的顺序去编译。甚至它还可以配置更复杂的功能操作，比如定义编译规则，打包规则等，因为Makefile就像一个shell脚本，不仅可以使用自己的语法，也能调用操作系的命令。</p>
+<p>关于编译给大家推荐两篇文章：</p>
+<p><a href="http://tokgoliang.com/2016/09/13/%E7%90%86%E8%A7%A3Android%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4/" title="理解Android编译命令" target="_blank" rel="external">理解Android编译命令</a><br><a href="https://www.ibm.com/developerworks/cn/opensource/os-cn-android-build/" title="理解 Android Build 系统" target="_blank" rel="external">理解 Android Build 系统</a></p>
+<h3 id="Android系统目录"><a href="#Android系统目录" class="headerlink" title="Android系统目录"></a>Android系统目录</h3><p>未完待续。。。。。</p>
+<h1 id="Android开发工具新接触"><a href="#Android开发工具新接触" class="headerlink" title="Android开发工具新接触"></a>Android开发工具新接触</h1>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/原创/" rel="tag">#原创</a>
+          
+            <a href="/tags/Android群英传/" rel="tag">#Android群英传</a>
+          
+            <a href="/tags/开发工具/" rel="tag">#开发工具</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/19/第七章：ProGuard技术详解/" rel="next" title="第七章：ProGuard技术详解">
+                <i class="fa fa-chevron-left"></i> 第七章：ProGuard技术详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xu1cb.com1.z0.glb.clouddn.com/IMG_0273.JPG"
+               alt="TokgoLiang" />
+          <p class="site-author-name" itemprop="name">TokgoLiang</p>
+          <p class="site-description motion-element" itemprop="description">In me the tiger sniffs the rose.</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://qiushao.net/" title="qiushao的博客" target="_blank">qiushao的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android体系与系统架构"><span class="nav-number">1.</span> <span class="nav-text">Android体系与系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android系统架构"><span class="nav-number">1.1.</span> <span class="nav-text">Android系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dalvik与ART"><span class="nav-number">1.1.2.</span> <span class="nav-text">Dalvik与ART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Framework"><span class="nav-number">1.1.3.</span> <span class="nav-text">Framework</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-Libraries"><span class="nav-number">1.1.4.</span> <span class="nav-text">Standard Libraries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Application"><span class="nav-number">1.1.5.</span> <span class="nav-text">Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-App-组件架构"><span class="nav-number">1.2.</span> <span class="nav-text">Android App 组件架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android四大组件如何协同工作"><span class="nav-number">1.2.1.</span> <span class="nav-text">Android四大组件如何协同工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用运行上下文对象"><span class="nav-number">1.2.2.</span> <span class="nav-text">应用运行上下文对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android系统源代码目录与系统目录"><span class="nav-number">1.3.</span> <span class="nav-text">Android系统源代码目录与系统目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android系统源代码目录"><span class="nav-number">1.3.1.</span> <span class="nav-text">Android系统源代码目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android系统目录"><span class="nav-number">1.3.2.</span> <span class="nav-text">Android系统目录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android开发工具新接触"><span class="nav-number">2.</span> <span class="nav-text">Android开发工具新接触</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">TokgoLiang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

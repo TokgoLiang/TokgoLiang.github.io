@@ -248,6 +248,169 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/21/第一章：Android体系与系统架构丶第二章：Android开发工具新接触/" itemprop="url">
+                  第一章：Android体系与系统架构丶第二章：Android开发工具新接触
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-21T23:55:36+08:00" content="2016-09-21">
+              2016-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/Android群英传/" itemprop="url" rel="index">
+                    <span itemprop="name">Android群英传</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Android体系与系统架构"><a href="#Android体系与系统架构" class="headerlink" title="Android体系与系统架构"></a>Android体系与系统架构</h1><h2 id="Android系统架构"><a href="#Android系统架构" class="headerlink" title="Android系统架构"></a>Android系统架构</h2><p>　　如下图所示，这是一张讲解Android系统架构的经典示意图。它将Android大致分为了四层，即Linux内核层，库和运行时，Framwork层和应用层。Android的系统架构鼓励系统组建重用，共享组件间的数据，并且定义组件间的访问权限控制。可以说，这些层次结构既相互独立又是互相关联的。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Android%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.gif" alt="Android系统架构"></p>
+<p>　　有人说，Android是一个用于连接设备的软件集合，下图就代表了一个最抽象的Android系统架构。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Android%E6%9E%B6%E6%9E%84%E6%80%BB%E8%A7%88.png" alt="android架构总览"></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>　　Linux层，Android最底层最核心的部分。当我们打开手机Setting，选择about phone选项，这一选项所显示的内核版本，就是我们所用的Linux内核的版本。Linux层包含了Android系统的核心服务，包括硬件驱动丶进程管理丶安全系统，等等。</p>
+<h3 id="Dalvik与ART"><a href="#Dalvik与ART" class="headerlink" title="Dalvik与ART"></a>Dalvik与ART</h3><p>　　Dalvik包含了一整套的Android运行环境虚拟机，每个App都会分配Dalvik虚拟机来保证互相之间不受干扰，并保持独立。它的特点是在运行时编译。打个比方，就好比你买了一辆折叠自行车，平时是折叠的，只有在骑得时候，才需要组装起来用。而在Android5.X版本开始，ART模式已经取代了Dalvik，ART采用的是安装时就进行编译，以后运行时就不用编译了，这就好比你买了辆组装好了的自行车，装好了就可以骑了。当然，对在其虚拟机环境中运行的大部分App来说，它们都运行着同样的代码。</p>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p>　　下图为Android App Framework 的详细版。它包含了整个Android Framework的重点，如果以后要研究Framework的具体流程，基本就是在和它们打交道。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Framework.png" alt="framework"></p>
+<h3 id="Standard-Libraries"><a href="#Standard-Libraries" class="headerlink" title="Standard Libraries"></a>Standard Libraries</h3><p>　　下图为Standard Libraries的详细版，这里包含的是Android中的一些标准库，所谓标准，就是开发者在开源环境中可以使用的开发库。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/Libraries.png" alt="libraries"></p>
+<h3 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h3><p>　　下面两图分别表示了使用NDK开发和Java开发的App的主要构成。可以看出，不管那种App，它们都有Android Manifest 文件，Dalvik Classes，Resource Bundle这几个东西，相信解压过Apk的朋友应该注意到了，这些就是我们解压Apk后的文件。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/ndkapp.png" alt="ndk"></p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/sdkapp.png" alt="sdk"></p>
+<p>　　对于开发者来说，与Android系统最直接的接触就是SDK，应用开发者应当关注每个版本的SDK修改，从而提高应用的兼容性，如果站在Android设计者的角度上来看整个Android的架构，设计者希望Android的架构层能够起到承上启下的功能，让应用的各个组件之间解耦，并通过框架来进行统一的调度，管理。</p>
+<h2 id="Android-App-组件架构"><a href="#Android-App-组件架构" class="headerlink" title="Android App 组件架构"></a>Android App 组件架构</h2><p>　　在应用层，Android的App组件架构，痛就是我们所说的四大组件，指的是Activity，BroadCastReciver,ContentProvider和Service，它们是构成一个AndroidApp的最基本元素。</p>
+<h3 id="Android四大组件如何协同工作"><a href="#Android四大组件如何协同工作" class="headerlink" title="Android四大组件如何协同工作"></a>Android四大组件如何协同工作</h3><p>　　Activity作为人机交互的第一界面，负责向用户展示信息和处理结果，而这些信息的来源，可以是通过资源获取，也可以是通过Conten Provider 来获取其他应用的信息，或是Service从后台计算，下载，处理的结果，当然也可以是通过BroadCast Reciver获取到的广播信息。同时，Android系统还提供了要给信使——Intent，作为信息传递的载体。组件与组件之间通过Intent来通信，传递信息，交换数据，正式通过这样要给方式，四大组件形成了各自独立而又紧密联系的关系，让整个Android系统“活”了起来。</p>
+<h3 id="应用运行上下文对象"><a href="#应用运行上下文对象" class="headerlink" title="应用运行上下文对象"></a>应用运行上下文对象</h3><p>　　Android系统中的上下文对象，即在Context中，为我们封装了这样一个“语境”。Activity，Service，Application都是继承自Context。</p>
+<p>　　Android应用程序会在如下所示的几个时间点创建上下文Context。</p>
+<ul>
+<li>创建 Application</li>
+<li>创建Activity</li>
+<li>创建Service</li>
+</ul>
+<p>　　不难发现，创建Context的时机就是创建Context的实现类的时候。当应用程序第一次启动时，Android系统都会创建一个Application对象，同时创建Application Conetext，所有的组件都共同拥有这个Context对象，这个应用上下文对象贯穿了整个应用进程的生命周期，为应用全局提供了功能和环境支持。</p>
+<p>　　而创建Activity和Service组件时，系统也会给他们提供运行时的上下文环境，即创建Activity实例，Service实例的Context对象。所以在Activity中获取Context对象时，可以直接使用this，而在匿名内部类中，就必须指定XXXActivity.this 才可以获得该Activity的Context对象。</p>
+<p>　　当然也可以通过getApplicationContext()方法来获取整个App的Context，但是通过getApplicationContext()方法获得的是整个应用的上下文引用，这与某个组件的上下文应用，在某些时候还有有区别的。</p>
+<h2 id="Android系统源代码目录与系统目录"><a href="#Android系统源代码目录与系统目录" class="headerlink" title="Android系统源代码目录与系统目录"></a>Android系统源代码目录与系统目录</h2><h3 id="Android系统源代码目录"><a href="#Android系统源代码目录" class="headerlink" title="Android系统源代码目录"></a>Android系统源代码目录</h3><blockquote>
+<p>想要看懂整个Android的源代码，你要懂C，懂脚本，懂Java，不仅仅要软硬兼通，而且要有一颗耐得住寂寞，忍得了枯燥的心。。。。。。</p>
+</blockquote>
+<p>作者推荐了一个查看Android源代码的网站：<a href="http://androidxref.com/" title="androidxref" target="_blank" rel="external">androidxref</a></p>
+<p>还有一个非常好的不需要翻墙的网站<a href="https://developer.android.com/index.html" title="Android Developers" target="_blank" rel="external">Android Developers</a></p>
+<p>Android源码大概目录如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- Makefile</div><div class="line">- bionic				（bionic C 库）</div><div class="line">- bootable			（启动引导相关代码）</div><div class="line">- build				（存放系统编译规则等基础开发包配置）</div><div class="line">- cts				（Google 兼容性测试标准）</div><div class="line">- dalvik            （dalvik虚拟机）</div><div class="line">- development		（应用程序开发相关）</div><div class="line">- external          （android 使用的一些开源的模块）</div><div class="line">- framework         （Framework框架核心）</div><div class="line">- hardware			（厂商硬件适配层HAL代码）</div><div class="line">- out				（编译完成后的代码输出目录）</div><div class="line">- packages			（应用程序包）</div><div class="line">- prebuilt			（x86和arm架构下预编译资源）</div><div class="line">- sdk				 (sdk及模拟器）</div><div class="line">- system				（底层文件系统库，应用及组件）</div><div class="line">- vendor				（厂商定制代码）</div></pre></td></tr></table></figure>
+<p>　　不过并不是所有的源代码结构都是这样，只有AOSP的Android项目才是这样一个结构。</p>
+<p>　　Eclipse，AndroidStudio都属于开发IDE，Android源码的编译需要通过Makefile机制。</p>
+<p>　　一个像Andoid这样的大型工程，它的源文件不计其数，不同的功能，模块，按类型分别放置在不同的目录中，这些模块通常会有一个叫Makefile的文件来进行管理。它定义了一系列的规则来制定模块，哪些文件需要编译，以及这些文件该按照怎样的顺序去编译。甚至它还可以配置更复杂的功能操作，比如定义编译规则，打包规则等，因为Makefile就像一个shell脚本，不仅可以使用自己的语法，也能调用操作系的命令。</p>
+<p>关于编译给大家推荐两篇文章：</p>
+<p><a href="http://tokgoliang.com/2016/09/13/%E7%90%86%E8%A7%A3Android%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4/" title="理解Android编译命令" target="_blank" rel="external">理解Android编译命令</a><br><a href="https://www.ibm.com/developerworks/cn/opensource/os-cn-android-build/" title="理解 Android Build 系统" target="_blank" rel="external">理解 Android Build 系统</a></p>
+<h3 id="Android系统目录"><a href="#Android系统目录" class="headerlink" title="Android系统目录"></a>Android系统目录</h3><p>未完待续。。。。。</p>
+<h1 id="Android开发工具新接触"><a href="#Android开发工具新接触" class="headerlink" title="Android开发工具新接触"></a>Android开发工具新接触</h1>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/19/第七章：ProGuard技术详解/" itemprop="url">
                   第七章：ProGuard技术详解
                 </a>
@@ -278,6 +441,18 @@
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
                     <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/App研发录/" itemprop="url" rel="index">
+                    <span itemprop="name">App研发录</span>
                   </a>
                 </span>
 
@@ -437,6 +612,18 @@
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
                     <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/App研发录/" itemprop="url" rel="index">
+                    <span itemprop="name">App研发录</span>
                   </a>
                 </span>
 
@@ -739,6 +926,18 @@
 
                 
                 
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/App研发录/" itemprop="url" rel="index">
+                    <span itemprop="name">App研发录</span>
+                  </a>
+                </span>
+
+                
+                
 
               
             </span>
@@ -1025,6 +1224,18 @@
 
                 
                 
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/App研发录/" itemprop="url" rel="index">
+                    <span itemprop="name">App研发录</span>
+                  </a>
+                </span>
+
+                
+                
 
               
             </span>
@@ -1261,6 +1472,18 @@
 
                 
                 
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/App研发录/" itemprop="url" rel="index">
+                    <span itemprop="name">App研发录</span>
+                  </a>
+                </span>
+
+                
+                
 
               
             </span>
@@ -1354,138 +1577,6 @@
 <h1 id="统一代码格式"><a href="#统一代码格式" class="headerlink" title="统一代码格式"></a>统一代码格式</h1><p>在Eclipse中导入Android源码中用于统一代码格式的android-formatting.xml，然后执行快键键Ctrl+shift+f，</p>
 <p>导入方法如下：window–preference–Java–code style–Formatter 导入android-formatting.xml</p>
 <p>推荐一个自动检查工具，checkstyle，</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/13/我所理解的OOP——UML六种关系/" itemprop="url">
-                  我所理解的OOP——UML六种关系
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-13T23:21:50+08:00" content="2016-09-13">
-              2016-09-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.cnblogs.com/dolphinX/p/3296681.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
-<p>UML定义的关系主要有：泛化、实现、依赖、关联、聚合、组合，这六种关系紧密程度依次加强，分别看一下</p>
-<h1 id="泛化"><a href="#泛化" class="headerlink" title="泛化"></a>泛化</h1><p>概念：泛化是一种一般与特殊、一般与具体之间关系的描述，具体描述建立在一般描述的基础之上，并对其进行了扩展。在程序中是通过继承类实现的。比如狗是对动物的具体描述，在面向对象设计的时候一般把狗设计为动物的子类。</p>
-<p>表示方法：空心三角形箭头的实线，子类指向父类</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E6%B3%9B%E5%8C%96.png" alt="泛化"></p>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>概念：实现是一种类与接口的关系，表示类是接口所有特征和行为的实现，在程序中一般通过类实现接口来描述</p>
-<p>表示方法：空心三角形箭头的虚线，实现类指向接口</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%AE%9E%E7%8E%B0.png" alt="实现"></p>
-<h1 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h1><p>概念：是一种使用的关系，即一个类的实现需要另一个类的协助，所以要尽量不使用双向的互相依赖，在程序中一般表现为类A中的方法需要类B的实例作为其参数或者变量，而类A本身并不需要引用类B的实例作为其成员变量。</p>
-<p>表示方法：虚线箭头，类A指向类B。</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E4%BE%9D%E8%B5%96.png" alt="依赖"></p>
-<h1 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h1><p>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的，在程序中被关联类B以类属性的形式出现在关联类A中，也可能是关联类A引用了一个类型为被关联类B的全局变量</p>
-<p>表示方法：实线箭头，类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%85%B3%E8%81%94.png" alt="关联"></p>
-<h1 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h1><p>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</p>
-<p>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%81%9A%E5%90%88.png" alt="聚合"></p>
-<h1 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h1><p>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</p>
-<p>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B</p>
-<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E7%BB%84%E5%90%88.png" alt="组合"></p>
 
           
         
@@ -1916,6 +2007,138 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
             
               
                 
+                <a class="post-title-link" href="/2016/09/13/我所理解的OOP——UML六种关系/" itemprop="url">
+                  我所理解的OOP——UML六种关系
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-13T23:21:50+08:00" content="2016-09-13">
+              2016-09-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.cnblogs.com/dolphinX/p/3296681.html" target="_blank" rel="external">TokgoLiang——转载别人的原文链接一定要写在开头</a></p>
+<p>UML定义的关系主要有：泛化、实现、依赖、关联、聚合、组合，这六种关系紧密程度依次加强，分别看一下</p>
+<h1 id="泛化"><a href="#泛化" class="headerlink" title="泛化"></a>泛化</h1><p>概念：泛化是一种一般与特殊、一般与具体之间关系的描述，具体描述建立在一般描述的基础之上，并对其进行了扩展。在程序中是通过继承类实现的。比如狗是对动物的具体描述，在面向对象设计的时候一般把狗设计为动物的子类。</p>
+<p>表示方法：空心三角形箭头的实线，子类指向父类</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E6%B3%9B%E5%8C%96.png" alt="泛化"></p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>概念：实现是一种类与接口的关系，表示类是接口所有特征和行为的实现，在程序中一般通过类实现接口来描述</p>
+<p>表示方法：空心三角形箭头的虚线，实现类指向接口</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%AE%9E%E7%8E%B0.png" alt="实现"></p>
+<h1 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h1><p>概念：是一种使用的关系，即一个类的实现需要另一个类的协助，所以要尽量不使用双向的互相依赖，在程序中一般表现为类A中的方法需要类B的实例作为其参数或者变量，而类A本身并不需要引用类B的实例作为其成员变量。</p>
+<p>表示方法：虚线箭头，类A指向类B。</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E4%BE%9D%E8%B5%96.png" alt="依赖"></p>
+<h1 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h1><p>概念：表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的，在程序中被关联类B以类属性的形式出现在关联类A中，也可能是关联类A引用了一个类型为被关联类B的全局变量</p>
+<p>表示方法：实线箭头，类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E5%85%B3%E8%81%94.png" alt="关联"></p>
+<h1 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h1><p>概念：聚合关联关系的一种特例，是强的关联关系。聚合是整体和个体之间的关系，即has-a的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。程序中聚合和关联关系是一致的，只能从语义级别来区分；</p>
+<p>表示方法：尾部为空心菱形的实线箭头（也可以没箭头），类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E8%81%9A%E5%90%88.png" alt="聚合"></p>
+<h1 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h1><p>概念：组合也是关联关系的一种特例。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</p>
+<p>表示方法：尾部为实心菱形的实现箭头（也可以没箭头），类A指向类B</p>
+<p><img src="http://7xu1cb.com1.z0.glb.clouddn.com/%E7%BB%84%E5%90%88.png" alt="组合"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/13/第三章：Android经典场景设计/" itemprop="url">
                   第三章：Android经典场景设计
                 </a>
@@ -1946,6 +2169,18 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
                     <span itemprop="name">Android_读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/App研发录/" itemprop="url" rel="index">
+                    <span itemprop="name">App研发录</span>
                   </a>
                 </span>
 
@@ -2209,6 +2444,18 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
 
                 
                 
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android-读书笔记/App研发录/" itemprop="url" rel="index">
+                    <span itemprop="name">App研发录</span>
+                  </a>
+                </span>
+
+                
+                
 
               
             </span>
@@ -2382,194 +2629,6 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/12/第一章：重构，夜未眠/" itemprop="url">
-                  第一章：重构，夜未眠
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-12T22:34:39+08:00" content="2016-09-12">
-              2016-09-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android-读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Android_读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="重新规划Android项目的目录结构"><a href="#重新规划Android项目的目录结构" class="headerlink" title="重新规划Android项目的目录结构"></a>重新规划Android项目的目录结构</h1><p>第一步：建立AndroidLib类库，将与业务无关的逻辑转移到AndroidLib</p>
-<p>AndroidLib中业务无关逻辑至少包括五大部分，</p>
-<ul>
-<li>activity包，存放与业务无关的Activity积累，Activity基类要分两层，AndroidLib下的基类BaseActivity封装的是业务无关的公用逻辑，主项目中的AppBaseActivity基类封装的事业务相关的公用逻辑。</li>
-<li>net包，存放网络底层封装，如AsyncTase</li>
-<li>cache包，存放的是缓存数据和图片相关的处理</li>
-<li>ui包，存放自定义控件</li>
-<li>utils包，存放各种与业务逻辑无关的公用方法，比如对SharedPreferences的封装</li>
-</ul>
-<p>第二步：将主项目中的类分门别类的进行规划，放置在各种包中，</p>
-<ul>
-<li>activity包，按照模块继续拆分，将不同模块Activity划分到不同的包下</li>
-<li>adapter包，所有适配器都放在一起</li>
-<li>entity包，将所有实体都放在一起</li>
-<li>db包，SQLLite相关逻辑的封装</li>
-<li>engine包，将业务相关的类都放在一起</li>
-<li>ui包，将自定义控件都放在一起</li>
-<li>uitils包，将所有公用方法</li>
-<li>interfaces包，真正意义上的接口，命名以“I”作为开头</li>
-<li>listener包，基于Listener的接口，命名以“On”开头</li>
-</ul>
-<h1 id="为Activity定义新的生命周期"><a href="#为Activity定义新的生命周期" class="headerlink" title="为Activity定义新的生命周期"></a>为Activity定义新的生命周期</h1><p>例如，把onCreate方法中拆成三个子方法</p>
-<ul>
-<li>initVariables：初始化变量，包括Intent带的数据和Activity内的变量</li>
-<li>initViews：加载Layout布局文件，初始化控件，为控件挂上事件的方法</li>
-<li>loadData：获取数据</li>
-</ul>
-<h1 id="统一事件编程模型"><a href="#统一事件编程模型" class="headerlink" title="统一事件编程模型"></a>统一事件编程模型</h1><p><strong>方式一：实现Listener，在onClick方法中使用switch…case…，作者不建议使用</strong></p>
-<blockquote>
-<p>我不希望R这个类在程序中反复出现，这回扰乱面向对象编程的风格，按照我的设想，我们在initViews方法中一次性把所有的控件都初始化了，今后就再也不会私用R.id了。</p>
-</blockquote>
-<p><strong>方式二：匿名内部类</strong></p>
-<p>作者比较推崇的方法，有以下两个有点：</p>
-<ol>
-<li>直接在btn按钮对象上曾经点击事件，是面向对象的写法。</li>
-<li>将onClick方面的实现，封装成一个对应的方法，这样onClick事件方法就不那么臃肿了。</li>
-</ol>
-<h1 id="实体化编程"><a href="#实体化编程" class="headerlink" title="实体化编程"></a>实体化编程</h1><h2 id="使用fastJSON（阿里巴巴）和GSON（Google）"><a href="#使用fastJSON（阿里巴巴）和GSON（Google）" class="headerlink" title="使用fastJSON（阿里巴巴）和GSON（Google）"></a>使用fastJSON（阿里巴巴）和GSON（Google）</h2><p>作者使用fastJSON之后遇到的一个问题，表现为</p>
-<ol>
-<li>加了符号Annotation的实体属性，一使用就奔溃</li>
-<li>当有泛型是，一使用就崩溃</li>
-</ol>
-<p>在调试的时候没事，每次打签名混淆包，就会出现上述问题，原因：</p>
-<ul>
-<li>–keepattributes Signature                //避免混淆泛型</li>
-<li>–keepattributes <em>Annotation</em>            //不混淆注解</li>
-</ul>
-<h2 id="在页面跳转中使用实体"><a href="#在页面跳转中使用实体" class="headerlink" title="在页面跳转中使用实体"></a>在页面跳转中使用实体</h2><p>一个页面中，数据的来源有两种：</p>
-<ul>
-<li>调用MobileAPI获取JSON数据,使用fastJSON或者GSON</li>
-<li>从上一个页面传递过来,Activity之间的数据传递</li>
-</ul>
-<p><strong>方法一：使用全局变量</strong></p>
-<p>不建议使用，App一旦被切换到后台，当内存不足的时候，就会回收这些全局变量，从而当App再次切回到前台是，再继续使用全局变量，就会因为他们为空二崩溃</p>
-<p>如果必须使用全局变量，就一定要把它们序列化到本地，这样即使全局变量味浓，也能从本地文件中恢复</p>
-<p><strong>方法二：使用Intent在页面间传递数据实体</strong></p>
-<p>注，如果使用Fragment可以使用Fragment来传递数据。。。（我自己加的）</p>
-<h1 id="Adapter模板"><a href="#Adapter模板" class="headerlink" title="Adapter模板"></a>Adapter模板</h1><p>作者建议所有的Adapter都继承自BaseAdapter，从构造函数注入List&lt;自定义实体&gt;这样的数据集合，从而完成ListView的填充工作，代码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CinemaAdapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> ArrayList&lt;CinemaBean&gt; cinemaList;</div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> AppBaseActivity context;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">CinemaAdapter</span><span class="params">(ArrayList&lt;CinemaBean&gt; cinemaList,</span></span></div><div class="line">			AppBaseActivity context) &#123;</div><div class="line">		<span class="keyword">this</span>.cinemaList = cinemaList;</div><div class="line">		<span class="keyword">this</span>.context = context;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> cinemaList.size();</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> CinemaBean <span class="title">getItem</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> cinemaList.get(position);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getItemId</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> position;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> View <span class="title">getView</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> position, View convertView,</span></span></div><div class="line">			<span class="keyword">final</span> ViewGroup parent) &#123;</div><div class="line">		<span class="keyword">final</span> Holder holder;</div><div class="line">		<span class="keyword">if</span> (convertView == <span class="keyword">null</span>) &#123;</div><div class="line">			holder = <span class="keyword">new</span> Holder();</div><div class="line">			convertView = context.getLayoutInflater().inflate(</div><div class="line">					R.layout.item_cinemalist, <span class="keyword">null</span>);</div><div class="line">			holder.tvCinemaName = (TextView) convertView</div><div class="line">					.findViewById(R.id.tvCinemaName);</div><div class="line">			holder.tvCinemaId = (TextView) convertView</div><div class="line">					.findViewById(R.id.tvCinemaId);</div><div class="line">			convertView.setTag(holder);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			holder = (Holder) convertView.getTag();</div><div class="line">		&#125;</div><div class="line">		CinemaBean cinema = cinemaList.get(position);</div><div class="line">		holder.tvCinemaName.setText(cinema.getCinemaName());</div><div class="line">		holder.tvCinemaId.setText(cinema.getCinemaId());</div><div class="line">		<span class="keyword">return</span> convertView;</div><div class="line">	&#125;</div><div class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Holder</span> </span>&#123;</div><div class="line">		TextView tvCinemaName;</div><div class="line">		TextView tvCinemaId;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>对于每个自定义的Adapter都要实现以下四个方法</p>
-<ul>
-<li>getCount()</li>
-<li>getItem()</li>
-<li>getItemId()</li>
-<li>getView()<br>此外还要内置一个ViewHolder</li>
-</ul>
-<h1 id="类型安全转换函数"><a href="#类型安全转换函数" class="headerlink" title="类型安全转换函数"></a>类型安全转换函数</h1><p><strong>对于一个Object类型的对象，我们对其直接使用字符串操作函数toString，当其为null是就会奔溃</strong></p>
-<p>比较好的做法就是，编写一个类型安全转换函数，实现如下，核心思想是，如果转换失败就返回默认值： </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">convertToInt</span><span class="params">(Object value, <span class="keyword">int</span> defaultValue)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (value == <span class="keyword">null</span> || <span class="string">""</span>.equals(value.toString().trim())) &#123;</div><div class="line">		<span class="keyword">return</span> defaultValue;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		<span class="keyword">return</span> Integer.valueOf(value.toString());</div><div class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">return</span> Double.valueOf(value.toString()).intValue();</div><div class="line">		&#125; <span class="keyword">catch</span> (Exception e1) &#123;</div><div class="line">			<span class="keyword">return</span> defaultValue;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>如果长度不够，那么执行subString函数就会崩溃</strong></p>
-<p>所以每次使用subString函数的时候，都要判断start和end两个参数是否越界了。</p>
-<p>以上两类问题的根源，都来自MobileAPI返回的数据，由此引出另一个很严肃的问题，对于从MobileAPI返回的数据，可信度到底有多高呢？</p>
-<p>首先，不能让App崩溃，应该在解析JSON数据的外面包一层try…catch…语句，将截获到的异常在catch中进行处理，例如发送错误日志给服务器。</p>
-<p>其次，对数据要分级对待，例如：</p>
-<p>1.对于那些不需要加工就能直接展示的数据，我们不担心，因为即使为空，页面上也就是不显示而已，不会引起逻辑的问题</p>
-<p>2.对于那些很重要的数据，比如设计支付的金额不能为空的逻辑，这个时候就应该弹出提示框提示用户当前服务不可用，并停止接下里的操作</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2615,7 +2674,7 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2623,7 +2682,7 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2632,7 +2691,7 @@ include $(BUILD_STATIC_JAVA_LIBRARY)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
