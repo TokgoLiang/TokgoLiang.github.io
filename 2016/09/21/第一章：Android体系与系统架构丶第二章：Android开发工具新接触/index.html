@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/Libraries.png">
 <meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/ndkapp.png">
 <meta property="og:image" content="http://7xu1cb.com1.z0.glb.clouddn.com/sdkapp.png">
-<meta property="og:updated_time" content="2016-09-21T15:55:55.748Z">
+<meta property="og:updated_time" content="2016-10-13T15:37:49.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第一章：Android体系与系统架构丶第二章：Android开发工具新接触">
 <meta name="twitter:description" content="Android体系与系统架构Android系统架构　　如下图所示，这是一张讲解Android系统架构的经典示意图。它将Android大致分为了四层，即Linux内核层，库和运行时，Framwork层和应用层。Android的系统架构鼓励系统组建重用，共享组件间的数据，并且定义组件间的访问权限控制。可以说，这些层次结构既相互独立又是互相关联的。
@@ -368,8 +368,142 @@
 <p>　　一个像Andoid这样的大型工程，它的源文件不计其数，不同的功能，模块，按类型分别放置在不同的目录中，这些模块通常会有一个叫Makefile的文件来进行管理。它定义了一系列的规则来制定模块，哪些文件需要编译，以及这些文件该按照怎样的顺序去编译。甚至它还可以配置更复杂的功能操作，比如定义编译规则，打包规则等，因为Makefile就像一个shell脚本，不仅可以使用自己的语法，也能调用操作系的命令。</p>
 <p>关于编译给大家推荐两篇文章：</p>
 <p><a href="http://tokgoliang.com/2016/09/13/%E7%90%86%E8%A7%A3Android%E7%BC%96%E8%AF%91%E5%91%BD%E4%BB%A4/" title="理解Android编译命令" target="_blank" rel="external">理解Android编译命令</a><br><a href="https://www.ibm.com/developerworks/cn/opensource/os-cn-android-build/" title="理解 Android Build 系统" target="_blank" rel="external">理解 Android Build 系统</a></p>
-<h3 id="Android系统目录"><a href="#Android系统目录" class="headerlink" title="Android系统目录"></a>Android系统目录</h3><p>未完待续。。。。。</p>
-<h1 id="Android开发工具新接触"><a href="#Android开发工具新接触" class="headerlink" title="Android开发工具新接触"></a>Android开发工具新接触</h1>
+<h3 id="Android系统目录"><a href="#Android系统目录" class="headerlink" title="Android系统目录"></a>Android系统目录</h3><p>　　在Android手机里，系统的目录结构与源代码目录结构还是有所不同的，我们通过ADB连接Android设备，通过Linux的ls命令查看Android系统的根目录，其中/system和/data是开发者非常关心的两个目录。</p>
+<table>
+<thead>
+<tr>
+<th>目录/文件</th>
+<th>放置内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/system/app/</td>
+<td>系统app</td>
+</tr>
+<tr>
+<td>/system/bin/</td>
+<td>主要是Linux自带的组件</td>
+</tr>
+<tr>
+<td>/system/build.prop</td>
+<td>系统的属性信息</td>
+</tr>
+<tr>
+<td>/system/fonts/</td>
+<td>系统字体</td>
+</tr>
+<tr>
+<td>/system/framework/</td>
+<td>系统核心文件，框架层</td>
+</tr>
+<tr>
+<td>/system/lib/</td>
+<td>几乎所有的共享库（.so）文件</td>
+</tr>
+<tr>
+<td>/system/media/</td>
+<td>系统提示音，系统铃声等</td>
+</tr>
+<tr>
+<td>/system/usr/</td>
+<td>用户的配置文件</td>
+</tr>
+<tr>
+<td>/data/app/</td>
+<td>用户安装或者升级的app</td>
+</tr>
+<tr>
+<td>/data/data/</td>
+<td>App的数据信息，文件信息，数据库信息等</td>
+</tr>
+<tr>
+<td>/data/syste/</td>
+<td>设备的各项系统信息</td>
+</tr>
+<tr>
+<td>/data/misc/</td>
+<td>大部分的Wifi，VPN信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Android-app文件目录"><a href="#Android-app文件目录" class="headerlink" title="Android app文件目录"></a>Android app文件目录</h3><p>图。。</p>
+<h1 id="Android开发工具新接触"><a href="#Android开发工具新接触" class="headerlink" title="Android开发工具新接触"></a>Android开发工具新接触</h1><h2 id="Android-开发IDE介绍"><a href="#Android-开发IDE介绍" class="headerlink" title="Android 开发IDE介绍"></a>Android 开发IDE介绍</h2><p>　　Google提供了自己的IDE(Integrated Development Environment，集成开发环境)——Android Studio。作为官方指定的Android开发IDE，Android更加专业，快捷，已经渐渐成为Android开发的主流IDE。</p>
+<p><a href="http://developer.android.com/sdk/installing/studio.html" title="Android Studio 官网下载地址" target="_blank" rel="external">Android Studio 官网下载地址</a></p>
+<p><a href="http://www.androiddevtools.cm" title="另外介绍一个非常好的镜像网站" target="_blank" rel="external">另外介绍一个非常好的镜像网站</a></p>
+<p>注：下载安装Android Studio之后，在运行之前需要先配置一下JDK的安装路径：</p>
+<ul>
+<li>JAVA_HOME：D:\ProgramFiles\Java\jdk1.7.0_79（JDK安装路径）</li>
+<li>CLASSPATH：.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar</li>
+<li>Path：;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin（添加）</li>
+</ul>
+<h2 id="ADB命令使用技巧"><a href="#ADB命令使用技巧" class="headerlink" title="ADB命令使用技巧"></a>ADB命令使用技巧</h2><h3 id="ADB基础"><a href="#ADB基础" class="headerlink" title="ADB基础"></a>ADB基础</h3><p>ADB工具位于SDK的platform-tools目录下，因此在命令行中使用ADB的时候，需要通过cd命令，切换到该目录下，或者将platform-tools的路径添加系统环境变量中，这样就可以直接使用了。配置好后，在命令行中输入以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb version</div></pre></td></tr></table></figure>
+<p>如果显示如下内容，就说嘛配置成功了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Android Debug Bridge version 1.0.36</div><div class="line">Revision 8f855a3d9b35-android</div></pre></td></tr></table></figure>
+<p>PC端：Windows系统下载对应Android设备驱动（可以使用各类手机助手下载），Linux系统不需要下载。</p>
+<p>Android设备端：首先进入Setting，选择“about my phone”，通过不断单击“内部版本号”来激活开发者选项。进入开发者选项后，就可以选择“USB Debug”了。这时候，如果你的设备连接了电脑，那么设备界面上回显示“是否需要对这台电脑授权”的选项，选择“OK”后，电脑就通过ADB连接上这台手机了。</p>
+<p>在命令行中输入如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell</div><div class="line">shell@konka_6a638_ud:/ <span class="comment">#</span></div></pre></td></tr></table></figure>
+<p>就可以使用shell命令了。</p>
+<h3 id="ADB常用命令"><a href="#ADB常用命令" class="headerlink" title="ADB常用命令"></a>ADB常用命令</h3><ul>
+<li><p>显示系统中全部Android平台</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb list targets</div><div class="line">Android Debug Bridge version 1.0.32</div><div class="line">Revision eac51f2bb6a8-android</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装Apk程序之Install</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb install -r 应用程序.apk</div><div class="line">C:\Users\Administrator&gt;adb install -r F:\Test.apk</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装Apk程序之Push </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb push &lt;<span class="built_in">local</span>&gt; &lt;remote&gt;</div><div class="line">C:\Users\Administrator&gt;adb push F:\Test.apk /system/app</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上两种方法都可以安装Apk，但是它们也有不同。Adb Install 是将Apk安装到/data/data目录下，作为普通的用户程序。而Adb Push则不是安装命令，他是将一个文件写入Android设备存储系统。因此，只要拥有相应权限，就可以把任何Apk放到任何目录下，甚至是System目录下，作为一个系统应用程序。</p>
+<ul>
+<li><p>向手机写入文件 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb push &lt;<span class="built_in">local</span>&gt; &lt;remote&gt;</div><div class="line">C:\Users\Administrator&gt;adb push D:\Test.txt /system/temp</div></pre></td></tr></table></figure>
+</li>
+<li><p>从手机获取文件 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb pull &lt;remote&gt; &lt;<span class="built_in">local</span>&gt;</div><div class="line">C:\Users\Administrator&gt;adb push /system/temp D:\Test.txt</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看Log </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell</div><div class="line">shell@xxx:/$ logcat | grep <span class="string">"adbc"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>删除应用 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb remount</div><div class="line">C:\Users\Administrator&gt;adb shell</div><div class="line">shell@xxx:/$ rm /system/app/xxx.apk</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看系统盘符</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell df</div><div class="line">Filesystem               Size     Used     Free   Blksize</div><div class="line">/dev                   485.6M     2.9M   482.7M   4096</div><div class="line">/sys/fs/cgroup         485.6M    12.0K   485.5M   4096</div><div class="line">/mnt/secure            485.6M     0.0K   485.6M   4096</div><div class="line">/mnt/asec              485.6M     0.0K   485.6M   4096</div><div class="line">/mnt/obb               485.6M     0.0K   485.6M   4096</div><div class="line">/mnt/usb               485.6M     0.0K   485.6M   4096</div><div class="line">/mnt/iso               485.6M     0.0K   485.6M   4096</div><div class="line">/mnt/samba             485.6M     0.0K   485.6M   4096</div><div class="line">/var                   485.6M     4.0K   485.5M   4096</div><div class="line">/system                871.8M   481.4M   390.4M   4096</div><div class="line">/cache                 484.3M   128.0K   484.2M   4096</div><div class="line">/data                    1.8G   148.9M     1.7G   4096</div><div class="line">/tvservice              55.0M    39.4M    15.6M   4096</div><div class="line">/tvconfig                5.8M     4.2M     1.6M   4096</div><div class="line">/tvdatabase              3.9M   772.0K     3.1M   4096</div><div class="line">/tvcustomer             11.7M   952.0K    10.8M   4096</div><div class="line">/customercfg             3.9M   952.0K     2.9M   4096</div><div class="line">/mnt/sdcard             28.6G     6.3G    22.3G   16384</div><div class="line">/mnt/usb/sdb1           28.6G     5.0G    23.6G   16384</div><div class="line">/mnt/media_rw/sdcard0    28.6G     6.3G    22.3G   16384</div><div class="line">/mnt/secure/asec        28.6G     6.3G    22.3G   16384</div></pre></td></tr></table></figure>
+</li>
+<li><p>输出所有已安装的应用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell pm list packages <span class="_">-f</span></div><div class="line">package:/system/app/Upgrade-midware.apk=com.konka.upgrade</div><div class="line">package:/system/app/KonkaEdu3.apk=com.konka.apkhall.edu</div><div class="line">package:/system/app/SettingsCenter.apk=com.konka.systemsetting</div><div class="line">package:/system/priv-app/DefaultContainerService.apk=com.android.defcontainer</div><div class="line">package:/system/app/IflytekTVService.apk=com.iflytek.itvs</div><div class="line">package:/system/app/KKSystemUI.apk=com.konka.kksystemui</div><div class="line">package:/system/app/MDummyAPK.apk=com.android.dummyactivity</div><div class="line">package:/system/app/Bluetooth.apk=com.android.bluetooth</div><div class="line">package:/system/app/KKFactory.apk=com.konka.kkfactory</div><div class="line">。。。</div></pre></td></tr></table></figure>
+</li>
+<li><p>模拟按键输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell input  keyevent 19</div></pre></td></tr></table></figure>
+</li>
+<li><p>模拟滑动输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell input touchscreen  swipe &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>input 命令</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">Usage: input [&lt;source&gt;] &lt;command&gt; [&lt;arg&gt;...]</div><div class="line"></div><div class="line">The sources are: </div><div class="line">      trackball</div><div class="line">      joystick</div><div class="line">      touchnavigation</div><div class="line">      mouse</div><div class="line">      keyboard</div><div class="line">      gamepad</div><div class="line">      touchpad</div><div class="line">      dpad</div><div class="line">      stylus</div><div class="line">      touchscreen</div><div class="line"></div><div class="line">The commands and default sources are:</div><div class="line">      text &lt;string&gt; (Default: touchscreen)</div><div class="line">      keyevent [--longpress] &lt;key code number or name&gt; ... (Default: keyboard)</div><div class="line">      tap &lt;x&gt; &lt;y&gt; (Default: touchscreen)</div><div class="line">      swipe &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt; [duration(ms)] (Default: touchscreen)</div><div class="line">      press (Default: trackball)</div><div class="line">      roll &lt;dx&gt; &lt;dy&gt; (Default: trackball)</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell reboot</div></pre></td></tr></table></figure>
+</li>
+<li><p>截屏</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;db shell /system/bin/screencap -p /sdcard/screenshot.png</div></pre></td></tr></table></figure>
+</li>
+<li><p>录制视频</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;adb shell screenrecord /sdcard/demo.mp4</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="ADB命令来源"><a href="#ADB命令来源" class="headerlink" title="ADB命令来源"></a>ADB命令来源</h3><ul>
+<li>/system/core/toolbox</li>
+<li>/framework/base/cmds</li>
+</ul>
+<blockquote>
+<p>模拟器建议使用Genymotion</p>
+</blockquote>
+
       
     </div>
 
@@ -413,6 +547,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/03/第三章：Android控件架构与自定义控件详解/" rel="prev" title="第三章：Android控件架构与自定义控件详解">
+                第三章：Android控件架构与自定义控件详解 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -480,7 +618,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -497,7 +635,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -540,7 +678,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android体系与系统架构"><span class="nav-number">1.</span> <span class="nav-text">Android体系与系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android系统架构"><span class="nav-number">1.1.</span> <span class="nav-text">Android系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dalvik与ART"><span class="nav-number">1.1.2.</span> <span class="nav-text">Dalvik与ART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Framework"><span class="nav-number">1.1.3.</span> <span class="nav-text">Framework</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-Libraries"><span class="nav-number">1.1.4.</span> <span class="nav-text">Standard Libraries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Application"><span class="nav-number">1.1.5.</span> <span class="nav-text">Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-App-组件架构"><span class="nav-number">1.2.</span> <span class="nav-text">Android App 组件架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android四大组件如何协同工作"><span class="nav-number">1.2.1.</span> <span class="nav-text">Android四大组件如何协同工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用运行上下文对象"><span class="nav-number">1.2.2.</span> <span class="nav-text">应用运行上下文对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android系统源代码目录与系统目录"><span class="nav-number">1.3.</span> <span class="nav-text">Android系统源代码目录与系统目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android系统源代码目录"><span class="nav-number">1.3.1.</span> <span class="nav-text">Android系统源代码目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android系统目录"><span class="nav-number">1.3.2.</span> <span class="nav-text">Android系统目录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android开发工具新接触"><span class="nav-number">2.</span> <span class="nav-text">Android开发工具新接触</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android体系与系统架构"><span class="nav-number">1.</span> <span class="nav-text">Android体系与系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android系统架构"><span class="nav-number">1.1.</span> <span class="nav-text">Android系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.1.1.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dalvik与ART"><span class="nav-number">1.1.2.</span> <span class="nav-text">Dalvik与ART</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Framework"><span class="nav-number">1.1.3.</span> <span class="nav-text">Framework</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-Libraries"><span class="nav-number">1.1.4.</span> <span class="nav-text">Standard Libraries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Application"><span class="nav-number">1.1.5.</span> <span class="nav-text">Application</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-App-组件架构"><span class="nav-number">1.2.</span> <span class="nav-text">Android App 组件架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android四大组件如何协同工作"><span class="nav-number">1.2.1.</span> <span class="nav-text">Android四大组件如何协同工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用运行上下文对象"><span class="nav-number">1.2.2.</span> <span class="nav-text">应用运行上下文对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android系统源代码目录与系统目录"><span class="nav-number">1.3.</span> <span class="nav-text">Android系统源代码目录与系统目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android系统源代码目录"><span class="nav-number">1.3.1.</span> <span class="nav-text">Android系统源代码目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android系统目录"><span class="nav-number">1.3.2.</span> <span class="nav-text">Android系统目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-app文件目录"><span class="nav-number">1.3.3.</span> <span class="nav-text">Android app文件目录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android开发工具新接触"><span class="nav-number">2.</span> <span class="nav-text">Android开发工具新接触</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-开发IDE介绍"><span class="nav-number">2.1.</span> <span class="nav-text">Android 开发IDE介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADB命令使用技巧"><span class="nav-number">2.2.</span> <span class="nav-text">ADB命令使用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ADB基础"><span class="nav-number">2.2.1.</span> <span class="nav-text">ADB基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADB常用命令"><span class="nav-number">2.2.2.</span> <span class="nav-text">ADB常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADB命令来源"><span class="nav-number">2.2.3.</span> <span class="nav-text">ADB命令来源</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
